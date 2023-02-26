@@ -10,18 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 class EventAttendee
 {
     use EntityIdTrait;
+    use QuestionsAndConcernsTrait;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $church = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $invitedBy = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $questionsOrComments = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $concerns = null;
 
     #[ORM\ManyToOne(inversedBy: 'eventAttendees')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,30 +42,6 @@ class EventAttendee
     public function setInvitedBy(?string $invitedBy): self
     {
         $this->invitedBy = $invitedBy;
-
-        return $this;
-    }
-
-    public function getQuestionsOrComments(): ?string
-    {
-        return $this->questionsOrComments;
-    }
-
-    public function setQuestionsOrComments(?string $questionsOrComments): self
-    {
-        $this->questionsOrComments = $questionsOrComments;
-
-        return $this;
-    }
-
-    public function getConcerns(): ?string
-    {
-        return $this->concerns;
-    }
-
-    public function setConcerns(?string $concerns): self
-    {
-        $this->concerns = $concerns;
 
         return $this;
     }

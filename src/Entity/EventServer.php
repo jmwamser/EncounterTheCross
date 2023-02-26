@@ -9,4 +9,5 @@ use Doctrine\ORM\Mapping as ORM;
 class EventServer
 {
     use EntityIdTrait;
+    use QuestionsAndConcernsTrait;
 }
