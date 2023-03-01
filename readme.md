@@ -75,3 +75,7 @@ Below you will find the list of entities that are dual-purpose and the types eac
 
     This type is for an Event Attendee, the person that the event is for.
 
+## Testing
+TODO List:
+- [ ] Entity Core Doctrine Extension Tests to make sure they are working correctly.
+- [ ] Entity Class Managers? Still need to decide which ones we want. Im thinking the entities that are dual-purpose.
