@@ -40,6 +40,7 @@ trait EntityIdTrait
         return $this->id;
     }
 
+    #[ORM\PrePersist]
     public function getRowPointer(): Uuid
     {
         return $this->rowPointer;
