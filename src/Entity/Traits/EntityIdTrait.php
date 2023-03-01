@@ -6,11 +6,10 @@
  * File Name: AbstractEntity.php
  */
 
-namespace App\Entity;
+namespace App\Entity\Traits;
 
-use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
-use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @link https://titouangalopin.com/posts/4dzpjwHfpm0eqvNt9G0trK/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine Why UUID & INT for our ID fields
@@ -24,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  * public view we will display out the uuid.
  *
  * There are some additional tools we can implement/use to allow url friendly uuid's.
- * TODO: Create the UUID utility tools
+ * TODO: Create the UUID utility tools or use sluggable extension?
  */
 trait EntityIdTrait
 {

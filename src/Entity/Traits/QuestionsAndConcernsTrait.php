@@ -6,7 +6,7 @@
  * File Name: QuestionsAndConcernsTrait.php
  */
 
-namespace App\Entity;
+namespace App\Entity\Traits;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +17,7 @@ trait QuestionsAndConcernsTrait
     private ?string $questionsOrComments = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $concerns = null;
+    private ?string $healthConcerns = null;
 
     public function getQuestionsOrComments(): ?string
     {
