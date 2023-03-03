@@ -10,6 +10,7 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use UuidFactory;
 
 /**
  * @link https://titouangalopin.com/posts/4dzpjwHfpm0eqvNt9G0trK/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine Why UUID & INT for our ID fields
@@ -44,5 +45,15 @@ trait EntityIdTrait
     public function getRowPointer(): Uuid
     {
         return $this->rowPointer;
+    }
+
+    public function getBase32RowPointer(): string
+    {
+        return UuidFactory::getBase32RowPointer($this->rowPointer);
+    }
+
+    public function getRowPointerFromBase32(string $base): ?Uuid
+    {
+        return UuidFactory::getRowPointerFromBase32($base);
     }
 }
