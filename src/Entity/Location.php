@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\CoreEntityTrait;
+use App\Entity\Traits\EntityIdTrait;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use \ReflectionClass;
+use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
-    use EntityIdTrait;
+    use CoreEntityTrait;
     use AddressTrait;
 
     public const TYPE_LAUNCH_POINT = 'launch';
@@ -26,7 +29,7 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: EventAttendee::class)]
+    #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: EventParticipant::class)]
     private Collection $eventAttendees;
 
     public function __construct()
@@ -100,14 +103,14 @@ class Location
     }
 
     /**
-     * @return Collection<int, EventAttendee>
+     * @return Collection<int, EventParticipant>
      */
     public function getEventAttendees(): Collection
     {
         return $this->eventAttendees;
     }
 
-    public function addEventAttendee(EventAttendee $eventAttendee): self
+    public function addEventAttendee(EventParticipant $eventAttendee): self
     {
         if (!$this->eventAttendees->contains($eventAttendee)) {
             $this->eventAttendees->add($eventAttendee);
@@ -117,7 +120,7 @@ class Location
         return $this;
     }
 
-    public function removeEventAttendee(EventAttendee $eventAttendee): self
+    public function removeEventAttendee(EventParticipant $eventAttendee): self
     {
         if ($this->eventAttendees->removeElement($eventAttendee)) {
             // set the owning side to null (unless already changed)

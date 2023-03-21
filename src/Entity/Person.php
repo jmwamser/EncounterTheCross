@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CoreEntityTrait;
+use App\Entity\Traits\EntityIdTrait;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person
 {
-    use EntityIdTrait;
+    use CoreEntityTrait;
 
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
@@ -27,9 +29,13 @@ class Person
     #[ORM\OneToMany(mappedBy: 'details', targetEntity: ContactPerson::class, orphanRemoval: true)]
     private Collection $contactFor;
 
+    #[ORM\OneToMany(mappedBy: 'person', targetEntity: EventParticipant::class, orphanRemoval: true)]
+    private Collection $attendedEvents;
+
     public function __construct()
     {
         $this->contactFor = new ArrayCollection();
+        $this->attendedEvents = new ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -104,6 +110,36 @@ class Person
             // set the owning side to null (unless already changed)
             if ($contactFor->getDetails() === $this) {
                 $contactFor->setDetails(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EventParticipant>
+     */
+    public function getAttendedEvents(): Collection
+    {
+        return $this->attendedEvents;
+    }
+
+    public function addAttendedEvent(EventParticipant $attendedEvent): self
+    {
+        if (!$this->attendedEvents->contains($attendedEvent)) {
+            $this->attendedEvents->add($attendedEvent);
+            $attendedEvent->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttendedEvent(EventParticipant $attendedEvent): self
+    {
+        if ($this->attendedEvents->removeElement($attendedEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($attendedEvent->getPerson() === $this) {
+                $attendedEvent->setPerson(null);
             }
         }
 
