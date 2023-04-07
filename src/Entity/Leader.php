@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Leader implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use CoreEntityTrait;
+
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -23,6 +24,8 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    private ?string $plainPassword;
 
     public function getEmail(): ?string
     {
@@ -86,6 +89,22 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     */
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 }

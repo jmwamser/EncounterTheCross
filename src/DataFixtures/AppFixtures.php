@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\EventParticipant;
 use App\Factory\EventFactory;
 use App\Factory\EventParticipantFactory;
+use App\Factory\LeaderFactory;
 use App\Factory\LocationFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -13,7 +14,8 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        //TODO: Create Admin `Leader` so you can login
+        //Create Admin `Leader` so you can login
+        LeaderFactory::createOne(['email'=>'dev@dev.com']);
 
         // Create all Launch Points to use
         LocationFactory::new('launchPoint')->many(8)->create();
