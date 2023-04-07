@@ -24,7 +24,7 @@ use UuidFactory;
  * public view we will display out the uuid.
  *
  * There are some additional tools we can implement/use to allow url friendly uuid's.
- * TODO: Create the UUID utility tools or use sluggable extension?
+ * the UUID utility tools (or use sluggable extension) is in Services UuidManager
  */
 trait EntityIdTrait
 {

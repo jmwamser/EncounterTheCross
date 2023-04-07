@@ -32,8 +32,6 @@ final class LocationFactory extends ModelFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct()
     {
@@ -43,7 +41,7 @@ final class LocationFactory extends ModelFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
      *
-     * @todo add your default values here
+     * TODO remove row pointer once DoctrineEvent Hook is used
      */
     protected function getDefaults(): array
     {

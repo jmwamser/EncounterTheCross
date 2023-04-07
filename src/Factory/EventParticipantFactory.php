@@ -34,8 +34,6 @@ final class EventParticipantFactory extends ModelFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct()
     {
@@ -45,21 +43,22 @@ final class EventParticipantFactory extends ModelFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
      *
-     * @todo add your default values here
+     * TODO remove row pointer once DoctrineEvent Hook is used
      */
     protected function getDefaults(): array
     {
         $type = self::faker()->randomElement(EventParticipant::TYPES());
 
-        //TODO: Fill out the required fields per `type`
+
         $typeDefaults = [];
         if (EventParticipant::TYPE_ATTENDEE === $type){
+            //TODO: Fill out the required fields per `type` (ATTENDEE)
             $contactEmail = self::faker()->email();
             $contactPhone = self::faker()->phoneNumber();
             $typeDefaults['attendeeContactPerson'] = $this->findByPersonDetailsOrCreate($contactEmail,$contactPhone);
         }
         if (EventParticipant::TYPE_SERVER === $type){
-
+            //TODO: Fill out the required fields per `type` (SERVER)
         }
 
         $eventLaunchPoints = EventFactory::randomOrCreate()->getLaunchPoints();
