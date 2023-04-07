@@ -24,7 +24,7 @@ class Location
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Event::class)]
-    private Collection $events;
+    private Collection $events; // this field is for self::TYPE_EVENT only
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -32,10 +32,14 @@ class Location
     #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: EventParticipant::class)]
     private Collection $eventAttendees;
 
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'launchPoints')]
+    private Collection $launchPointEvents; // this field is for self::TYPE_LAUNCH_POINT only
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->eventAttendees = new ArrayCollection();
+        $this->launchPointEvents = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -127,6 +131,33 @@ class Location
             if ($eventAttendee->getLaunchPoint() === $this) {
                 $eventAttendee->setLaunchPoint(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getLaunchPointEvents(): Collection
+    {
+        return $this->launchPointEvents;
+    }
+
+    public function addLaunchPointEvent(Event $launchPointEvent): self
+    {
+        if (!$this->launchPointEvents->contains($launchPointEvent)) {
+            $this->launchPointEvents->add($launchPointEvent);
+            $launchPointEvent->addLaunchPoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaunchPointEvent(Event $launchPointEvent): self
+    {
+        if ($this->launchPointEvents->removeElement($launchPointEvent)) {
+            $launchPointEvent->removeLaunchPoint($this);
         }
 
         return $this;

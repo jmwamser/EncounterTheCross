@@ -32,12 +32,12 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
-    #[ORM\ManyToMany(targetEntity: Location::class)]
-    private Collection $launchPoint;
+    #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'launchPointEvents')]
+    private Collection $launchPoints;
 
     public function __construct()
     {
-        $this->launchPoint = new ArrayCollection();
+        $this->launchPoints = new ArrayCollection();
     }
 
     public function getStart(): ?\DateTimeInterface
@@ -107,19 +107,15 @@ class Event
     /**
      * @return Collection<int, Location>
      */
-    public function getLaunchPoint(): Collection
+    public function getLaunchPoints(): Collection
     {
-        return $this->launchPoint;
+        return $this->launchPoints;
     }
 
     public function addLaunchPoint(Location $launchPoint): self
     {
-        if (Location::TYPE_LAUNCH_POINT !== $launchPoint->getType()) {
-            throw new InvalidLocationType('Launch Point',Location::TYPE_LAUNCH_POINT);
-        }
-
-        if (!$this->launchPoint->contains($launchPoint)) {
-            $this->launchPoint->add($launchPoint);
+        if (!$this->launchPoints->contains($launchPoint)) {
+            $this->launchPoints->add($launchPoint);
         }
 
         return $this;
@@ -127,8 +123,9 @@ class Event
 
     public function removeLaunchPoint(Location $launchPoint): self
     {
-        $this->launchPoint->removeElement($launchPoint);
+        $this->launchPoints->removeElement($launchPoint);
 
         return $this;
     }
+
 }

@@ -47,6 +47,16 @@ trait EntityIdTrait
         return $this->rowPointer;
     }
 
+    /**
+     * TODO: remove this and update the Fixtures Factories, this will use Doctrine EventSucscribers to assign this value.
+     *
+     * @param Uuid|null $rowPointer
+     */
+    public function setRowPointer(?Uuid $rowPointer): void
+    {
+        $this->rowPointer = $rowPointer;
+    }
+
     public function getBase32RowPointer(): string
     {
         return UuidFactory::getBase32RowPointer($this->rowPointer);

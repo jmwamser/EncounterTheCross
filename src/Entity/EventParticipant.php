@@ -15,6 +15,9 @@ class EventParticipant
     use AddressTrait;
     use QuestionsAndConcernsTrait;
 
+    public const TYPE_SERVER = 'server';
+    public const TYPE_ATTENDEE = 'attendee';
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $church = null;
 
@@ -37,6 +40,12 @@ class EventParticipant
 
     #[ORM\Column(nullable: true)]
     private ?int $serverAttendedTimes = null;
+
+    public static function TYPES(): array
+    {
+        $oClass = new \ReflectionClass(static::class);
+        return $oClass->getConstants();
+    }
 
     public function getChurch(): ?string
     {
