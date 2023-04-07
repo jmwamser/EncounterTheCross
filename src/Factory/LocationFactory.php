@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Location;
 use App\Repository\LocationRepository;
+use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -47,17 +48,36 @@ final class LocationFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'city' => self::faker()->text(255),
-            'country' => self::faker()->text(255),
+            'city' => self::faker()->city(),
+            'country' => self::faker()->country(),
             'createdAt' => self::faker()->dateTime(),
-            'line1' => self::faker()->text(255),
+            'line1' => self::faker()->streetAddress(),
             'name' => self::faker()->text(255),
-            'rowPointer' => null, // TODO add UUID type manually
-            'state' => self::faker()->text(255),
-            'type' => self::faker()->text(255),
+            'rowPointer' => new Uuid(self::faker()->uuid()),
+            'state' => self::faker()->state(),
+            'type' => self::faker()->randomElement(Location::TYPES()),
             'updatedAt' => self::faker()->dateTime(),
-            'zipcode' => self::faker()->text(255),
+            'zipcode' => self::faker()->postcode(),
         ];
+    }
+
+    public function launchPoint(): self
+    {
+        return $this->addState(['type' => Location::TYPE_LAUNCH_POINT]);
+    }
+
+    public function event(): self
+    {
+        return $this->addState(['type' => Location::TYPE_EVENT]);
+    }
+
+    public static function allLaunchPoints($min = 1)
+    {
+        if ($launchPoints = self::findBy(['type'=> Location::TYPE_LAUNCH_POINT])) {
+            return $launchPoints;
+        }
+
+        return LocationFactory::new('launchPoint')->many($min);
     }
 
     /**

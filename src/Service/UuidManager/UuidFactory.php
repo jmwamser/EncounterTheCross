@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Service\UuidManager;
+
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 

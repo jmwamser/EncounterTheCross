@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\ContactPerson;
 use App\Repository\ContactPersonRepository;
+use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -48,11 +49,27 @@ final class ContactPersonFactory extends ModelFactory
     {
         return [
             'createdAt' => self::faker()->dateTime(),
-            'details' => PersonFactory::new(),
-            'relationship' => self::faker()->text(255),
-            'rowPointer' => null, // TODO add UUID type manually
+            'details' => PersonFactory::findByEmailOrPhoneOrCreate(
+                self::faker()->email(),
+                self::faker()->phoneNumber()
+            ),
+            'relationship' => self::faker()->randomElement([
+                'Father',
+                'Mother',
+                'Sister',
+                'Brother',
+                'Aunt',
+                'Uncle',
+                'GrandParent',
+            ]),
+            'rowPointer' => new Uuid(self::faker()->uuid()),
             'updatedAt' => self::faker()->dateTime(),
         ];
+    }
+
+    public static function findByPersonDetailsOrCreate($email,$phone)
+    {
+        return self::new(['details'=>PersonFactory::findByEmailOrPhoneOrCreate($email,$phone)]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Event;
 use App\Repository\EventRepository;
+use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -46,15 +47,17 @@ final class EventFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+        $start = self::faker()->dateTimeBetween('+1 month','+1 year');
         return [
             'createdAt' => self::faker()->dateTime(),
-            'end' => self::faker()->dateTime(),
-            'location' => LocationFactory::new(),
+            'end' => $start->modify('+3 days'),
+            'location' => LocationFactory::new('event'),
             'name' => self::faker()->text(255),
-            'registrationDeadLineServers' => self::faker()->dateTime(),
-            'rowPointer' => null, // TODO add UUID type manually
-            'start' => self::faker()->dateTime(),
+            'registrationDeadLineServers' => $start->modify('-2 weeks'),//self::faker()->dateTime(),
+            'rowPointer' => new Uuid(self::faker()->uuid()),
+            'start' => $start,
             'updatedAt' => self::faker()->dateTime(),
+            'launchPoints' => LocationFactory::allLaunchPoints(),
         ];
     }
 

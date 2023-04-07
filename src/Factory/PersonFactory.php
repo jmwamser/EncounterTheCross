@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Person;
 use App\Repository\PersonRepository;
+use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -46,13 +47,46 @@ final class PersonFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+        $email = self::faker()->boolean(80) ? self::faker()->email():null;
+        $phone = self::faker()->boolean(80) ? self::faker()->phoneNumber():null;
         return [
             'createdAt' => self::faker()->dateTime(),
-            'firstName' => self::faker()->text(255),
-            'lastName' => self::faker()->text(255),
-            'rowPointer' => null, // TODO add UUID type manually
+            'firstName' => self::faker()->firstName(),
+            'lastName' => self::faker()->lastName(),
+            'rowPointer' => new Uuid(self::faker()->uuid()),
             'updatedAt' => self::faker()->dateTime(),
+            'email' => $email,
+            'phone' => $phone,
         ];
+    }
+
+    public static function findByEmailOrPhone($email,$phone)
+    {
+        if ($person = self::findBy([
+            'email' => $email,
+        ])) {
+            return $person;
+        }
+
+        if ($person = self::findBy([
+            'phone' => $phone,
+        ])) {
+            return $person;
+        }
+
+        return null;
+    }
+
+    public static function findByEmailOrPhoneOrCreate($email,$phone)
+    {
+        if ($person = self::findByEmailOrPhone($email,$phone)) {
+            return $person;
+        }
+
+        return self::new([
+            'email' => $email,
+            'phone' => $phone,
+        ]);
     }
 
     /**
