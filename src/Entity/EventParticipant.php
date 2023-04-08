@@ -131,4 +131,15 @@ class EventParticipant
         return $this;
     }
 
+    public function getFullName(): string
+    {
+        $person = $this->getPerson();
+        return $person->getFirstName(). " " .$person->getLastName();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFullName();
+    }
+
 }

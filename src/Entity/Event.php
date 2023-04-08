@@ -8,6 +8,7 @@ use App\Exception\InvalidLocationType;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -128,4 +129,53 @@ class Event
         return $this;
     }
 
+    public function getTotalServers(): int
+    {
+        $total = 0;
+        foreach($this->getLaunchPoints()->getIterator() as $launchPoint) {
+            $servers = $this->getEventServers($launchPoint);
+
+            $total += $servers->count();
+        }
+
+        return $total;
+    }
+
+    public function getTotalAttendees(): int
+    {
+        $total = 0;
+        foreach($this->getLaunchPoints()->getIterator() as $launchPoint) {
+            $servers = $this->getEventServers($launchPoint);
+
+            $total += $servers->count();
+        }
+
+        return $total;
+    }
+
+    private function getEventServers(Location $launchPoint): ReadableCollection
+    {
+        return $this->filterLaunchPointEventAttendees($launchPoint,EventParticipant::TYPE_SERVER);
+    }
+
+    private function getEventAttendees(Location $launchPoint): ReadableCollection
+    {
+        return $this->filterLaunchPointEventAttendees($launchPoint,EventParticipant::TYPE_ATTENDEE);
+    }
+
+    private function filterLaunchPointEventAttendees(Location $launchPoint, string $type): ReadableCollection
+    {
+        if (Location::TYPE_EVENT === $launchPoint->getType()) {
+            throw new InvalidLocationType($this->name,Location::TYPE_LAUNCH_POINT);
+        }
+
+        return $launchPoint->getEventAttendees()->filter(function(EventParticipant $attendee) use ($type) {
+            return $attendee->getType() === $type;
+        });
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

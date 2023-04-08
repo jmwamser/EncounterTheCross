@@ -50,7 +50,7 @@ final class LocationFactory extends ModelFactory
             'country' => self::faker()->country(),
             'createdAt' => self::faker()->dateTime(),
             'line1' => self::faker()->streetAddress(),
-            'name' => self::faker()->text(255),
+            'name' => self::faker()->company(),
             'rowPointer' => new Uuid(self::faker()->uuid()),
             'state' => self::faker()->state(),
             'type' => self::faker()->randomElement(Location::TYPES()),
