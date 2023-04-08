@@ -27,6 +27,7 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
     {
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
+        //TODO: filter out Deleted Entities unless Role:FULL
         $expr = $qb->expr();
 //        $qb->andWhere(
 //            $expr->isNull('entity.deletedAt')
@@ -47,7 +48,6 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
             fn ($dto) => Field::newFromDto($dto),
             array_values($fields->getIterator()->getArrayCopy())
         );
-//        yield $this->addRowPointerField();
     }
 
     protected function addRowPointerField(): FieldInterface
@@ -55,6 +55,4 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
         return UuidField::new('rowPointer')
             ->hideOnForm();
     }
-
-
 }

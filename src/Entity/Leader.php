@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\CoreEntityTrait;
 use App\Repository\LeaderRepository;
+use App\Service\RoleManager\Role;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,6 +28,25 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
 
     private ?string $plainPassword;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Person $person = null;
+
+    /**
+     * !! KEY OVERLAP ISSUES - SET TO TRUE IF IT COULD HAPPEN !!
+     * @param bool $forceMerge This sets the key to the role that is default,
+     *      This will make sure when providing Instance
+     *      Roles we don't overwrite anything while including this role as well.
+     * @return array
+     */
+    public static function DEFAULT_ROLES(bool $forceMerge = false): array
+    {
+        if ($forceMerge) {
+            return [Role::DEFAULT => Role::DEFAULT];
+        }
+        return [Role::DEFAULT];
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -35,6 +55,7 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+        $this->getPerson()?->setEmail($email);
 
         return $this;
     }
@@ -54,11 +75,13 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles = array_merge(
+            $this->roles,
+            self::DEFAULT_ROLES(true)
+        );
 
-        return array_unique($roles);
+        return array_unique(array_values($roles));
     }
 
     public function setRoles(array $roles): self
@@ -106,5 +129,17 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getPerson(): ?Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(Person $person): self
+    {
+        $this->person = $person;
+
+        return $this;
     }
 }

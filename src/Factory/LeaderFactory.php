@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Leader;
 use App\Repository\LeaderRepository;
+use App\Service\RoleManager\Role;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
@@ -51,11 +52,12 @@ final class LeaderFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
+            'person' => PersonFactory::new(),
             'createdAt' => self::faker()->dateTime(),
             'email' => self::faker()->email(),
 //            'password' => self::faker()->text(),
             'plainPassword' => 'tada',
-            'roles' => ['ROLE_ADMIN'],
+            'roles' => [Role::LIMITED_FULL],
             'rowPointer' => new Uuid(self::faker()->uuid()),
             'updatedAt' => self::faker()->dateTime(),
         ];

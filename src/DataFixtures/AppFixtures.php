@@ -7,6 +7,7 @@ use App\Factory\EventFactory;
 use App\Factory\EventParticipantFactory;
 use App\Factory\LeaderFactory;
 use App\Factory\LocationFactory;
+use App\Service\RoleManager\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -15,7 +16,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         //Create Admin `Leader` so you can login
-        LeaderFactory::createOne(['email'=>'dev@dev.com']);
+        LeaderFactory::createOne(['email'=>'dev@dev.com','roles'=>[Role::FULL]]);
 
         // Create all Launch Points to use
         LocationFactory::new('launchPoint')->many(8)->create();

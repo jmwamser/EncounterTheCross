@@ -42,6 +42,14 @@ class Location
         $this->launchPointEvents = new ArrayCollection();
     }
 
+    public function getShortAddress(): string
+    {
+        $city = empty($city = $this->getCity() ?? '') ? $city : $city.", ";
+        $state = empty($state = $this->getCity() ?? '') ? $$state : $state." ";
+        $zip = $this->getCity() ?? '';
+        return $city.$state.$zip;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

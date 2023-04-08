@@ -3,9 +3,11 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Controller\Admin\Crud\Field\Field;
+use App\Entity\Event;
 use App\Entity\Location;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class LocationCrudController extends AbstractCrudController
 {
@@ -17,6 +19,7 @@ class LocationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield Field::new('name');
+        // TODO look into a HiddenField::class
         yield ChoiceField::new('type')
             ->renderAsNativeWidget()
             ->setChoices(array_combine(Location::TYPES(),Location::TYPES()))
@@ -35,11 +38,26 @@ class LocationCrudController extends AbstractCrudController
         // use for Launch Point CRUD
 //        yield Field::new('launchPointEvents');
 
-        yield AssociationField::new('eventAttendees', 'LifeTime Attendees')
-            ->hideOnForm()
-        ;
+        // Where is the Event Location
+        yield Field::new('shortAddress', 'Where is it?')
+            ->onlyOnIndex();
 
-        //address fields
+
+        if ($this->isLaunchPoint()) {
+            yield AssociationField::new('eventAttendees', 'LifeTime Attendees')
+                ->hideOnForm()
+            ;
+            yield AssociationField::new('launchPointEvents');
+        }
+
+        if ($this->isEventLocation()) {
+            // use for Event Location CRUD
+            yield CollectionField::new('events')
+                ->hideOnForm();
+        }
+
+
+        // address fields
         yield Field::new('line1', 'Address Line 1')
             ->hideOnIndex()
         ;
@@ -58,5 +76,17 @@ class LocationCrudController extends AbstractCrudController
         yield Field::new('country')
             ->hideOnIndex()
         ;
+    }
+
+    private function isEventLocation(): bool
+    {
+        // Get what type of Location this is, NULL value is ok for this.
+        return new($this->getContext()->getCrud()->getControllerFqcn()) instanceof EventLocationCrudController;
+    }
+
+    private function isLaunchPoint(): bool
+    {
+        // Get what type of Location this is, NULL value is ok for this.
+        return new($this->getContext()->getCrud()->getControllerFqcn()) instanceof LaunchPointCrudController;
     }
 }
