@@ -55,3 +55,7 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> asset example directories ###
+/horizon-ui-chakra/
+###< asset example directories ###
