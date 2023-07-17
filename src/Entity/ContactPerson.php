@@ -17,11 +17,19 @@ class ContactPerson
     #[ORM\Column(length: 255)]
     private ?string $relationship = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contactFor')]
+    #[ORM\ManyToOne(
+        cascade: ['persist'],
+        inversedBy: 'contactFor'
+    )]
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $details = null;
 
-    #[ORM\OneToMany(mappedBy: 'attendeeContactPerson', targetEntity: EventParticipant::class, orphanRemoval: true)]
+    #[ORM\OneToMany(
+        mappedBy: 'attendeeContactPerson',
+        targetEntity: EventParticipant::class,
+        cascade: ['persist'],
+        orphanRemoval: true
+    )]
     private Collection $eventParticipants;
 
     public function __construct()
@@ -82,4 +90,11 @@ class ContactPerson
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this?->details->__ToString() ?? '';
+    }
+
+
 }

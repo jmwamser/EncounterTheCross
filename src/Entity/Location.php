@@ -45,9 +45,18 @@ class Location
     public function getShortAddress(): string
     {
         $city = empty($city = $this->getCity() ?? '') ? $city : $city.", ";
-        $state = empty($state = $this->getCity() ?? '') ? $$state : $state." ";
-        $zip = $this->getCity() ?? '';
+        $state = empty($state = $this->getState() ?? '') ? $state : $state." ";
+        $zip = $this->getZipcode() ?? '';
         return $city.$state.$zip;
+    }
+
+    public function getLongAddress(): string
+    {
+        $cityStateZip = $this->getShortAddress();
+
+
+
+        return $this->getLine1()."\n".$cityStateZip."\n".$this->getCountry();
     }
 
     public function getName(): ?string

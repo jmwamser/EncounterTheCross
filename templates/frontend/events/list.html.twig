@@ -1,0 +1,40 @@
+{% extends 'frontend/blank_content.html.twig' %}
+
+{% block content %}
+    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+    <h2 class="text-white mb-5">Event Registration</h2>
+    <p class="text-white-50">
+        Below is a list of all events that are currently open for registration. Click on the event name to proceed.
+    </p>
+    <div class="table-responsive bg-light" style="--bs-bg-opacity: .5;">
+        <table class="table table-sm table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th scope="col">Event</th>
+                <th scope="col">Location</th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+                <th scope="col" colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.location.longAddress|nl2br }}</td>
+                    <td>{{ event.start|date('M') }} {{ event.start|date('d') }} - {{ event.end|date('d') }}</td>
+                    <td>$135 (TODO)</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_registration_attendee_formentry',{'event': event.id}) }}" class="btn btn-primary btn-sm">Attendee Registration</a>
+                    </td>
+                    <td class="text-center">
+                        <a type="button" class="btn btn-secondary btn-sm">Server Registration</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

@@ -24,22 +24,35 @@ class EventParticipant
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $invitedBy = null;
 
-    #[ORM\ManyToOne(inversedBy: 'eventAttendees')]
+    #[ORM\ManyToOne(
+        cascade: ['persist'],
+        inversedBy: 'eventAttendees'
+    )]
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $launchPoint = null;
 
-    #[ORM\ManyToOne(inversedBy: 'attendedEvents')]
+    #[ORM\ManyToOne(
+        cascade: ['persist'],
+        inversedBy: 'attendedEvents'
+    )]
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $person = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\ManyToOne(inversedBy: 'eventParticipants')]
+    #[ORM\ManyToOne(
+        cascade: ['persist'],
+        inversedBy: 'eventParticipants'
+    )]
     private ?ContactPerson $attendeeContactPerson = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $serverAttendedTimes = null;
+
+    #[ORM\ManyToOne(inversedBy: 'eventParticipants')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Event $event = null;
 
     public static function TYPES(): array
     {
@@ -140,6 +153,18 @@ class EventParticipant
     public function __toString(): string
     {
         return $this->getFullName();
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
     }
 
 }

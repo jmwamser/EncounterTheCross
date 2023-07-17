@@ -31,15 +31,19 @@ trait QuestionsAndConcernsTrait
         return $this;
     }
 
-    public function getConcerns(): ?string
+    /**
+     * @return string|null
+     */
+    public function getHealthConcerns(): ?string
     {
-        return $this->concerns;
+        return $this->healthConcerns;
     }
 
-    public function setConcerns(?string $concerns): self
+    /**
+     * @param string|null $healthConcerns
+     */
+    public function setHealthConcerns(?string $healthConcerns): void
     {
-        $this->concerns = $concerns;
-
-        return $this;
+        $this->healthConcerns = $healthConcerns;
     }
 }
