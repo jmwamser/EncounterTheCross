@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\EventParticipant;
 use App\Form\AttendeeEventParticipantType;
+use App\Form\ServerEventParticipantType;
 use App\Repository\EventParticipantRepository;
 use App\Repository\EventRepository;
 use App\Service\PersonManager;
@@ -38,8 +39,6 @@ class RegistrationController extends AbstractController
     #[Route('/register/{event}/attendee', name: 'app_registration_attendee_formentry')]
     public function attendeeRegistration(Event $event,Request $request)
     {
-        dump($event);
-
         $form = $this->createForm(AttendeeEventParticipantType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,6 +60,36 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('frontend/events/attendee.regestration.html.twig',[
+            'event' => $event,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/register/{event}/server', name: 'app_registration_server_formentry')]
+    public function serverRegistration(Event $event,Request $request)
+    {
+        $form = $this->createForm(ServerEventParticipantType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var EventParticipant $eventRegistration */
+            $eventRegistration = $form->getData();
+            $eventRegistration->setPerson(
+                $this->personManager->exists(
+                    $form->get('person')->getData()
+                )
+            );
+
+            $eventRegistration->setEvent($event);
+
+            $this->eventParticipantRepository->save(
+                $eventRegistration,
+                true
+            );
+            return $this->redirectToRoute('app_registration_registrationthankyou');
+        }
+
+        return $this->render('frontend/events/server.regestration.html.twig',[
+            'event' => $event,
             'form' => $form->createView(),
         ]);
     }

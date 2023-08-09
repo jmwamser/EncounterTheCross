@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class MenuBuilderFactory
 {
+    //TODO: get routeProvider
     public function __construct(private readonly GrayscaleMenuBuilder $menuBuilder)
     {
     }
@@ -21,7 +22,7 @@ final class MenuBuilderFactory
         //About Page
         $mainMenu->addChild(
             'About', [
-                'uri' => '#about',
+                'uri' => '/#about',
             ])
         ;
 
@@ -35,9 +36,16 @@ final class MenuBuilderFactory
         // Testimony Pages
         $mainMenu->addChild(
             'Testimonials', [
-                'uri' => '#testimonials'
+                'uri' => '/#testimonials'
             ])
         ;
+
+        // Contact - Launch Point Pages
+        $mainMenu->addChild(
+            'Contact', [
+                'uri' => '/contact',
+            ]
+        );
 
         return $mainMenu->build();
     }

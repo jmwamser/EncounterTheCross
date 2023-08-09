@@ -1,10 +1,13 @@
-// 
+//
 // Navbar
-// 
+//
+
+$navLight:      $gray-300;
+$navDark:       $dark;
 
 #mainNav {
     min-height: 3.5rem;
-    background-color: $white;
+    background-color: $navLight;
 
     .navbar-toggler {
         font-size: 80%;
@@ -18,7 +21,7 @@
     }
 
     .navbar-brand {
-        color: $black;
+        color: $navDark;
         font-weight: 700;
         padding: 0.9rem 0;
     }
@@ -26,15 +29,17 @@
     .navbar-nav {
         .nav-item {
             &:hover {
-                color: fade($white, 80%);
+                color: fade($navLight, 80%);
                 outline: none;
-                background-color: transparent;
+                background-color: rgba($navLight, .3)
+                //background-color: transparent;
             }
 
             &:active,
             &:focus {
                 outline: none;
-                background-color: transparent;
+                background-color: rgba($navLight, .3)
+                //background-color: transparent;
             }
         }
     }
@@ -43,37 +48,38 @@
         padding-top: 0;
         padding-bottom: 0;
         border-bottom: none;
-        background-color: transparent;
+        background-color: rgba($navLight, .3);
+        //background-color: transparent;
         transition: background-color 0.3s ease-in-out;
 
         .navbar-brand {
             padding: 0.5rem 0;
-            color: fade-out($white, 0.5);
+            color: fade-out($dark, 0.2);
         }
 
         .nav-link {
             transition: none;
             padding: 2rem 1.5rem;
-            color: fade-out($white, 0.5);
+            color: fade-out($dark, 0.3);
 
             &:hover {
-                color: fade-out($white, 0.25);
+                color: fade-out($dark, 0.1);
             }
 
             &:active {
-                color: $white;
+                color: $dark;
             }
         }
 
         &.navbar-shrink {
-            background-color: $white;
+            background-color: $navLight;
 
             .navbar-brand {
-                color: $black;
+                color: $navDark;
             }
 
             .nav-link {
-                color: $black;
+                color: $navDark;
                 padding: 1.5rem 1.5rem 1.25rem;
                 border-bottom: 0.25rem solid transparent;
 

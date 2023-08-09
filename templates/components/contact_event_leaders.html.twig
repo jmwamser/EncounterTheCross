@@ -1,0 +1,10 @@
+{#  To render the component, use {{ component('contact_event_leaders') }} #}
+<div{{ attributes.defaults({class:"row gx-4 gx-lg-5"}) }}>
+    {% for eventLeader in this.eventLeaders %}
+        <div class="col-md-4 mb-3 mb-md-0">
+            {{ component('contact_details_card',{
+                leader: eventLeader
+            }) }}
+        </div>
+    {% endfor %}
+</div>

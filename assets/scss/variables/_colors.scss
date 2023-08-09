@@ -29,14 +29,37 @@ $cyan: #1cabc4;
 
 // State colors
 
-$primary: $teal;
-$secondary: $purple;
-$success: $green;
-$info: $cyan;
-$warning: $yellow;
-$danger: $red;
-$light: $gray-100;
-$dark: $gray-900;
+// Original Site Template Colors
+//$primary: $teal;
+//$secondary: $purple;
+//$success: $green;
+//$info: $cyan;
+//$warning: $yellow;
+//$danger: $red;
+//$light: $gray-100;
+//$dark: $gray-900;
+
+//Theme 1
+// scss-docs-start theme-color-variables
+//$light:      #d7d2b9;
+//$dark:       $gray-900;
+//$primary:    #ca3929;
+//$secondary:  #515256;
+//$info:       #98c0f7;
+//$success:    #579b08;
+//$warning:    #ffbc5a;
+//$danger:     #ed0463;
+// scss-docs-end theme-color-variables
+
+// Theme 2
+$light:      #e9d9c1;
+$dark:       #020e09;
+$primary:    #d72323;
+$secondary:  #6b563e;
+$info:       #f35301;
+$success:    #5aa000;
+$warning:    #ffbe63;
+$danger:     #f00065;
 
 // Bootstrap color map
 

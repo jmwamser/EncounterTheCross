@@ -25,6 +25,7 @@ class AttendeeEventParticipantType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('line2',null,[
                 'label' => 'Address 2',
@@ -91,6 +92,7 @@ class AttendeeEventParticipantType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => false,
             ])
             ->add('healthConcerns',TextareaType::class,[
                 'label' => 'Do you have any dietary concerns, physical limitations or health concerns?',
@@ -101,6 +103,7 @@ class AttendeeEventParticipantType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => false,
             ])
             ->add('launchPoint',null,[
                 'label' => 'Launch Point',

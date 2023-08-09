@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Leader;
+use App\Service\RoleManager\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -56,6 +57,33 @@ class LeaderRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->save($user, true);
     }
 
+    public function findEventLeaders()
+    {
+        $rsm = $this->createResultSetMappingBuilder('l');
+
+        $rawQuery = sprintf(
+            'SELECT %s
+        FROM leader l
+        WHERE JSON_SEARCH(l.roles, \'one\', :role) is not null',
+            $rsm->generateSelectClause()
+        );
+        $query = $this->getEntityManager()->createNativeQuery($rawQuery, $rsm);
+        $query->setParameter('role', Role::LEADER_EVENT);
+
+        return $query->getResult();
+//        $qb = $this->createQueryBuilder('l');
+//
+//        $qb
+//            ->select('l')
+////            ->andWhere(
+////                "JSON_EXTRACT(l.roles, JSON_SEARCH(l.roles, 'one', ':role'))"
+////            )
+////            ->setParameter('role',Role::LEADER_EVENT)
+//            ->setMaxResults(3);
+//
+//        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Leader[] Returns an array of Leader objects
 //     */
@@ -80,4 +108,5 @@ class LeaderRepository extends ServiceEntityRepository implements PasswordUpgrad
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

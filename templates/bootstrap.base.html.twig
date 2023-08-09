@@ -1,6 +1,8 @@
 {% extends nglayouts.layoutTemplate %}
 
-{% block ticket %}Grayscale - Start Bootstrap Theme{% endblock %}
+{#{% block html_tag %} data-bs-theme="dark"{% endblock %}#}
+
+{#{% block title %}Grayscale - Start Bootstrap Theme{% endblock %}#}
 {% block icon_link %}<link rel="icon" type="image/x-icon" href="{{ asset('build/favicon.ico') }}" />{% endblock %}
 {% block meta %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -25,11 +27,37 @@
     {% block projects %}{% endblock %}
     <!-- Signup-->
     {% block signup %}{% endblock %}
-    <!-- Contact-->
-    {% block contact %}{% endblock %}
+
 
 {% endblock %}
 
 {% block footer %}
-    <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Your Website 2023</div></footer>
+    <!-- Contact-->
+    {% block contact %}
+        <section class="contact-section bg-black">
+            {% if app.request.get('_route') != 'app_launchpoints' %}
+                <div class="container px-4 px-lg-5">
+                    <div class="row mb-3 gx-4 gx-lg-5">
+                        <div class="col">
+                            <p class="text-center text-white display-6">Event Contacts</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="container px-4 px-lg-5">
+                {% if app.request.get('_route') != 'app_launchpoints' %}
+                    {{ component('contact_event_leaders') }}
+                    <div class="d-flex mt-4 justify-content-center">
+                        <a role="button" href="{{ path('app_launchpoints') }}" class="btn btn-outline-light">Launch Points <i class="fa-solid fa-angles-right fa-fade fa-sm"></i></a>
+                    </div>
+                {% endif %}
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="https://www.facebook.com/encounterthecross/"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </section>
+
+    {% endblock %}
+    <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Men's Encounter {{ 'now' | date('Y') }}</div></footer>
 {% endblock %}

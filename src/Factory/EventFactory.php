@@ -46,10 +46,9 @@ final class EventFactory extends ModelFactory
     protected function getDefaults(): array
     {
         $start = self::faker()->dateTimeBetween('+1 month','+1 year');
-        $end = $start->modify('+3 days');
         return [
             'createdAt' => self::faker()->dateTime(),
-            'end' => $end,
+            'end' => $start->modify('+3 days'),
             'location' => LocationFactory::new('event'),
             'name' => $start->format('M Y').' Men\'s Encounter',
             'registrationDeadLineServers' => $start->modify('-2 weeks'),//self::faker()->dateTime(),

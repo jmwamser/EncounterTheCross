@@ -1,9 +1,16 @@
 // 
-// Projects
+// Blank Content
 // 
 
-.projects-section {
+.content-section {
     padding: 10rem 0;
+    background: linear-gradient(to bottom,
+            $light 0%,
+            #{fade-out($light, 0.3)} 30%,
+            #{fade-out($light, 0.7)} 40%,
+            #{fade-out($black, 0.7)} 60%,
+            #{fade-out($black, 0.3)} 75%,
+            $black 100%);
 
     .featured-text {
         padding: 2rem;

@@ -33,7 +33,8 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
-    .addEntry('app', './assets/app.js')
+    .addEntry('app', './assets/js/app.js')
+    .addEntry('event-counter','./assets/js/EventCountDown.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -90,33 +91,5 @@ Encore
     ///////////////////
 
 ;
-
-// if (Encore.isDev()) {
-//     console.log('Is Development');
-//     Encore
-//         //Move static files to build folders
-//         .copyFiles({
-//             from: './assets/static',
-//
-//             // optional target path, relative to the output dir
-//             to: '[path][name].[ext]',
-//             // only copy files matching this pattern
-//             //pattern: /\.(png|jpg|jpeg)$/
-//         })
-// }
-//
-// if (Encore.isProduction()) {
-//     console.log('Is Production');
-//     Encore
-//         //Move static files to build folders
-//         .copyFiles({
-//             from: './assets/static',
-//
-//             // optional target path, relative to the output dir
-//             to: '[path][name].[hash:8].[ext]',
-//             // only copy files matching this pattern
-//             //pattern: /\.(png|jpg|jpeg)$/
-//         })
-// }
 
 module.exports = Encore.getWebpackConfig();

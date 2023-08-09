@@ -1,12 +1,12 @@
 {% extends 'frontend/blank_content.html.twig' %}
 
 {% block content %}
-    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-    <h2 class="text-white mb-5">Event Registration</h2>
+    <i class="fa-solid fa-church fa-bounce fa-2xl mb-2 text-dark"></i>
+    <h1 class="text-dark display-1 mb-5">{{ event.name|default('Event') }} Registration</h1>
 
     <div class="card">
         <div class="card-body">
-            {{ form_start(form) }}
+            {{ form_start(form, { 'attr' : { 'class': 'requires-validation-js', 'novalidate': true } }) }}
                 {% block registeration_form %}
                     {{ form_widget(form) }}
                 {% endblock %}
