@@ -1,0 +1,16 @@
+{#  To render the component, use {{ component('contact_details_card') }} #}
+<div{{ attributes.defaults({class:'card py-4 h-100'}) }}>
+    <div class="card-body text-center">
+        <h4 class="text-uppercase m-0">{{ leader.person.firstName }} {{ leader.person.lastName }}</h4>
+        <hr class="my-4 mx-auto" />
+        <div class="small text-black-50">
+            {#            <i class="fas fa-envelope text-primary mb-2"></i>#}
+            <a href="mailto:jmwamser@me.com">{{ leader.person.email }}</a>
+        </div>
+        <div class="small text-black-50">
+            {#            <i class="fas fa-mobile-alt text-primary mb-2"></i>#}
+            <a href="tel:785-829-3937">{{ leader.person.phone }}</a>
+        </div>
+    </div>
+</div>
+

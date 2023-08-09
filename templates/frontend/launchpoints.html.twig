@@ -1,0 +1,32 @@
+{% extends 'frontend/blank_content.html.twig' %}
+
+{% block content %}
+    <i class="fa-solid fa-place-of-worship fa-bounce fa-2xl mb-2 text-dark"></i>
+    <h1 class="text-dark mb-5 display-1">Contact</h1>
+    <hr>
+    <div class="row mb-3">
+        <div class="card">
+            <h2 class="card-header">Event Contacts</h2>
+        </div>
+        {{ component('contact_event_leaders') }}
+    </div>
+    <div class="row">
+        <div class="card">
+            <h2 class="card-header">Launch Point Contacts</h2>
+            <div class="card-body">
+                <div class="row">
+                    {% for launchPoint in launch_points %}
+                        <div class="col-4">
+                            <h5 class="card-title">{{ launchPoint.name }}</h5>
+                            <p class="card-text">Leader informaiton will go here. Do we want Addresses?</p>
+                            <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination={{ launchPoint.longAddress|url_encode }}" class="btn btn-primary">Get Directions</a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{#    {{ dump(launch_points) }}#}
+{% endblock %}
+

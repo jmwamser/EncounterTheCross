@@ -1,5 +1,8 @@
 doctrine:
     dbal:
+        # Ignore Netgen Layout Tables
+        schema_filter: ~^(?!nglayouts_)~
+
         url: '%env(resolve:DATABASE_URL)%'
 
         # IMPORTANT: You MUST configure your server version,

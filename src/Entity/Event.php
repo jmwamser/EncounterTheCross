@@ -36,9 +36,13 @@ class Event
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'launchPointEvents')]
     private Collection $launchPoints;
 
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventParticipant::class)]
+    private Collection $eventParticipants;
+
     public function __construct()
     {
         $this->launchPoints = new ArrayCollection();
+        $this->eventParticipants = new ArrayCollection();
     }
 
     public function getStart(): ?\DateTimeInterface
@@ -132,10 +136,10 @@ class Event
     public function getTotalServers(): int
     {
         $total = 0;
-        foreach($this->getLaunchPoints()->getIterator() as $launchPoint) {
-            $servers = $this->getEventServers($launchPoint);
-
-            $total += $servers->count();
+        foreach($this->getEventParticipants()->getIterator() as $server) {
+            if ($server->getType() === EventParticipant::TYPE_SERVER) {
+                $total++;
+            }
         }
 
         return $total;
@@ -144,38 +148,50 @@ class Event
     public function getTotalAttendees(): int
     {
         $total = 0;
-        foreach($this->getLaunchPoints()->getIterator() as $launchPoint) {
-            $servers = $this->getEventServers($launchPoint);
 
-            $total += $servers->count();
+        /** @var EventParticipant $attendee */
+        foreach($this->getEventParticipants()->getIterator() as $attendee) {
+            if ($attendee->getType() === EventParticipant::TYPE_ATTENDEE) {
+                $total++;
+            }
         }
 
         return $total;
     }
 
-    private function getEventServers(Location $launchPoint): ReadableCollection
-    {
-        return $this->filterLaunchPointEventAttendees($launchPoint,EventParticipant::TYPE_SERVER);
-    }
-
-    private function getEventAttendees(Location $launchPoint): ReadableCollection
-    {
-        return $this->filterLaunchPointEventAttendees($launchPoint,EventParticipant::TYPE_ATTENDEE);
-    }
-
-    private function filterLaunchPointEventAttendees(Location $launchPoint, string $type): ReadableCollection
-    {
-        if (Location::TYPE_EVENT === $launchPoint->getType()) {
-            throw new InvalidLocationType($this->name,Location::TYPE_LAUNCH_POINT);
-        }
-
-        return $launchPoint->getEventAttendees()->filter(function(EventParticipant $attendee) use ($type) {
-            return $attendee->getType() === $type;
-        });
-    }
 
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, EventParticipant>
+     */
+    public function getEventParticipants(): Collection
+    {
+        return $this->eventParticipants;
+    }
+
+    public function addEventParticipant(EventParticipant $eventParticipant): self
+    {
+        if (!$this->eventParticipants->contains($eventParticipant)) {
+            $this->eventParticipants->add($eventParticipant);
+            $eventParticipant->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventParticipant(EventParticipant $eventParticipant): self
+    {
+        if ($this->eventParticipants->removeElement($eventParticipant)) {
+            // set the owning side to null (unless already changed)
+            if ($eventParticipant->getEvent() === $this) {
+                $eventParticipant->setEvent(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -1,0 +1,59 @@
+{# To render the component, use {{ component('TestimonialCollectionComponent') }} #}
+{# There will be 3 Layouts.
+    1) Full Width Featured
+    2) Full Width Normal (Right & Left Aligned)
+    3) 33% Width Just Quote
+#}
+{% if isLayoutFeatured %}
+        {% set defaultClasses = 'row gx-0 mb-4 mb-lg-5 align-items-center' %}
+{% elseif isLayoutGrid %}
+    {% set defaultClasses = 'row gx-3 mb-3 justify-content-center' %}
+{% elseif isLayoutHalfRight %}
+        {% set defaultClasses = 'row gx-0 mb-5 mb-lg-0 justify-content-center' %}
+{% else %}
+    {#  Grid and HalfLeft should have same default classes  #}
+    {% set defaultClasses = 'row gx-0 justify-content-center' %}
+{% endif %}
+
+<div class="container px-4 px-lg-5">
+
+    {% for row in testimonies|batch(cardsPerRow) %}
+        {% set createWrapper = row|length < 2 %}
+
+        {% set Flipped = loop.index is odd %}
+        {% if not isLayoutGrid and not isLayoutFeatured  and isLayoutHalfRight %}
+            {% set RightSide = isLayoutHalfRight and Flipped %}
+        {% elseif not isLayoutGrid and not isLayoutFeatured and not isLayoutHalfRight %}
+            {% set RightSide = not Flipped %}
+        {% else %}
+            {% set RightSide = false %}
+        {% endif %}
+
+        {% if not createWrapper %}
+            <div{{ attributes.defaults({class: "#{defaultClasses} #{background}"}) }}>
+        {% endif %}
+        {% for testimony in row %}
+
+{#                {% set orientation = (loop.index is even) %}#}
+                {{ component('testimonial',{
+                    isLayoutFeatured: isLayoutFeatured,
+                    isLayoutHalfRight: RightSide,
+                    isLayoutGrid: isLayoutGrid,
+                    size: size,
+                    testimonial: testimony,
+                    createWrapper: createWrapper,
+                    background: background,
+                }) }}
+        {% endfor %}
+        {% if not createWrapper %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if pagination %}
+{#        <nav aria-label="Testimonies Pages" class="d-flex justify-content-center">#}
+            {{ pagerfanta(testimonies, {'omitFirstPage': true }) }}
+{#        </nav>#}
+    {% endif %}
+
+</div>

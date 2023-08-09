@@ -78,6 +78,7 @@ final class EventParticipantFactory extends ModelFactory
             'type' => $type,
             'updatedAt' => self::faker()->dateTime(),
             'zipcode' => self::faker()->postcode(),
+            'event' => EventFactory::randomOrCreate(),
         ],$typeDefaults);
     }
 

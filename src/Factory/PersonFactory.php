@@ -47,15 +47,23 @@ final class PersonFactory extends ModelFactory
     {
         $email = self::faker()->boolean(80) ? self::faker()->email():null;
         $phone = self::faker()->boolean(80) ? self::faker()->phoneNumber():null;
-        return [
+        $data = [
             'createdAt' => self::faker()->dateTime(),
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
             'rowPointer' => new Uuid(self::faker()->uuid()),
             'updatedAt' => self::faker()->dateTime(),
-            'email' => $email,
-            'phone' => $phone,
         ];
+
+        if ($email) {
+            $data['email'] = $email;
+        }
+
+        if ($phone) {
+            $data['phone'] = $phone;
+        }
+
+        return $data;
     }
 
     public static function findByEmailOrPhone($email,$phone)

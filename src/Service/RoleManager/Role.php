@@ -18,6 +18,10 @@ class Role
 
     const ADMIN = "ROLE_ADMIN"; // Just a normal Admin
 
+    const LEADER = "ROLE_LEADER";
+    const LEADER_EVENT = 'ROLE_EVENT_LEADER';
+    const LEADER_LAUNCH_POINT = 'ROLE_LAUNCH_LEADER';
+
     const USER = "ROLE_USER"; // Normal User
 
     /*

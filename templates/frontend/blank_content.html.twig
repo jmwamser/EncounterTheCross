@@ -1,0 +1,23 @@
+{% extends 'bootstrap.base.html.twig' %}
+
+{% block body %}
+{#    TODO: convert this class `.signup-section` to another one to handle this styling #}
+{#    <section class="signup-section">#}
+{#        <div class=" px-4 px-lg-5">#}
+{#            <div class="row gx-4 gx-lg-5">#}
+{#                <div class="col-md-10 col-lg-8 mx-auto text-center">#}
+{#                    {% block content %}{% endblock %}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    {% block projects %}
+        <section class="content-section bg-secondary">
+            <div class="container px-4 px-lg-5 text-center">
+                {% block content %}{% endblock %}
+            </div>
+        </section>
+    {% endblock %}
+{% endblock %}
+
+

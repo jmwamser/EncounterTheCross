@@ -1,0 +1,102 @@
+//
+// Navbar
+//
+
+$navLight:      $gray-300;
+$navDark:       $dark;
+
+#mainNav {
+    min-height: 3.5rem;
+    background-color: $navLight;
+
+    .navbar-toggler {
+        font-size: 80%;
+        padding: 0.75rem;
+        color: $primary;
+        border: $border-width solid $primary;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .navbar-brand {
+        color: $navDark;
+        font-weight: 700;
+        padding: 0.9rem 0;
+    }
+
+    .navbar-nav {
+        .nav-item {
+            &:hover {
+                color: fade($navLight, 80%);
+                outline: none;
+                background-color: rgba($navLight, .3)
+                //background-color: transparent;
+            }
+
+            &:active,
+            &:focus {
+                outline: none;
+                background-color: rgba($navLight, .3)
+                //background-color: transparent;
+            }
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        padding-top: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+        background-color: rgba($navLight, .3);
+        //background-color: transparent;
+        transition: background-color 0.3s ease-in-out;
+
+        .navbar-brand {
+            padding: 0.5rem 0;
+            color: fade-out($dark, 0.2);
+        }
+
+        .nav-link {
+            transition: none;
+            padding: 2rem 1.5rem;
+            color: fade-out($dark, 0.3);
+
+            &:hover {
+                color: fade-out($dark, 0.1);
+            }
+
+            &:active {
+                color: $dark;
+            }
+        }
+
+        &.navbar-shrink {
+            background-color: $navLight;
+
+            .navbar-brand {
+                color: $navDark;
+            }
+
+            .nav-link {
+                color: $navDark;
+                padding: 1.5rem 1.5rem 1.25rem;
+                border-bottom: 0.25rem solid transparent;
+
+                &:hover {
+                    color: $primary;
+                }
+
+                &:active {
+                    color: darken($primary, 15%);
+                }
+
+                &.active {
+                    color: $primary;
+                    outline: none;
+                    border-bottom: 0.25rem solid $primary;
+                }
+            }
+        }
+    }
+}

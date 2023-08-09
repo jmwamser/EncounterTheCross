@@ -1,0 +1,41 @@
+{% extends 'frontend/blank_content.html.twig' %}
+
+{% block content %}
+    <i class="fa-solid fa-calendar-days fa-bounce fa-2xl mb-2 text-dark"></i>
+    <h1 class="text-dark display-1 mb-5">Event Registration</h1>
+    <p class="text-dark">
+        Below is a list of all events that are currently open for registration. Click on the event name to proceed.
+    </p>
+    {% for event in events %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.name }}</h5>
+                {#                            <h6 class="card-subtitle mb-2 text-muted">{{ event.start|date('M') }} {{ event.start|date('d') }} - {{ event.end|date('d') }}</h6>#}
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                        </div>
+                        <div class="col">
+                            <dl class="row">
+                                <dt class="col-sm-3">Location</dt>
+                                <dd class="col-sm-9">{{ event.location.longAddress|nl2br }}</dd>
+
+                                <dt class="col-sm-3">Date</dt>
+                                <dd class="col-sm-9">{{ event.start|date('M') }} {{ event.start|date('d') }} - {{ event.end|date('d') }}</dd>
+
+                                <dt class="col-sm-3">Price</dt>
+                                <dd class="col-sm-9">$135 (TODO)</dd>
+                            </dl>
+                        </div>
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('app_registration_attendee_formentry',{'event': event.id}) }}" class="btn btn-primary btn-sm">Attendee Registration</a>
+                <a href="{{ path('app_registration_server_formentry',{'event': event.id}) }}" type="button" class="btn btn-secondary btn-sm">Server Registration</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
