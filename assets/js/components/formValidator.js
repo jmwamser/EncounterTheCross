@@ -12,5 +12,4 @@ export default function () {
                 form.classList.add('was-validated')
             }, false)
         })
-    console.log(forms);
 }

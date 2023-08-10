@@ -9,6 +9,7 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\ArrayShape;
 use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
@@ -35,6 +36,9 @@ class Location
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'launchPoints')]
     private Collection $launchPointEvents; // this field is for self::TYPE_LAUNCH_POINT only
 
+    #[ORM\Column(nullable: true)]
+    private ?array $geolocation = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -50,11 +54,13 @@ class Location
         return $city.$state.$zip;
     }
 
-    public function getLongAddress(): string
+    public function getLongAddress(bool $url = false): string
     {
         $cityStateZip = $this->getShortAddress();
 
-
+        if ($url) {
+            return urlencode($this->getLine1().", ".$cityStateZip.", ".$this->getCountry());
+        }
 
         return $this->getLine1()."\n".$cityStateZip."\n".$this->getCountry();
     }
@@ -183,6 +189,42 @@ class Location
     public function __toString(): string
     {
         return $this->getName() ?? "";
+    }
+
+    #[ArrayShape(["latitude"=>"int","longitude"=>"int","color"=>"string","status"=>"string"])]
+    public function getGeolocation(): ?array
+    {
+        return $this->geolocation;
+    }
+
+    public function setGeolocation(?array $geolocation): static
+    {
+        $this->geolocation = $geolocation;
+
+        return $this;
+    }
+
+    public function hasMappingLocation(): bool
+    {
+        if (!$this->getGeolocation()) {
+            return false;
+        }
+
+        if ($this->getGeolocation()['status'] !== 'SUCCESS') {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->getGeolocation()['latitude'] ?? null;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->getGeolocation()['longitude'] ?? null;
     }
 
 }

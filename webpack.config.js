@@ -35,6 +35,7 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('event-counter','./assets/js/EventCountDown.js')
+    .addEntry('map-launch-points','./assets/js/map.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -74,7 +75,7 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+    // .enableTypeScriptLoader()
 
     // uncomment if you use React
     //.enableReactPreset()

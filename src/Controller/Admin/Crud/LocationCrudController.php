@@ -78,15 +78,15 @@ class LocationCrudController extends AbstractCrudController
         ;
     }
 
-    private function isEventLocation(): bool
+    protected function isEventLocation(): bool
     {
         // Get what type of Location this is, NULL value is ok for this.
-        return new($this->getContext()->getCrud()->getControllerFqcn()) instanceof EventLocationCrudController;
+        return $this->getContext()->getCrud()->getControllerFqcn() === EventLocationCrudController::class;
     }
 
-    private function isLaunchPoint(): bool
+    protected function isLaunchPoint(): bool
     {
         // Get what type of Location this is, NULL value is ok for this.
-        return new($this->getContext()->getCrud()->getControllerFqcn()) instanceof LaunchPointCrudController;
+        return $this->getContext()->getCrud()->getControllerFqcn() === LaunchPointCrudController::class;
     }
 }
