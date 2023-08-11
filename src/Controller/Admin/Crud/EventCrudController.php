@@ -6,14 +6,20 @@ use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
 use App\Repository\LocationRepository;
+use App\Service\Exporter\XlsExporter;
 use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class EventCrudController extends AbstractCrudController
 {
@@ -86,5 +92,31 @@ class EventCrudController extends AbstractCrudController
             ->hideOnForm();
 
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $exportAction = Action::new('export_attending_list')
+//            ->addCssClass('btn btn-success')
+//            ->setIcon('fa fa-check-circle')
+//            ->displayAsButton()
+            ->linkToCrudAction('export')
+        ;
+
+        return parent::configureActions($actions)
+            ->add(Crud::PAGE_INDEX,$exportAction);
+    }
+
+    public function export(AdminContext $adminContext, XlsExporter $exporter)
+    {
+        $event = $adminContext->getEntity()->getInstance();
+        if (!$event instanceof Event) {
+            throw new \LogicException('Entity is missing or not an Event');
+        }
+
+        return $exporter->createResponse($event->getEventParticipants()->toArray());
+//        $spreadsheet = $spreadsheetGenerator->createSheet();
+
+    }
+
 
 }

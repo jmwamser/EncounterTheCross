@@ -31,4 +31,5 @@ return [
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
     Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
+    Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
 ];

@@ -32,6 +32,9 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $person = null;
 
+    #[ORM\ManyToOne(inversedBy: 'launchPointContacts')]
+    private ?Location $launchPoint = null;
+
     /**
      * !! KEY OVERLAP ISSUES - SET TO TRUE IF IT COULD HAPPEN !!
      * @param bool $forceMerge This sets the key to the role that is default,
@@ -141,5 +144,23 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
         $this->person = $person;
 
         return $this;
+    }
+
+    public function getLaunchPoint(): ?Location
+    {
+        return $this->launchPoint;
+    }
+
+    public function setLaunchPoint(?Location $launchPoint): static
+    {
+        $this->launchPoint = $launchPoint;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        $person = $this->getPerson();
+        return $person->getFirstName().' '.$person->getLastName();
     }
 }

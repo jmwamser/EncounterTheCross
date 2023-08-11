@@ -6,10 +6,11 @@ use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CoreEntityTrait;
 use App\Entity\Traits\QuestionsAndConcernsTrait;
 use App\Repository\EventParticipantRepository;
+use App\Service\Exporter\EntityExportableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventParticipantRepository::class)]
-class EventParticipant
+class EventParticipant implements EntityExportableInterface
 {
     use CoreEntityTrait;
     use AddressTrait;
@@ -167,4 +168,17 @@ class EventParticipant
         return $this;
     }
 
+    public function toArray(): array
+    {
+        return [
+            'type'=> $this->getType(),
+            'name' => $this->getFullName(),
+            'email' => $this->getPerson()->getEmail(),
+            'phone' => $this->getPerson()->getPhone(),
+            'contactPerson' => $this->getAttendeeContactPerson()?->getDetails()->getFullName(),
+            'contactRelation' => $this->getAttendeeContactPerson()?->getRelationship(),
+            'contactPhone' => $this->getAttendeeContactPerson()?->getDetails()->getPhone(),
+            'invitedBy' => $this->getInvitedBy(),
+        ];
+    }
 }

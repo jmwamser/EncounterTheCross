@@ -73,7 +73,6 @@ class LaunchPointCrudController extends LocationCrudController
 
     private function findLatLonCordinates($entityInstance)
     {
-        dump($entityInstance,$this->isLaunchPoint());
         if ($entityInstance instanceof Location && $this->isLaunchPoint() && $entityInstance->getType() === Location::TYPE_LAUNCH_POINT) {
             if (
                 $entityInstance->getGeolocation() !== null && ($entityInstance->getGeolocation()['status'] ?? '') !== 'SUCCESS'

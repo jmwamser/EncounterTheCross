@@ -39,11 +39,18 @@ class Location
     #[ORM\Column(nullable: true)]
     private ?array $geolocation = null;
 
+    #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: Leader::class)]
+    private Collection $launchPointContacts;
+
+    #[ORM\Column(length: 255,nullable: true)]
+    private ?string $pinColor = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->eventAttendees = new ArrayCollection();
         $this->launchPointEvents = new ArrayCollection();
+        $this->launchPointContacts = new ArrayCollection();
     }
 
     public function getShortAddress(): string
@@ -225,6 +232,48 @@ class Location
     public function getLongitude(): ?float
     {
         return $this->getGeolocation()['longitude'] ?? null;
+    }
+
+    /**
+     * @return Collection<int, Leader>
+     */
+    public function getLaunchPointContacts(): Collection
+    {
+        return $this->launchPointContacts;
+    }
+
+    public function addLaunchPointContact(Leader $launchPointContact): static
+    {
+        if (!$this->launchPointContacts->contains($launchPointContact)) {
+            $this->launchPointContacts->add($launchPointContact);
+            $launchPointContact->setLaunchPoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaunchPointContact(Leader $launchPointContact): static
+    {
+        if ($this->launchPointContacts->removeElement($launchPointContact)) {
+            // set the owning side to null (unless already changed)
+            if ($launchPointContact->getLaunchPoint() === $this) {
+                $launchPointContact->setLaunchPoint(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPinColor(): ?string
+    {
+        return $this->pinColor;
+    }
+
+    public function setPinColor(string $pinColor): static
+    {
+        $this->pinColor = $pinColor;
+
+        return $this;
     }
 
 }

@@ -61,7 +61,7 @@ final class LocationFactory extends ModelFactory
 
     public function launchPoint(): self
     {
-        return $this->addState(['type' => Location::TYPE_LAUNCH_POINT]);
+        return $this->addState(['type' => Location::TYPE_LAUNCH_POINT,'pinColor' => self::faker()->hexColor()]);
     }
 
     public function event(): self

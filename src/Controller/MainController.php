@@ -42,6 +42,7 @@ class MainController extends AbstractController
                     'lat' => $launchPoint->getLatitude(),
                     'lon' => $launchPoint->getLongitude(),
                     'name' => $launchPoint->getName(),
+                    'color' => $launchPoint->getPinColor(),
                 ];
             }
         }

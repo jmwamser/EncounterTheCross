@@ -8,6 +8,7 @@ use App\Entity\Location;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 
 class LocationCrudController extends AbstractCrudController
 {
@@ -48,6 +49,9 @@ class LocationCrudController extends AbstractCrudController
                 ->hideOnForm()
             ;
             yield AssociationField::new('launchPointEvents');
+            yield AssociationField::new('launchPointContacts')
+                ->setFormTypeOptionIfNotSet('by_reference', false);
+            yield ColorField::new('pinColor');
         }
 
         if ($this->isEventLocation()) {

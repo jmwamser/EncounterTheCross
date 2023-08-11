@@ -12,6 +12,7 @@ import {Control, defaults as defaultControls} from 'ol/control';
 import {useGeographic} from "ol/proj";
 import {GeoJSON} from "ol/format";
 import {Stamen} from "ol/source";
+import {defaults} from "ol/interaction";
 
 useGeographic();
 let mapWrapper = document.getElementById('map');
@@ -22,12 +23,13 @@ let pins = JSON.parse(mapWrapper.dataset.pins).map((Location) => {
         geometry: new Point([Location.lon,Location.lat]),
         name: Location.name,
     });
+    let color = Location.color ? Location.color : Math.floor(Math.random()*16777215).toString(16);
     let style = new Style({
         image: new Icon({
             anchor: [0.5, 46],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
-            src: 'https://localhost:8000/map/pin/'+Math.floor(Math.random()*16777215).toString(16)
+            src: 'https://localhost:8000/map/pin/'+color.substring(1)
         })
     });
     iconFeature.setStyle(style);
@@ -68,13 +70,15 @@ const map = new Map({
     target: mapWrapper,
     layers: [
         osmgrey,
-        vectorLayer
+        // watercolor,
+        // waterlabels,
+        vectorLayer,
     ],
     view: new View({
         center: [-97.2304,38.6212],
         zoom: 7,
     }),
-
+    interactions: defaults({mouseWheelZoom:false}),
 });
 
 

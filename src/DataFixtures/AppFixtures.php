@@ -31,9 +31,9 @@ class AppFixtures extends Fixture
 
         // Create people that will go to the events
         //Servers
-        EventParticipantFactory::new('server')->many(10)->create();
+        EventParticipantFactory::new('server')->many(130)->create();
         //Attendees
-        EventParticipantFactory::new('attendee')->many(10)->create();
+        EventParticipantFactory::new('attendee')->many(400)->create();
 
         // Create the Testimonials
         TestimonialFactory::createMany(50);

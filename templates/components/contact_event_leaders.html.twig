@@ -1,7 +1,7 @@
 {#  To render the component, use {{ component('contact_event_leaders') }} #}
-<div{{ attributes.defaults({class:"row gx-4 gx-lg-5"}) }}>
+<div{{ attributes.defaults({class:"row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-3"}) }}>
     {% for eventLeader in this.eventLeaders %}
-        <div class="col-md-4 mb-3 mb-md-0">
+        <div class="col">
             {{ component('contact_details_card',{
                 leader: eventLeader
             }) }}

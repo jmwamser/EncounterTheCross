@@ -26,19 +26,19 @@ final class MenuBuilderFactory
             ])
         ;
 
+        // Testimony Pages
+        $mainMenu->addChild(
+            'Testimonials', [
+            'uri' => '/#testimonials'
+        ])
+        ;
+
         // Register Pages
         $mainMenu->addChild(
             'Register', [
                 'uri' => '/register'
             ]
         );
-
-        // Testimony Pages
-        $mainMenu->addChild(
-            'Testimonials', [
-                'uri' => '/#testimonials'
-            ])
-        ;
 
         // Contact - Launch Point Pages
         $mainMenu->addChild(
