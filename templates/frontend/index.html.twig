@@ -1,0 +1,140 @@
+{% extends 'bootstrap.base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('event-counter') }}
+{% endblock %}
+
+{% block masthead %}
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Galations 5:1</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5 ">It is for freedom that christ has set us free.</h2>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-4 ">{{ event.start|date("F d") }}-{{ event.end|date("d") }}, {{ event.start|date("Y") }}</h2>
+
+                    <div id="flip" class="mb-4 text-white d-flex justify-content-evenly" data-next-encounter="{{ event.start|date('c', "America/Chicago") }}">
+                    </div>
+
+
+
+                    <a class="btn btn-primary" href="{{ path('app_registration_attendee_formentry',{'event': event.id}) }}">Attendee Register</a>
+                    <a class="btn btn-outline-light" href="{{ path('app_registration_server_formentry',{'event': event.id}) }}">Server Register</a>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block about %}
+    <section class="about-section" id="about">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <h2 class="text-white mb-4">About Men's Encounter</h2>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What is Men's Encounter?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                Men’s Encounter is a time for us men to get away and encounter God, perhaps like never before; a time to consider, give thought to our lives, and discover solutions to the unique challenges facing men.
+                                <br><br>
+                                Who would you like to provide solutions for you?  Who better than God?
+                                <br><br>
+                                It is important to take the time to step away and gain perspective.  Whether you think you have it all figured out or not, you will benefit from attending and you will come home with no regrets.  From the time you leave until the time you return, you will have nothing to worry about; all meals, transportation and lodging is included.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Encounter Weekend
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                Most likely you were directed here by a friend, and you may be wondering "what in the world is this guy so excited about?"  Well, take any ideas you may have about this impactful event and throw them out the window.  You can be as social or hermit-like as you wish - you will not be forced out of your comfort zone.  Don’t worry, this is not another church retreat; there will not be: a bunch of dudes holding hands singing kumbaya, sleep-deprived group-therapy, or any other such nonsense.  Life is a series of choices, and at a minimum, this is an opportunity to receive something that equips you to face life’s challenges in an environment customized for you.
+                                <br><br>
+                                The Men’s Encounter is organized by men and for men.  There is no central organization, but rather a growing network of men from all walks of life and many different regions that have experienced freedom and are now working to share it with others.
+                                <br><br>
+                                The principles and tools shared are foundational in nature, but yet can have a profound influence on those who come with a humble and open heart.  While there will be other men in attendance, Encounter is an individual and personal experience.  What takes place during the weekend is between you and God.  He has a gift uniquely for you.
+                                <br><br>
+                                Hope to see you there!
+                                <div class="text-center">
+                                    <a class="btn btn-primary" href="{{ path('app_registration_attendee_formentry',{'event': event.id}) }}">Attendee Register</a>
+                                    <a class="btn btn-primary" href="{{ path('app_registration_server_formentry',{'event': event.id}) }}">Server Register</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Launch Points
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                The Men's Encounter is being hosted by several different communities.  For your convenience, we have designated different "Launch Points."  You will choose one of these points during your registration.  This will be the place that you start your Encounter.  Once you have arrived, we will have a brief meeting, and will then depart as a group for the Encounter location.  All the men from the different Launch Points will arrive at Encounter at the same time.  You will need to arrive at your Launch Point by the time stated on your confirmation email.
+                                <h3 class="mt-2 mb-4">What to Bring</h3>
+                                <ul>
+                                    <li>Sleeping bag/Bed covering & pillow</li>
+                                    <li>Comfortable Shoes</li>
+                                    <li>Towels</li>
+                                    <li>Toiletries (soap, deodorant, etc.)</li>
+                                    <li>Bible (Do not pack, you will need it at pre-encounter)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Cost
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                There is a registration charge, but don't let that stop you; if it is a problem, scholarships are available.  You can write a check to Men's Encounter and mail it to your Launch Point, or you can pay by cash or check upon arrival.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <img class="img-fluid" src="{{ asset('build/images/ipad.png') }}"  alt="..." />
+        </div>
+    </section>
+{% endblock %}
+
+{% block projects %}
+    <section class="content-section bg-light" id="testimonials">
+        <div class="container px-4 px-lg-5">
+            <!-- Featured Project Row-->
+{#            {{ component('testimonial',{#}
+{#                featured: true,#}
+{#                name: 'Jordan',#}
+{#                quote: 'this is a test to test the testing of this test.'#}
+{#            }) }}#}
+{#            {% for testimony in testimonies %}#}
+            {# : 'HalfLeft', #}
+                {{ component('TestimonialCollectionComponent',{
+                    layout: 'HalfRight',
+                    limit: 2,
+                    request: app.request,
+                }) }}
+{#            {% endfor %}#}
+            <div class="d-flex mt-4 justify-content-center">
+                <a role="button" href="{{ path('app_testimonies') }}" class="btn btn-outline-dark">More Testimonials <i class="fa-solid fa-angles-right fa-fade fa-sm"></i></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block signup %}
+{% endblock %}

@@ -9,6 +9,7 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\ArrayShape;
 use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
@@ -24,7 +25,7 @@ class Location
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Event::class)]
-    private Collection $events;
+    private Collection $events; // this field is for self::TYPE_EVENT only
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
@@ -32,10 +33,43 @@ class Location
     #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: EventParticipant::class)]
     private Collection $eventAttendees;
 
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'launchPoints')]
+    private Collection $launchPointEvents; // this field is for self::TYPE_LAUNCH_POINT only
+
+    #[ORM\Column(nullable: true)]
+    private ?array $geolocation = null;
+
+    #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: Leader::class)]
+    private Collection $launchPointContacts;
+
+    #[ORM\Column(length: 255,nullable: true)]
+    private ?string $pinColor = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->eventAttendees = new ArrayCollection();
+        $this->launchPointEvents = new ArrayCollection();
+        $this->launchPointContacts = new ArrayCollection();
+    }
+
+    public function getShortAddress(): string
+    {
+        $city = empty($city = $this->getCity() ?? '') ? $city : $city.", ";
+        $state = empty($state = $this->getState() ?? '') ? $state : $state." ";
+        $zip = $this->getZipcode() ?? '';
+        return $city.$state.$zip;
+    }
+
+    public function getLongAddress(bool $url = false): string
+    {
+        $cityStateZip = $this->getShortAddress();
+
+        if ($url) {
+            return urlencode($this->getLine1().", ".$cityStateZip.", ".$this->getCountry());
+        }
+
+        return $this->getLine1()."\n".$cityStateZip."\n".$this->getCountry();
     }
 
     public function getName(): ?string
@@ -131,4 +165,115 @@ class Location
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getLaunchPointEvents(): Collection
+    {
+        return $this->launchPointEvents;
+    }
+
+    public function addLaunchPointEvent(Event $launchPointEvent): self
+    {
+        if (!$this->launchPointEvents->contains($launchPointEvent)) {
+            $this->launchPointEvents->add($launchPointEvent);
+            $launchPointEvent->addLaunchPoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaunchPointEvent(Event $launchPointEvent): self
+    {
+        if ($this->launchPointEvents->removeElement($launchPointEvent)) {
+            $launchPointEvent->removeLaunchPoint($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName() ?? "";
+    }
+
+    #[ArrayShape(["latitude"=>"int","longitude"=>"int","color"=>"string","status"=>"string"])]
+    public function getGeolocation(): ?array
+    {
+        return $this->geolocation;
+    }
+
+    public function setGeolocation(?array $geolocation): static
+    {
+        $this->geolocation = $geolocation;
+
+        return $this;
+    }
+
+    public function hasMappingLocation(): bool
+    {
+        if (!$this->getGeolocation()) {
+            return false;
+        }
+
+        if ($this->getGeolocation()['status'] !== 'SUCCESS') {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->getGeolocation()['latitude'] ?? null;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->getGeolocation()['longitude'] ?? null;
+    }
+
+    /**
+     * @return Collection<int, Leader>
+     */
+    public function getLaunchPointContacts(): Collection
+    {
+        return $this->launchPointContacts;
+    }
+
+    public function addLaunchPointContact(Leader $launchPointContact): static
+    {
+        if (!$this->launchPointContacts->contains($launchPointContact)) {
+            $this->launchPointContacts->add($launchPointContact);
+            $launchPointContact->setLaunchPoint($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaunchPointContact(Leader $launchPointContact): static
+    {
+        if ($this->launchPointContacts->removeElement($launchPointContact)) {
+            // set the owning side to null (unless already changed)
+            if ($launchPointContact->getLaunchPoint() === $this) {
+                $launchPointContact->setLaunchPoint(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPinColor(): ?string
+    {
+        return $this->pinColor;
+    }
+
+    public function setPinColor(string $pinColor): static
+    {
+        $this->pinColor = $pinColor;
+
+        return $this;
+    }
+
 }

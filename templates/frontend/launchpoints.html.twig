@@ -1,0 +1,99 @@
+{% extends 'frontend/blank_content.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('map-launch-points') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('map-launch-points') }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col text-center">
+            <i class="fa-solid fa-place-of-worship fa-bounce fa-2xl mb-2 text-dark"></i>
+            <h1 class="text-dark mb-5 display-1">Contact</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row map-row mb-3">
+        <div class="col-12 map-background-container p-0 m-0">
+            <div id="map" data-pins="{{ map_pins|json_encode }}" class="map-container"></div>
+        </div>
+    </div>
+{#    TODO: use Vortex Contact Us page for inspiration, the Global contact info should be the Event Contacts. Then the Action cards the launch points
+#}
+    {{ component('contact_event_leaders') }}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-3">
+        {% for launchPoint in launch_points %}
+            <div class="col">
+                <div class="card mb-3">
+                    {#                            <img src="..." class="card-img-top" alt="...">#}
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="--bs-bg-opacity: 1;background-color: {{ launchPoint.pinColor }} !important;"></li>
+                    </ul>
+                    <div class="card-header p-0 mb-2 mt-3 bg-white">
+                        <p class="h-5 text-center">Launch Point Contact</p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ launchPoint.name }}</h5>
+                        <div class="row justify-content-center">
+                            <div class="col-8">
+                                <address>{{ launchPoint.longAddress }}</address>
+                            </div>
+                        </div>
+                        <hr>
+                        {% for leader in launchPoint.launchPointContacts %}
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title">{{ leader }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            {% if leader.person.email %}
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <i class="fas fa-envelope text-primary"></i>
+                                                        <a class="text-start text-decoration-none" href="mailto:{{ leader.person.email }}">{{ leader.person.email }}</a>
+                                                    </div>
+
+                                                </div>
+                                            {% endif %}
+                                            {% if leader.person.phone %}
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <i class="fa-solid fa-phone text-primary"></i>
+                                                        <a class=" text-decoration-none" href="tel:{{ leader.person.phone }}">{{ leader.person.phone }}</a>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="card-text">No Contact Available</p>
+                        {% endfor %}
+
+                    </div>
+                    {% if launchPoint.longAddress %}
+                        <div class="card-footer py-2 bg-white d-flex justify-content-evenly">
+                            <a class=" text-decoration-none" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination={{ launchPoint.longAddress|url_encode }}">
+                                <span class="text-black">Get Directions </span><i class="fa-solid fa-location-arrow fa-lg"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+{#    {{ dump(launch_points) }}#}
+{% endblock %}
+

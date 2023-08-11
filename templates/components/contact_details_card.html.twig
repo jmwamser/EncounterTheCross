@@ -1,0 +1,42 @@
+{#  To render the component, use {{ component('contact_details_card') }} #}
+
+<div{{ attributes.defaults({class:'card h-100'}) }}>
+    <div class="card-header p-0 mb-2 mt-3 bg-white">
+        <p class="h-5 text-center">Event Contact</p>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-uppercase text-center">{{ leader.person.firstName }} {{ leader.person.lastName }}</h5>
+        {% if leader.person.email %}
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <i class="fas fa-envelope text-primary"></i>
+                <a class="small text-start text-decoration-none" href="mailto:{{ leader.person.email }}">{{ leader.person.email }}</a>
+            </div>
+
+        </div>
+        {% endif %}
+{#        {% if leader.person.email and leader.person.phone %}#}
+{#        <div class="row justify-content-center">#}
+{#            <hr class="mt-2 mb-2">#}
+{#        </div>#}
+{#        {% endif %}#}
+        {% if leader.person.phone %}
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <i class="fa-solid fa-phone text-primary"></i>
+                <a class="small text-decoration-none" href="tel:{{ leader.person.phone }}">{{ leader.person.phone }}</a>
+            </div>
+        </div>
+        {% endif %}
+
+
+    </div>
+    <div class="card-footer py-2 bg-white d-flex justify-content-evenly">
+        {% if leader.person.email %}
+            <a target="_blank" href="mailto:{{ leader.person.email }}"><i class="fa-solid fa-envelope fa-lg"></i></a>
+        {% endif %}
+        {% if leader.person.phone %}
+            <a target="_blank" href="tel:{{ leader.person.phone }}"><i class="fa-solid fa-phone fa-lg"></i></a>
+        {% endif %}
+    </div>
+</div>

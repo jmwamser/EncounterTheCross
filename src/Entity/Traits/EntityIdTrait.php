@@ -10,6 +10,7 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use App\Service\UuidManager\UuidFactory;
 
 /**
  * @link https://titouangalopin.com/posts/4dzpjwHfpm0eqvNt9G0trK/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine Why UUID & INT for our ID fields
@@ -23,7 +24,7 @@ use Symfony\Component\Uid\Uuid;
  * public view we will display out the uuid.
  *
  * There are some additional tools we can implement/use to allow url friendly uuid's.
- * TODO: Create the UUID utility tools or use sluggable extension?
+ * the UUID utility tools (or use sluggable extension) is in Services UuidManager
  */
 trait EntityIdTrait
 {
@@ -40,9 +41,26 @@ trait EntityIdTrait
         return $this->id;
     }
 
-    #[ORM\PrePersist]
-    public function getRowPointer(): Uuid
+    public function getRowPointer(): ?Uuid
     {
         return $this->rowPointer;
+    }
+
+    /**
+     * TODO: remove this and update the Fixtures Factories, this will use Doctrine EventSucscribers to assign this value.
+     */
+    public function setRowPointer(?Uuid $rowPointer): void
+    {
+        $this->rowPointer = $rowPointer;
+    }
+
+    public function getBase32RowPointer(): string
+    {
+        return UuidFactory::getBase32RowPointer($this->rowPointer);
+    }
+
+    public function getRowPointerFromBase32(string $base): ?Uuid
+    {
+        return UuidFactory::getRowPointerFromBase32($base);
     }
 }

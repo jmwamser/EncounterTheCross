@@ -1,0 +1,9 @@
+{% extends '@BabDevPagerfanta/twitter_bootstrap5.html.twig' %}
+
+{%- block pager_widget -%}
+    <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-lg">
+            {{- block('pager') -}}
+        </ul>
+    </nav>
+{%- endblock pager_widget -%}

@@ -1,0 +1,19 @@
+{% extends 'frontend/blank_content_container.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col text-center">
+        <i class="fa-solid fa-cross fa-2x mb-2 text-dark"></i>
+        <h1 class="text-dark mb-5 display-1">Testimonies</h1>
+    </div>
+</div>
+
+    {{ component('TestimonialCollectionComponent',{
+        layout: 'Grid',
+        request: app.request,
+    }) }}
+
+
+{% endblock %}
+
+

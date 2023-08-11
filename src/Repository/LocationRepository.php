@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Location;
+use App\Repository\Traits\UuidFinderTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LocationRepository extends ServiceEntityRepository
 {
+    use UuidFinderTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Location::class);
@@ -37,6 +41,40 @@ class LocationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public static function queryBuilderFilterByLocationType(string $type, QueryBuilder $queryBuilder)
+    {
+        $expr = $queryBuilder->expr();
+        $queryBuilder->andWhere(
+            $expr->eq(
+                'entity.type',
+                ':type'
+            )
+        )
+            ->setParameter(
+                'type',
+                $type
+            );
+
+        return $queryBuilder;
+    }
+
+    public function getAllActiveLaunchPoints(): array
+    {
+        return $this->findActiveLoctionsByType(Location::TYPE_LAUNCH_POINT);
+    }
+
+    public function getAllActiveEventLocations(): array
+    {
+        return $this->findActiveLoctionsByType(Location::TYPE_EVENT);
+    }
+
+    private function findActiveLoctionsByType(string $type): array
+    {
+        return $this->findBy([
+            'type' => $type,
+        ]);
     }
 
 //    /**

@@ -8,6 +8,7 @@ use App\Exception\InvalidLocationType;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,12 +33,19 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
-    #[ORM\ManyToMany(targetEntity: Location::class)]
-    private Collection $launchPoint;
+    #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'launchPointEvents')]
+    private Collection $launchPoints;
+
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventParticipant::class)]
+    private Collection $eventParticipants;
+
+    #[ORM\Column]
+    private ?float $price = null;
 
     public function __construct()
     {
-        $this->launchPoint = new ArrayCollection();
+        $this->launchPoints = new ArrayCollection();
+        $this->eventParticipants = new ArrayCollection();
     }
 
     public function getStart(): ?\DateTimeInterface
@@ -107,19 +115,15 @@ class Event
     /**
      * @return Collection<int, Location>
      */
-    public function getLaunchPoint(): Collection
+    public function getLaunchPoints(): Collection
     {
-        return $this->launchPoint;
+        return $this->launchPoints;
     }
 
     public function addLaunchPoint(Location $launchPoint): self
     {
-        if (Location::TYPE_LAUNCH_POINT !== $launchPoint->getType()) {
-            throw new InvalidLocationType('Launch Point',Location::TYPE_LAUNCH_POINT);
-        }
-
-        if (!$this->launchPoint->contains($launchPoint)) {
-            $this->launchPoint->add($launchPoint);
+        if (!$this->launchPoints->contains($launchPoint)) {
+            $this->launchPoints->add($launchPoint);
         }
 
         return $this;
@@ -127,7 +131,81 @@ class Event
 
     public function removeLaunchPoint(Location $launchPoint): self
     {
-        $this->launchPoint->removeElement($launchPoint);
+        $this->launchPoints->removeElement($launchPoint);
+
+        return $this;
+    }
+
+    public function getTotalServers(): int
+    {
+        $total = 0;
+        foreach($this->getEventParticipants()->getIterator() as $server) {
+            if ($server->getType() === EventParticipant::TYPE_SERVER) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+    public function getTotalAttendees(): int
+    {
+        $total = 0;
+
+        /** @var EventParticipant $attendee */
+        foreach($this->getEventParticipants()->getIterator() as $attendee) {
+            if ($attendee->getType() === EventParticipant::TYPE_ATTENDEE) {
+                $total++;
+            }
+        }
+
+        return $total;
+    }
+
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, EventParticipant>
+     */
+    public function getEventParticipants(): Collection
+    {
+        return $this->eventParticipants;
+    }
+
+    public function addEventParticipant(EventParticipant $eventParticipant): self
+    {
+        if (!$this->eventParticipants->contains($eventParticipant)) {
+            $this->eventParticipants->add($eventParticipant);
+            $eventParticipant->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventParticipant(EventParticipant $eventParticipant): self
+    {
+        if ($this->eventParticipants->removeElement($eventParticipant)) {
+            // set the owning side to null (unless already changed)
+            if ($eventParticipant->getEvent() === $this) {
+                $eventParticipant->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }

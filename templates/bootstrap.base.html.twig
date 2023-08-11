@@ -1,0 +1,63 @@
+{% extends nglayouts.layoutTemplate %}
+
+{#{% block html_tag %} data-bs-theme="dark"{% endblock %}#}
+
+{#{% block title %}Grayscale - Start Bootstrap Theme{% endblock %}#}
+{% block icon_link %}<link rel="icon" type="image/x-icon" href="{{ asset('build/favicon.ico') }}" />{% endblock %}
+{% block meta %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+{% endblock %}
+
+{% block body_tag %}id="page-top"{% endblock %}
+
+{% block navigation %}
+    {% include 'frontend/_main_menu.nav.html.twig' %}
+{% endblock %}
+
+{% block body %}
+
+    <!-- Masthead-->
+    {% block masthead %}{% endblock %}
+
+    <!-- About-->
+    {% block about %}{% endblock %}
+    <!-- Projects-->
+    {% block projects %}{% endblock %}
+    <!-- Signup-->
+    {% block signup %}{% endblock %}
+
+
+{% endblock %}
+
+{% block footer %}
+    <!-- Contact-->
+    {% block contact %}
+        <section class="contact-section bg-black">
+            {% if app.request.get('_route') != 'app_launchpoints' %}
+                <div class="container px-4 px-lg-5">
+                    <div class="row mb-3 gx-4 gx-lg-5">
+                        <div class="col">
+                            <p class="text-center text-white display-6">Event Contacts</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="container px-4 px-lg-5 text-center">
+                {% if app.request.get('_route') != 'app_launchpoints' %}
+                    {{ component('contact_event_leaders') }}
+                    <div class="d-flex mt-4 justify-content-center">
+                        <a role="button" href="{{ path('app_launchpoints') }}" class="btn btn-outline-light">Launch Points <i class="fa-solid fa-angles-right fa-fade fa-sm"></i></a>
+                    </div>
+                {% endif %}
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="https://www.facebook.com/encounterthecross/"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </section>
+
+    {% endblock %}
+    <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Men's Encounter {{ 'now' | date('Y') }}</div></footer>
+{% endblock %}
