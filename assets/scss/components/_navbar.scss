@@ -4,6 +4,7 @@
 
 $navLight:      $gray-300;
 $navDark:       $dark;
+$navbar-brand-font-size:            2rem;//$font-size-lg !default;
 
 #mainNav {
     min-height: 3.5rem;
@@ -22,6 +23,7 @@ $navDark:       $dark;
 
     .navbar-brand {
         color: $navDark;
+        font-family: "Black Ops One", cursive;
         font-weight: 700;
         padding: 0.9rem 0;
     }

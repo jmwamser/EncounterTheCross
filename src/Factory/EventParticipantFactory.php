@@ -79,6 +79,7 @@ final class EventParticipantFactory extends ModelFactory
             'updatedAt' => self::faker()->dateTime(),
             'zipcode' => self::faker()->postcode(),
             'event' => EventFactory::randomOrCreate(),
+            'paymentMethod' => self::faker()->randomElement(EventParticipant::PAYMENT_METHODS),
         ],$typeDefaults);
     }
 

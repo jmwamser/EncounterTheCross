@@ -39,8 +39,8 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventParticipant::class)]
     private Collection $eventParticipants;
 
-    #[ORM\Column]
-    private ?float $price = null;
+    #[ORM\Column(type: 'decimal',precision: 20,scale: 8)]
+    private ?string $price = null;
 
     public function __construct()
     {
@@ -198,12 +198,12 @@ class Event
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(string $price): static
     {
         $this->price = $price;
 
