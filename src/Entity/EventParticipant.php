@@ -192,6 +192,8 @@ class EventParticipant implements EntityExportableInterface
             'contactRelation' => $this->getAttendeeContactPerson()?->getRelationship(),
             'contactPhone' => $this->getAttendeeContactPerson()?->getDetails()->getPhone(),
             'invitedBy' => $this->getInvitedBy(),
+            'paid' => $this->paid ? 'X' : '',
+            'paymentMethod' => $this->paymentMethod ?? '',
         ];
     }
 
