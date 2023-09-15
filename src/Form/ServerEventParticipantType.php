@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\EventParticipant;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -99,6 +100,25 @@ class ServerEventParticipantType extends AbstractType
                 'label' => 'Launch Point',
                 'attr' => [
                     'placeholder' => 'Launch Point',
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+            ])
+            ->add('paymentMethod',ChoiceType::class,[
+                'label' => 'Payment Method',
+                'required' => true,
+//                "choices_as_values" => true,
+//                'choice_value' => function($choice) {
+//                    return $choice;
+//                },
+                'choices' => array_merge([
+                    'Select Payment Method' => null,
+                ],
+                    array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS)
+                ),
+                'attr' => [
+                    'placeholder' => 'Payment Method',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',

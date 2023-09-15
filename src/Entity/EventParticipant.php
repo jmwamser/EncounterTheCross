@@ -19,6 +19,13 @@ class EventParticipant implements EntityExportableInterface
     public const TYPE_SERVER = 'server';
     public const TYPE_ATTENDEE = 'attendee';
 
+    public const PAYMENT_METHOD_ATDOOR = 'DOOR';
+    public const PAYMENT_METHOD_SCHOLARSHIP = 'SCHOLARSHIP';
+    public const PAYMENT_METHODS = [
+        self::PAYMENT_METHOD_ATDOOR,
+        self::PAYMENT_METHOD_SCHOLARSHIP,
+    ];
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $church = null;
 
@@ -54,6 +61,12 @@ class EventParticipant implements EntityExportableInterface
     #[ORM\ManyToOne(inversedBy: 'eventParticipants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
+
+    #[ORM\Column]
+    private ?bool $paid = false;
+
+    #[ORM\Column(length: 255)]
+    private ?string $paymentMethod = null;
 
     public static function TYPES(): array
     {
@@ -180,5 +193,29 @@ class EventParticipant implements EntityExportableInterface
             'contactPhone' => $this->getAttendeeContactPerson()?->getDetails()->getPhone(),
             'invitedBy' => $this->getInvitedBy(),
         ];
+    }
+
+    public function isPaid(): ?bool
+    {
+        return $this->paid;
+    }
+
+    public function setPaid(bool $paid): static
+    {
+        $this->paid = $paid;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
     }
 }
