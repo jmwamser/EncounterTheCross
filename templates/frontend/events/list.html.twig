@@ -37,7 +37,7 @@
                                         <dd class="col-sm-9">{{ event.start|date('M') }} {{ event.start|date('d') }} - {{ event.end|date('d') }}</dd>
 
                                         <dt class="col-sm-3">Price</dt>
-                                        <dd class="col-sm-9">{{ event.price|format_currency('USD') }}</dd>
+                                        <dd class="col-sm-9">{{ (event.price/100)|format_currency('USD') }}</dd>
                                     </dl>
                                 </div>
                             </div>
