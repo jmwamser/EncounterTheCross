@@ -23,8 +23,7 @@
             <div id="map" data-pins="{{ map_pins|json_encode }}" class="map-container"></div>
         </div>
     </div>
-{#    TODO: use Vortex Contact Us page for inspiration, the Global contact info should be the Event Contacts. Then the Action cards the launch points
-#}
+
     {{ component('contact_event_leaders') }}
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-3">
         {% for launchPoint in launch_points %}
@@ -92,6 +91,8 @@
                 </div>
 
             </div>
+        {% else %}
+            <h3>Sorry we are still setting up our launch points.</h3>
         {% endfor %}
     </div>
 {#    {{ dump(launch_points) }}#}
