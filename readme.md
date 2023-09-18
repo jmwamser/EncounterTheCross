@@ -2,7 +2,80 @@
 
 TODO: description of the site here
 
-## Setting Up Project
+## Production Setup
+Here is the flow of a release from compile to installation.
+
+### Developer Actions
+#### A. Create Release in Version Control
+1. Merge `DEV` branch into `Master` branch
+    - This should trigger GitHub action to create the Release as well as the ZIP File. !!TODO!! See below how to do manually
+
+#### Creating the ZIP File (Manual Steps)
+1. In new folder download lastest core code of the project
+2. run `APP_ENV=prod composer install --no-dev -o`, to download PHP libraries and optimize autoloader
+3. run `yarn`, to install ecmascript libraries
+4. run `yarn build`, to build the production version of the ecmascripts
+5. run `APP_ENV=prod composer symfony:dump-env`, to generate `.env.local.php` file. This will hold all production environment variables
+    - This file will hold template strings. The installer file will need to help update these or will need manually updated.
+6. Rename `.env.local.php` to `.env.local.dist.php`
+7. ZIP Folder up
+
+### Database Setup / Creating
+this will just need done 1 time when initially setting up project
+
+1. Create MySQL DB
+2. Create User and Password for MySQL
+3. Tie new User to the DB that was created
+
+### Script Actions / Started by Person that is installing
+To be ran on the server the site is, as well in the parent folder of where you want the site installed/updated. ALWAYS TAKE A FILE AND DATABASE BACKUP BEFORE RUNNING SCRIPTS!
+
+#### B. Check Server Requirements
+TODO: This still needs built into the project
+This will check the server requirements before updating any code or files. This is to help prevent a fail over doing a update of the site. This doesn't 100% prevent but from a server level should help a lot.
+1. Confirm user has taken back ups of the install folder files and the database. In the prompt tell user if they havn't all data could be lost. If they answer anything but `YES` then STOP SCRIPT!
+    - !!TODO!! in the future have this script move the files up to a backup folder and into a folder with its version number. or have all versions install there then copy to install folder. That way this script can allow user to go up and down between versions. Maybe even look into a sqlite db to keep track of where the current installation is at.
+2. Confirm the install folder of the code. *** Should be a subfolder of where this script is running***
+3. Using the PHP health check Library, like what is on Vortex API (TODO update reference note once in project). Run `bin/console health:check` <- will change to just the file reference once in a script.
+
+#### C. Install Code
+if last step passed start this step
+
+1. Get Latest Release Zip From GitHub.
+    - If zip of release is not all files, follow the Manual process for creating the ZIP File
+2. Unzip File into the install folder that was confirmed from last step.
+    - Will need to figure out how to update the code, so we dont overwrite these files/folders: !!TODO!!
+        - `.env.local.php` but still keep a list of the environment variables needed.
+        - `./var`, this has the cache as well as the log files
+3. Prompt User for environment Variables.
+    - This will loop through the `.env.local.dist.php` file for prompts, but will also load in values from `.env.local.php` if it exists. 
+    - One of these will ask what database version you are using. Using the `./migrations/{dbtype and version}` folders to choose from. If user chooses "other" then the script need to let user know that type is not supported and stop the script. 
+4. Recreate the `.env.local.php` file with new variables and values
+
+#### D. Configure or Update Database
+1. Check if the database is reachable
+2. check the status of migrations
+3. if migrations need ran run them
+4. Check that starting login details are created.
+    - if not prompt user for super admin login details. (Ex: username prompt)
+    - display out the generated password to use
+5. Check that NGLayouts Migrations have ran 
+6. If NGLayouts Migrations need ran run them
+
+#### E. Clear Cache and Warmup
+1. run `bin/console cache:clear`
+2. run `bin/console cache:warmup`
+
+#### F. Check Health Points
+TODO: This still needs built into the project
+This will check the site is up and running, but also that all the requirements are configured on the server.
+
+1. Run Health Check Script
+    - if one health check fails stop script and revert to old install version
+2. Display to user that the site is not Installed/Updated
+
+
+## Setting Up Project (Overview)
  Below you will find steps to help configure the project on a new server or even locally.
 
 ### Symfony CLI 
@@ -13,11 +86,11 @@ This project is using Symfony as its core. You will want to make sure that is al
 Before going into the magic we will need to make sure our Environment Variables are all setup, follow the steps below to do this.
 
 1. copy `.env` file to `.env.local`
-    -  *IF RUNNING LOCALLY ELSE SETUP UP ENV VARS ON MACHINE*
+    -  *IF RUNNING LOCALLY ELSE SETUP UP ENV VARS ON MACHINE (Windows Environment Variables or Apache Environment Variables) OR create the .env.local.php file (If using the install script this is what will happen)*
 2. update variables for `.env.local` file for you site
 
 ### PHP External Libraries
-To get the external libraries you will need [PHP Composer](https://getcomposer.org/download/). Once you have that follow the CLI step below. 
+To get the external libraries you will need [PHP Composer](https://getcomposer.org/download/). Once you have that follow the CLI step below. (If using install script this will already be done)
 
 1. run `composer install`.
     -  This will install all required external libraries
@@ -26,6 +99,9 @@ To get the external libraries you will need [PHP Composer](https://getcomposer.o
 ### Database
 This setup will require MySQL V8. You can run this externally where ever you want or follow the 
 [Docker & Docker-Compose](#Docker--Docker-Compose) steps below.
+
+#### Support Multiple Database Types
+!!TODO!! Follow the steps [here](https://dev.to/rafaelberaldo/symfony-doctrine-migrations-for-multiple-databases-drivers-1a07) to support more than 1 database type
 
 #### Initial Setup Steps
 Follow these steps to set up the database for the first time, if it has not already been created. 
