@@ -66,6 +66,4 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-public/.DS_Store
-
-migrations/.DS_Store
+.DS_Store
