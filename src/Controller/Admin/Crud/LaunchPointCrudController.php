@@ -95,7 +95,6 @@ class LaunchPointCrudController extends LocationCrudController
                         'status' => 'SUCCESS',
                     ]);
 
-                    dump($entityInstance);
                 }
                 catch (\Exception $e) {
                     $entityInstance->setGeolocation([

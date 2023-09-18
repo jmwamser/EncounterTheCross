@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -86,6 +87,8 @@ class EventCrudController extends AbstractCrudController
         yield $location;
 
         yield $launchPoints;
+        yield MoneyField::new('price')
+            ->setCurrency('USD');
         yield Field::new('TotalServers')
             ->hideOnForm();
         yield Field::new('TotalAttendees')
