@@ -39,18 +39,20 @@ class RegistrationController extends AbstractController
     #[Route('/register/{event}/attendee', name: 'app_registration_attendee_formentry')]
     public function attendeeRegistration(Event $event,Request $request)
     {
-        $form = $this->createForm(AttendeeEventParticipantType::class);
+        $eventRegistration = new EventParticipant();
+        $eventRegistration->setEvent($event);
+        $form = $this->createForm(AttendeeEventParticipantType::class,$eventRegistration);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var EventParticipant $eventRegistration */
-            $eventRegistration = $form->getData();
+//            $eventRegistration = $form->getData();
             $eventRegistration->setPerson(
                 $this->personManager->exists(
                     $form->get('person')->getData()
                 )
             );
 
-            $eventRegistration->setEvent($event);
+//            $eventRegistration->setEvent($event);
 
             $this->eventParticipantRepository->save(
                 $eventRegistration,
@@ -68,18 +70,17 @@ class RegistrationController extends AbstractController
     #[Route('/register/{event}/server', name: 'app_registration_server_formentry')]
     public function serverRegistration(Event $event,Request $request)
     {
-        $form = $this->createForm(ServerEventParticipantType::class);
+        $eventRegistration = new EventParticipant();
+        $eventRegistration->setEvent($event);
+        $form = $this->createForm(ServerEventParticipantType::class,$eventRegistration);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var EventParticipant $eventRegistration */
-            $eventRegistration = $form->getData();
             $eventRegistration->setPerson(
                 $this->personManager->exists(
                     $form->get('person')->getData()
                 )
             );
-
-            $eventRegistration->setEvent($event);
 
             $this->eventParticipantRepository->save(
                 $eventRegistration,

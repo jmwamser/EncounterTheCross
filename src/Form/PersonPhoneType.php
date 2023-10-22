@@ -22,6 +22,7 @@ class PersonPhoneType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('lastName',null,[
                 'label' => 'Last Name',
@@ -31,6 +32,7 @@ class PersonPhoneType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('phone',TelType::class,[
                 'label' => 'Phone',
@@ -40,6 +42,7 @@ class PersonPhoneType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
         ;
     }

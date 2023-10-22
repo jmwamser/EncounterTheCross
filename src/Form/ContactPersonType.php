@@ -38,6 +38,7 @@ class ContactPersonType extends AbstractType
                     'class' => 'radio-inline',
                 ],
                 'expanded' => true,
+                'required' => true,
             ])
             ->add('details', PersonPhoneType::class)
         ;
