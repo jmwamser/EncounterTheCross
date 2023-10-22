@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ServerEventParticipantType extends AbstractType
 {
@@ -32,6 +33,11 @@ class ServerEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your address?'
+                    ),
+                ],
             ])
             ->add('line2',null,[
                 'label' => 'Address 2',
@@ -51,6 +57,11 @@ class ServerEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'What city are you from?'
+                    ),
+                ],
             ])
             ->add('state', StateType::class)
             ->add('zipcode',null,[
@@ -62,16 +73,22 @@ class ServerEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your Zip Code?'
+                    ),
+                ],
             ])
             ->add('country',HiddenType::class,[
                 'data' => Countries::exists('US') ? 'US' : '',
             ])
 
             ->add('serverAttendedTimes', IntegerType::class, [
-                'label' => 'How many times have you served at an Encounter prior to this one?',
+                'label' => 'Times Serving',
                 'attr' => [
                     'placeholder' => 'How many times have you served at an Encounter prior to this one?',
                 ],
+                'help' => 'How many times have you served at an Encounter prior to this one?',
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],

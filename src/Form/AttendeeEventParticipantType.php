@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class AttendeeEventParticipantType extends AbstractType
 {
@@ -33,6 +34,11 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your address?'
+                    ),
+                ],
             ])
             ->add('line2',null,[
                 'label' => 'Address 2',
@@ -52,6 +58,11 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'What city are you from?'
+                    ),
+                ],
             ])
             ->add('state', StateType::class)
             ->add('zipcode',null,[
@@ -63,6 +74,11 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your Zip Code?'
+                    ),
+                ],
             ])
             ->add('country',HiddenType::class,[
                 'data' => Countries::exists('US') ? 'US' : '',

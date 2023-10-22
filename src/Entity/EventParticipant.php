@@ -8,6 +8,7 @@ use App\Entity\Traits\QuestionsAndConcernsTrait;
 use App\Repository\EventParticipantRepository;
 use App\Service\Exporter\EntityExportableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventParticipantRepository::class)]
 class EventParticipant implements EntityExportableInterface
@@ -37,6 +38,9 @@ class EventParticipant implements EntityExportableInterface
         inversedBy: 'eventAttendees'
     )]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(
+        message: 'Please choose where you will launch from.'
+    )]
     private ?Location $launchPoint = null;
 
     #[ORM\ManyToOne(
@@ -66,6 +70,9 @@ class EventParticipant implements EntityExportableInterface
     private ?bool $paid = false;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(
+        message: 'Please select how you will pay.',
+    )]
     private ?string $paymentMethod = null;
 
     public static function TYPES(): array

@@ -17,6 +17,7 @@ use App\Repository\EventRepository;
 use App\Service\PersonManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
@@ -64,7 +65,7 @@ class RegistrationController extends AbstractController
         return $this->render('frontend/events/attendee.regestration.html.twig',[
             'event' => $event,
             'form' => $form->createView(),
-        ]);
+        ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 
     #[Route('/register/{event}/server', name: 'app_registration_server_formentry')]
@@ -92,7 +93,7 @@ class RegistrationController extends AbstractController
         return $this->render('frontend/events/server.regestration.html.twig',[
             'event' => $event,
             'form' => $form->createView(),
-        ]);
+        ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
     }
 
     #[Route('/register/thank-you', name: 'app_registration_registrationthankyou')]
