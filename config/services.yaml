@@ -37,8 +37,7 @@ services:
     App\Service\Menu\GrayscaleMenuBuilder:
         arguments: [ "@knp_menu.factory" ]
 
-#    App\Service\Menu\Renderer\GrayscaleMenuRenderer:
-#        arguments: [ "%kernel.charset%" ] # set your own dependencies here
-#        tags:
-#            # The alias is what is used to retrieve the menu
-#            - { name: knp_menu.renderer, alias: grayscale }
+    App\EventListener\SetFromListener:
+        arguments:
+            $fromEmail: '%env(MAILER_SENDER_EMAIL)%'
+            $fromName: '%env(MAILER_SENDER_NAME)%'
