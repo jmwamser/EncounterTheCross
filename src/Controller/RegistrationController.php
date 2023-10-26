@@ -14,17 +14,22 @@ use App\Form\AttendeeEventParticipantType;
 use App\Form\ServerEventParticipantType;
 use App\Repository\EventParticipantRepository;
 use App\Repository\EventRepository;
+use App\Service\Mailer\AttendeeRegistrationLeaderNotificationMailer;
+use App\Service\Mailer\AttendeeRegistrationThankYouMailer;
 use App\Service\PersonManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
     public function __construct(
         private PersonManager $personManager,
-        private EventParticipantRepository $eventParticipantRepository
+        private EventParticipantRepository $eventParticipantRepository,
+        private AttendeeRegistrationLeaderNotificationMailer $registrationNotificationMailer,
+        private AttendeeRegistrationThankYouMailer $registrationThankYouMailer,
     ){
     }
 
@@ -59,6 +64,10 @@ class RegistrationController extends AbstractController
                 $eventRegistration,
                 true
             );
+
+            //send email notification and thank you
+            $this->sendEmails($eventRegistration);
+
             return $this->redirectToRoute('app_registration_registrationthankyou');
         }
 
@@ -87,6 +96,10 @@ class RegistrationController extends AbstractController
                 $eventRegistration,
                 true
             );
+
+            //send email notification and thank you
+            $this->sendEmails($eventRegistration);
+
             return $this->redirectToRoute('app_registration_registrationthankyou');
         }
 
@@ -100,5 +113,17 @@ class RegistrationController extends AbstractController
     public function registrationThankYou()
     {
         return $this->render('frontend/events/submitted.regestration.html.twig',[]);
+    }
+
+    protected function sendEmails(EventParticipant $registration)
+    {
+
+        $toEmail = [new Address($registration->getPerson()->getEmail(),$registration->getFullName())];
+        $this->registrationThankYouMailer->send(
+            toEmails: $toEmail,context: ['registration' => $registration],
+        );
+        $this->registrationNotificationMailer->send(
+            context: ['registration' => $registration]
+        );
     }
 }
