@@ -29,7 +29,7 @@ class Event
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 

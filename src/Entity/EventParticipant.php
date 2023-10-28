@@ -77,8 +77,10 @@ class EventParticipant implements EntityExportableInterface
 
     public static function TYPES(): array
     {
-        $oClass = new \ReflectionClass(static::class);
-        return $oClass->getConstants();
+        return [
+            self::TYPE_SERVER,
+            self::TYPE_ATTENDEE,
+        ];
     }
 
     public function getChurch(): ?string
@@ -129,6 +131,16 @@ class EventParticipant implements EntityExportableInterface
         return $this;
     }
 
+    public function isServer(): bool
+    {
+        return self::TYPE_SERVER === $this->getType();
+    }
+
+    public function isAttendee(): bool
+    {
+        return self::TYPE_ATTENDEE === $this->getType();
+    }
+
     public function getType(): ?string
     {
         return $this->type;
@@ -167,8 +179,7 @@ class EventParticipant implements EntityExportableInterface
 
     public function getFullName(): string
     {
-        $person = $this->getPerson();
-        return $person->getFirstName(). " " .$person->getLastName();
+        return $this->getPerson()->getFullName();
     }
 
     public function __toString(): string

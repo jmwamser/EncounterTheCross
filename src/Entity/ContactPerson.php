@@ -91,6 +91,10 @@ class ContactPerson
         return $this;
     }
 
+    public function getFullName(): string
+    {
+        return $this->getDetails()->getFullName();
+    }
     public function __toString(): string
     {
         return $this?->details->__ToString() ?? '';

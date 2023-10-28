@@ -5,10 +5,10 @@ namespace App\Controller;
 use App\Entity\Leader;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
-use App\Service\Mailer\ResetPasswordMailer;
+use App\Service\Mailer\ResetPasswordContextAwareMailer;
+use App\Settings\SystemSettings;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +27,9 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     public function __construct(
-        private ResetPasswordHelperInterface $resetPasswordHelper,
-        private EntityManagerInterface $entityManager,
-        private ResetPasswordMailer $resetPasswordMailer,
+        private ResetPasswordHelperInterface    $resetPasswordHelper,
+        private EntityManagerInterface          $entityManager,
+        private ResetPasswordContextAwareMailer $resetPasswordMailer,
     ) {
     }
 
@@ -69,6 +69,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
+            'canEmail' => $this->getGlobalSettings()->isEmailNotificationsTurnedOn(),
         ]);
     }
 
@@ -158,7 +159,9 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $this->resetPasswordMailer->send([new Address($user->getEmail(),$user->getFullName())]);
+        if ($this->getGlobalSettings()->isEmailNotificationsTurnedOn()) {
+            $this->resetPasswordMailer->send([new Address($user->getEmail(),$user->getFullName())]);
+        }
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);

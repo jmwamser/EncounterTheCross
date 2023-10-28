@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\LeaderRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DevelopmentController extends AbstractController
@@ -16,6 +15,7 @@ class DevelopmentController extends AbstractController
     )]
     public function index(LeaderRepository $repo)
     {
+        dd($this->container->get('tzunghaor_settings.settings_service.global'));
         dump($repo->findAllLeadersWithNotificationOnAndActive());
         dd('test');
     }

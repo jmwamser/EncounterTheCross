@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    tzunghaor_settings.default_collection: 'global'
 
 services:
     # default configuration for services in *this* file
@@ -41,3 +42,11 @@ services:
         arguments:
             $fromEmail: '%env(MAILER_SENDER_EMAIL)%'
             $fromName: '%env(MAILER_SENDER_NAME)%'
+
+    App\EventSubscriber\MaintenanceModeSubscriber:
+        arguments:
+            $environment: '%kernel.environment%'
+
+#    App\Settings\SettingsEnumConverter:
+#        tags:
+#            - 'tzunghaor_settings.setting_converter'

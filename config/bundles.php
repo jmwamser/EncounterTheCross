@@ -32,4 +32,5 @@ return [
     Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
     BabDev\PagerfantaBundle\BabDevPagerfantaBundle::class => ['all' => true],
     Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle::class => ['all' => true],
+    Tzunghaor\SettingsBundle\TzunghaorSettingsBundle::class => ['all' => true],
 ];

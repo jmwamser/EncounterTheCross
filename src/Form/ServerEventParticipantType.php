@@ -141,7 +141,7 @@ class ServerEventParticipantType extends AbstractType
             ->add('paymentMethod',ChoiceType::class,[
                 'label' => 'Payment Method',
                 'required' => true,
-                'choices' => array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
+                'choices' => ['Pay at the door'=>EventParticipant::PAYMENT_METHOD_ATDOOR],//array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
                 'placeholder' => 'Select Payment Method',
                 'attr' => [
                     'placeholder' => 'Payment Method',

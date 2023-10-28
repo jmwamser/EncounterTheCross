@@ -1,0 +1,36 @@
+{% set particapent = registration.person %}
+<row>
+    <columns>
+        <h3>
+            Registration Details:
+        </h3>
+    </columns>
+</row>
+{% include('email/registration/participant_address.html.twig') %}
+{# START SUBMISSION INFORMATION #}
+<row>
+    <columns>
+        <p>
+            <strong>Phone:</strong> {{ particapent.phone }}<br/>
+            <strong>Email:</strong> {{ particapent.email }}<br/>
+            <strong>Contact Person:</strong> {{ registration.attendeeContactPerson.fullName }}<br/>
+            <strong>Relationship to Contact Person:</strong> {{ registration.attendeeContactPerson.relationship }}<br/>
+            <strong>Contact Person's Phone:</strong> {{ registration.attendeeContactPerson.details.phone }}<br/>
+            <strong>Church Registrant Attends(if applicable):</strong> {{ registration.church }}<br/>
+            <strong>Person who invited registrant:</strong> {{ registration.invitedBy }}<br/>
+            <strong>Question/Comments:</strong> {{ registration.questionsOrComments }}<br/>
+            <strong>Dietary concerns, physical limitations or health concerns:</strong> {{ registration.healthConcerns }}<br/>
+            <strong>Launch Point:</strong> {{ registration.launchPoint }}
+        </p>
+    </columns>
+</row>
+{# END SUBMISSION INFORMATION #}
+<row>
+    <columns>
+        <h3>
+            Payment Information:
+        </h3>
+    </columns>
+</row>
+{% include('email/registration/payment.html.twig') %}
+

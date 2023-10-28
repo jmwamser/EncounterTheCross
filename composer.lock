@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20325ccda9861c9ca5c99a8e52bed04c",
+    "content-hash": "20547d963295dc8076f0edb88a58caa1",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1722,16 +1722,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.8.0",
+            "version": "v4.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "15883641d9530e83a1a487d68314b2648e56f224"
+                "reference": "feaaf62ee9a931695ac7fe67a2436dbe02e3169d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/15883641d9530e83a1a487d68314b2648e56f224",
-                "reference": "15883641d9530e83a1a487d68314b2648e56f224",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/feaaf62ee9a931695ac7fe67a2436dbe02e3169d",
+                "reference": "feaaf62ee9a931695ac7fe67a2436dbe02e3169d",
                 "shasum": ""
             },
             "require": {
@@ -1804,7 +1804,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.0"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.2"
             },
             "funding": [
                 {
@@ -1812,7 +1812,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-21T10:59:52+00:00"
+            "time": "2023-10-27T18:28:21+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2883,16 +2883,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "3.4.0",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "e2392369686d420ca32df3803de28b5d6f76867d"
+                "reference": "c915e2634718dbc8a4a15c61b0e62e7a44e14448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/e2392369686d420ca32df3803de28b5d6f76867d",
-                "reference": "e2392369686d420ca32df3803de28b5d6f76867d",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c915e2634718dbc8a4a15c61b0e62e7a44e14448",
+                "reference": "c915e2634718dbc8a4a15c61b0e62e7a44e14448",
                 "shasum": ""
             },
             "require": {
@@ -2968,7 +2968,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/3.4.0"
+                "source": "https://github.com/Seldaek/monolog/tree/3.5.0"
             },
             "funding": [
                 {
@@ -2980,7 +2980,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-21T08:46:11+00:00"
+            "time": "2023-10-27T15:32:31+00:00"
         },
         {
             "name": "netgen/content-browser",
@@ -5189,16 +5189,16 @@
         },
         {
             "name": "stof/doctrine-extensions-bundle",
-            "version": "v1.8.0",
+            "version": "v1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stof/StofDoctrineExtensionsBundle.git",
-                "reference": "b40623da645d0e206331f506fb1065d8b0a0f3d6"
+                "reference": "eb677bf8aa05d741029dc4874e1884498236d531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/b40623da645d0e206331f506fb1065d8b0a0f3d6",
-                "reference": "b40623da645d0e206331f506fb1065d8b0a0f3d6",
+                "url": "https://api.github.com/repos/stof/StofDoctrineExtensionsBundle/zipball/eb677bf8aa05d741029dc4874e1884498236d531",
+                "reference": "eb677bf8aa05d741029dc4874e1884498236d531",
                 "shasum": ""
             },
             "require": {
@@ -5258,9 +5258,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stof/StofDoctrineExtensionsBundle/issues",
-                "source": "https://github.com/stof/StofDoctrineExtensionsBundle/tree/v1.8.0"
+                "source": "https://github.com/stof/StofDoctrineExtensionsBundle/tree/v1.9.0"
             },
-            "time": "2023-07-07T15:34:33+00:00"
+            "time": "2023-08-31T08:08:51+00:00"
         },
         {
             "name": "swaggest/json-diff",
@@ -11380,6 +11380,72 @@
                 }
             ],
             "time": "2023-08-28T11:09:02+00:00"
+        },
+        {
+            "name": "tzunghaor/settings-bundle",
+            "version": "0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tzunghaor/settings-bundle.git",
+                "reference": "27e1e1d2b67fc85c859f199fe384c6e104a65356"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tzunghaor/settings-bundle/zipball/27e1e1d2b67fc85c859f199fe384c6e104a65356",
+                "reference": "27e1e1d2b67fc85c859f199fe384c6e104a65356",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^2.0",
+                "doctrine/orm": ">=2.7.0",
+                "ext-json": "*",
+                "php": ">=7.4",
+                "symfony/cache": "^5.4 || ^6.0",
+                "symfony/config": "^5.4 || ^6.0",
+                "symfony/dependency-injection": "^5.4 || ^6.0",
+                "symfony/form": "^5.4 || ^6.0",
+                "symfony/http-kernel": "^5.4 || ^6.0",
+                "symfony/property-access": "^5.4 || ^6.0",
+                "symfony/property-info": "^5.4 || ^6.0",
+                "symfony/routing": "^5.4 || ^6.0",
+                "symfony/twig-bundle": "^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "phpdocumentor/reflection-docblock": "^5.3",
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "rector/rector": "^0.14.0",
+                "symfony/browser-kit": "^5.4 || ^6.0",
+                "symfony/framework-bundle": "^5.4 || ^6.0",
+                "symfony/yaml": "^5.4 || ^6.0"
+            },
+            "suggest": {
+                "phpdocumentor/reflection-docblock": "^5.3",
+                "symfony/asset": "^5.4 || ^6.0",
+                "symfony/validator": "^5.4 || ^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Tzunghaor\\SettingsBundle\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andras Prim",
+                    "email": "tzunghaor+github@gmail.com"
+                }
+            ],
+            "description": "Database persisted settings",
+            "support": {
+                "issues": "https://github.com/tzunghaor/settings-bundle/issues",
+                "source": "https://github.com/tzunghaor/settings-bundle/tree/0.13"
+            },
+            "time": "2022-10-23T14:42:09+00:00"
         },
         {
             "name": "webmozart/assert",

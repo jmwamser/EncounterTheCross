@@ -1,0 +1,8 @@
+{
+    "require": {
+        "andres-montanez/magallanes": "^5.0"
+    },
+    "config": {
+        "bin-dir": "../../bin"
+    }
+}

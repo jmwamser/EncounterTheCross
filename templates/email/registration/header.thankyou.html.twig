@@ -1,0 +1,34 @@
+{% if registration.isServer %}
+    <row>
+        <columns>
+            <p>
+                Thank you for volunteering to serve!  Part of what makes Encounter so special is the service of men like you.  Please begin praying for the Encounter and the men who will be in attendance. It is for freedom that Christ has set us free!
+            </p>
+        </columns>
+    </row>
+{% else %}
+    <row>
+        <columns>
+            <p>
+                Congratulations! You have been reserved a spot at Men's Encounter.  Someone from your launch point will be in contact with you about a week before Encounter to inform you of the exact location and time you will need to be at your launch point.  You will be leaving your vehicle there and departing together by group transport.  You will return late afternoon on the last day of Encounter.    We are so excited to meet you and to serve you on this wonderful weekend!
+            </p>
+        </columns>
+    </row>
+{% endif %}
+<row>
+    <columns>
+        <p>
+            Here is your registration information:
+        </p>
+    </columns>
+</row>
+{# START SUMMARY #}
+<row>
+    <columns>
+        <p>
+            {% set event = registration.event %}
+            You have registered as an attendee for the {{ event.start|date("F") }} {{ event.start|date("j") }}-{{ event.end|date('j') }}, {{ event.start|date("Y") }} Men’s Encounter.  It will be held at {{ event.location.name }} in {{ event.location.city }}, {{ event.location.state }}.
+        </p>
+    </columns>
+</row>
+{# END SUMMARY #}

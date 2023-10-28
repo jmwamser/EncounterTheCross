@@ -13,5 +13,5 @@ interface MailerInterface
      *
      * @throws TransportExceptionInterface
      */
-    public function send(string|array $toEmails);
+    public function send(string|array $toEmails): void;
 }

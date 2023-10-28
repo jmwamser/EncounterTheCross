@@ -1,0 +1,29 @@
+magephp:
+  log_dir: ./tools/ReleaseManager/logs
+  log_limit: 10
+  environments:
+    production:
+#      user: app
+      branch: main
+      from: ./
+#      host_path: /var/www/myapp
+      releases: 4
+      exclude:
+        - ./var/cache/*
+        - ./var/log/*
+        - ./web/app_dev.php
+#      hosts:
+#        - webserver1
+#        - webserver2
+#        - webserver3
+      pre-deploy:
+        - fs/remove: {file: './public/bundles'}
+#        - composer/install: { flags: '--no-dev --no-scripts' }
+#        - composer/dump-autoload
+#        - symfony/assets-install: { env: 'prod', target: 'public' }
+      on-deploy:
+#        - symfony/cache-warmup: { env: 'dev' }
+#        - symfony/assets-install: { env: 'dev' }
+      on-release:
+      post-release:
+      post-deploy:
