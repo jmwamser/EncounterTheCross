@@ -1,6 +1,12 @@
 magephp:
   log_dir: ./tools/ReleaseManager/logs
   log_limit: 10
+  custom_tasks:
+    - 'App\Tools\MageTools\Task\Release\Zip\PrepareTask'
+    - 'App\Tools\MageTools\Task\Symfony\DatabaseBackUpTask'
+    - 'App\Tools\MageTools\Task\Symfony\PlatformReleaseTask'
+    - 'App\Tools\MageTools\Task\Yarn\BuildTask'
+    - 'App\Tools\MageTools\Task\Yarn\InstallTask'
   environments:
     production:
 #      user: app
@@ -9,21 +15,38 @@ magephp:
 #      host_path: /var/www/myapp
       releases: 4
       exclude:
-        - ./var/cache/*
-        - ./var/log/*
-        - ./web/app_dev.php
+        - ./var/*
+        - ./horizon-ui-chakra/*
+        - ./tools/*
+        - ./.env.local
+        - ./migrations_mysql8.zip
+#        - ./var/cache/*
+#        - ./var/log/*
+#        - ./web/app_dev.php
 #      hosts:
 #        - webserver1
 #        - webserver2
 #        - webserver3
       pre-deploy:
-        - fs/remove: {file: './public/bundles'}
-#        - composer/install: { flags: '--no-dev --no-scripts' }
-#        - composer/dump-autoload
-#        - symfony/assets-install: { env: 'prod', target: 'public' }
+        - fs/remove: {file: './public/bundles', flags: '-Rf'}
+        - fs/remove: {file: './public/build', flags: '-Rf'}
+        - fs/remove: {file: './vendor', flags: '-Rf'}
+        - composer/install: { flags: '--no-dev --no-scripts' }
+        - composer/dump-autoload
+        - yarn/install
+        - yarn/build: { buildType: 'build' }
+        - symfony/assets-install: { env: 'prod', target: 'public' }
+        - release/zip/prepare
       on-deploy:
 #        - symfony/cache-warmup: { env: 'dev' }
 #        - symfony/assets-install: { env: 'dev' }
       on-release:
       post-release:
       post-deploy:
+        - fs/remove: { file: './public/bundles', flags: '-Rf' }
+        - fs/remove: { file: './public/build', flags: '-Rf' }
+        - fs/remove: { file: './vendor', flags: '-Rf' }
+        - composer/install: { flags: '--no-scripts' }
+        - yarn/install
+        - yarn/build
+        - symfony/assets-install: { env: 'dev', target: 'public' }

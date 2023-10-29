@@ -1,8 +1,17 @@
 {
     "require": {
-        "andres-montanez/magallanes": "^5.0"
+        "php": ">=8.1",
+        "andres-montanez/magallanes": "^5.0",
+        "symfony/yaml": "^6.3",
+        "z4kn4fein/php-semver": "^2.0"
     },
     "config": {
         "bin-dir": "../../bin"
-    }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Tools\\MageTools\\": "src"
+        }
+    },
+    "bin": ["bin/smaug"]
 }
