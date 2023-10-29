@@ -67,3 +67,11 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 .DS_Store
+
+tools/ReleaseManager/vendor/
+
+tools/ReleaseManager/logs/
+
+bin/mage
+
+bin/yaml-lint

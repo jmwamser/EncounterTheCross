@@ -28,8 +28,8 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
 
     private ?string $plainPassword;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(targetEntity:Person::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id',nullable: false)]
     private ?Person $person = null;
 
     #[ORM\ManyToOne(inversedBy: 'launchPointContacts')]
@@ -132,6 +132,11 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->getPerson()->getFullName();
     }
 
     public function getPerson(): ?Person

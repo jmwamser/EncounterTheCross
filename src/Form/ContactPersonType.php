@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ContactPersonType extends AbstractType
 {
@@ -38,6 +39,12 @@ class ContactPersonType extends AbstractType
                     'class' => 'radio-inline',
                 ],
                 'expanded' => true,
+                'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'What the contact persons relation to you?'
+                    ),
+                ],
             ])
             ->add('details', PersonPhoneType::class)
         ;

@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    tzunghaor_settings.default_collection: 'global'
 
 services:
     # default configuration for services in *this* file
@@ -37,8 +38,15 @@ services:
     App\Service\Menu\GrayscaleMenuBuilder:
         arguments: [ "@knp_menu.factory" ]
 
-#    App\Service\Menu\Renderer\GrayscaleMenuRenderer:
-#        arguments: [ "%kernel.charset%" ] # set your own dependencies here
+    App\EventListener\SetFromListener:
+        arguments:
+            $fromEmail: '%env(MAILER_SENDER_EMAIL)%'
+            $fromName: '%env(MAILER_SENDER_NAME)%'
+
+    App\EventSubscriber\MaintenanceModeSubscriber:
+        arguments:
+            $environment: '%kernel.environment%'
+
+#    App\Settings\SettingsEnumConverter:
 #        tags:
-#            # The alias is what is used to retrieve the menu
-#            - { name: knp_menu.renderer, alias: grayscale }
+#            - 'tzunghaor_settings.setting_converter'

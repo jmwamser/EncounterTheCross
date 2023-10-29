@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class PersonPhoneType extends AbstractType
 {
@@ -22,6 +23,12 @@ class PersonPhoneType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'You forgot to tell us your First Name.'
+                    ),
+                ],
             ])
             ->add('lastName',null,[
                 'label' => 'Last Name',
@@ -31,6 +38,12 @@ class PersonPhoneType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'You forgot to tell us your Last Name.'
+                    ),
+                ],
             ])
             ->add('phone',TelType::class,[
                 'label' => 'Phone',
@@ -39,6 +52,10 @@ class PersonPhoneType extends AbstractType
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
+                ],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(),
                 ],
             ])
         ;

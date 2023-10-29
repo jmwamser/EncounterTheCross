@@ -5,7 +5,7 @@
         <div class="col">
             <div class="row justify-content-center">
                 <div class="col-1">
-                    <i class="fa-solid fa-church fa-bounce fa-2xl mb-2 text-dark text-center"></i>
+                    <i class="fa-solid fa-church fa-2xl mb-2 text-dark text-center"></i>
                 </div>
             </div>
             <div class="row">
@@ -23,6 +23,11 @@
         </div>
         <div class="card-body">
             {{ form_start(form, { 'attr' : { 'class': 'requires-validation-js', 'novalidate': true } }) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
                 {% block registeration_form %}
                     {{ form_widget(form) }}
                 {% endblock %}

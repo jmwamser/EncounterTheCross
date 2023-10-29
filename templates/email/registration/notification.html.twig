@@ -1,0 +1,13 @@
+{% extends 'email/email_core.html.twig' %}
+{% block welcome_header %}
+    New Registration
+{% endblock %}
+{% block body_wrapper %}
+    {% include('email/registration/header.notification.html.twig') %}
+    {% if registration.isServer %}
+        {% include('email/registration/types/server.information.html.twig') %}
+    {% else %}
+        {% include('email/registration/types/attendee.information.html.twig') %}
+    {% endif %}
+
+{% endblock %}

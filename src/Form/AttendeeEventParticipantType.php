@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\EventParticipant;
+use App\Entity\Location;
+use App\Repository\LocationRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -11,11 +14,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class AttendeeEventParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var EventParticipant $data */
+        $data = $options['data'] ?? null;
+
         $builder
             ->add('person', PersonType::class)
             ->add('line1',null,[
@@ -27,6 +34,11 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
                 'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your address?'
+                    ),
+                ],
             ])
             ->add('line2',null,[
                 'label' => 'Address 2',
@@ -45,6 +57,12 @@ class AttendeeEventParticipantType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'What city are you from?'
+                    ),
+                ],
             ])
             ->add('state', StateType::class)
             ->add('zipcode',null,[
@@ -54,6 +72,12 @@ class AttendeeEventParticipantType extends AbstractType
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
+                ],
+                'required' => true,
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your Zip Code?'
+                    ),
                 ],
             ])
             ->add('country',HiddenType::class,[
@@ -72,10 +96,11 @@ class AttendeeEventParticipantType extends AbstractType
                 ],
             ])
             ->add('invitedBy',null,[
-                'label' => 'Who invited you? Please provide full name of person.',
+                'label' => 'Who invited you?',
                 'attr' => [
-                    'placeholder' => 'Who invited you? Please provide full name of person.',
+                    'placeholder' => 'Who invited you?',
                 ],
+                'help' => 'Please provide full name of person.',
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
@@ -85,9 +110,9 @@ class AttendeeEventParticipantType extends AbstractType
             ])
 
             ->add('questionsOrComments', TextareaType::class,[
-                'label' => 'Do you have any questions or comments?',
+                'label' => 'Questions or Comments?',
                 'attr' => [
-                    'placeholder' => 'Do you have any questions or comments?',
+                    'placeholder' => 'Questions or Comments?',
                     'style' => "height: 100px",
                 ],
                 'row_attr' => [
@@ -96,37 +121,40 @@ class AttendeeEventParticipantType extends AbstractType
                 'required' => false,
             ])
             ->add('healthConcerns',TextareaType::class,[
-                'label' => 'Do you have any dietary concerns, physical limitations or health concerns?',
+                'label' => 'Concerns?',
                 'attr' => [
-                    'placeholder' => 'Do you have any dietary concerns, physical limitations or health concerns?',
+                    'placeholder' => 'Concerns?',
                     'style' => "height: 100px",
                 ],
+                'help' => 'Let us know if you have any dietary concerns, physical limitations or health concerns',
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
                 'required' => false,
-            ])
-            ->add('launchPoint',null,[
-                'label' => 'Launch Point',
-                'attr' => [
-                    'placeholder' => 'Launch Point',
-                ],
-                'row_attr' => [
-                    'class' => 'form-floating',
-                ],
-            ])
+            ]);
+        $launchPointOptions = [
+            'placeholder' => 'Please choose a Launch Point',
+            'help' => 'The Launch Point is the area location we will meet up before attending Encounter.',
+            'class' => Location::class,
+            'label' => 'Launch Point',
+            'required' => true,
+            'attr' => [
+                'placeholder' => 'Launch Point',
+            ],
+            'row_attr' => [
+                'class' => 'form-floating',
+            ],
+        ];
+        if ($data) {
+            $launchPointOptions['choices'] = $data->getEvent()->getLaunchPoints()->toArray();
+        }
+        $builder
+            ->add('launchPoint',null,$launchPointOptions)
             ->add('paymentMethod',ChoiceType::class,[
                 'label' => 'Payment Method',
                 'required' => true,
-//                "choices_as_values" => true,
-//                'choice_value' => function($choice) {
-//                    return $choice;
-//                },
-                'choices' => array_merge([
-                        'Select Payment Method' => null,
-                    ],
-                    array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS)
-                ),
+                'choices' => array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
+                'placeholder' => 'Select Payment Method',
                 'attr' => [
                     'placeholder' => 'Payment Method',
                 ],

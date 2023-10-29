@@ -5,9 +5,10 @@ namespace App\Controller;
 use App\Entity\Leader;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Service\Mailer\ResetPasswordContextAwareMailer;
+use App\Settings\SystemSettings;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +27,9 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     public function __construct(
-        private ResetPasswordHelperInterface $resetPasswordHelper,
-        private EntityManagerInterface $entityManager
+        private ResetPasswordHelperInterface    $resetPasswordHelper,
+        private EntityManagerInterface          $entityManager,
+        private ResetPasswordContextAwareMailer $resetPasswordMailer,
     ) {
     }
 
@@ -67,6 +69,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
+            'canEmail' => $this->getGlobalSettings()->isEmailNotificationsTurnedOn(),
         ]);
     }
 
@@ -156,18 +159,9 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
-            //TODO Update sender and name
-            ->from(new Address('example@example.com', 'Encounter Leader'))
-            ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
-            ->context([
-                'resetToken' => $resetToken,
-            ])
-        ;
-
-        $mailer->send($email);
+        if ($this->getGlobalSettings()->isEmailNotificationsTurnedOn()) {
+            $this->resetPasswordMailer->send([new Address($user->getEmail(),$user->getFullName())]);
+        }
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);

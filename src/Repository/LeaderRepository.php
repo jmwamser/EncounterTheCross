@@ -57,6 +57,19 @@ class LeaderRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->save($user, true);
     }
 
+    public function findAllLeadersWithNotificationOnAndActive()
+    {
+        $qb = $this->createQueryBuilder('l');
+        $qb
+            ->leftJoin('l.person','p')
+            ->select('l.email as Email',"CONCAT(p.firstName,' ',p.lastName) as Name")
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findEventLeaders()
     {
         $rsm = $this->createResultSetMappingBuilder('l');

@@ -1,0 +1,18 @@
+{# Assign Variables #}
+{% set participentType = 'attendee' %}
+{% if registration.isServer %}
+    {% set participentType = 'server' %}
+{% endif %}
+{% set event = registration.event %}
+{# End Variables #}
+{# START SUMMARY #}
+<row>
+    <columns>
+        <p>
+            A new {{ participentType }} registration has been received for the
+            {{ event.start|date("F") }} {{ event.start|date("j") }}-{{ event.end|date('j') }}, {{ event.start|date("Y") }}
+            Men’s Encounter.  The registrant details are below:
+        </p>
+    </columns>
+</row>
+{# END SUMMARY #}

@@ -8,6 +8,7 @@ use App\Entity\Traits\QuestionsAndConcernsTrait;
 use App\Repository\EventParticipantRepository;
 use App\Service\Exporter\EntityExportableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventParticipantRepository::class)]
 class EventParticipant implements EntityExportableInterface
@@ -37,6 +38,9 @@ class EventParticipant implements EntityExportableInterface
         inversedBy: 'eventAttendees'
     )]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(
+        message: 'Please choose where you will launch from.'
+    )]
     private ?Location $launchPoint = null;
 
     #[ORM\ManyToOne(
@@ -66,12 +70,17 @@ class EventParticipant implements EntityExportableInterface
     private ?bool $paid = false;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(
+        message: 'Please select how you will pay.',
+    )]
     private ?string $paymentMethod = null;
 
     public static function TYPES(): array
     {
-        $oClass = new \ReflectionClass(static::class);
-        return $oClass->getConstants();
+        return [
+            self::TYPE_SERVER,
+            self::TYPE_ATTENDEE,
+        ];
     }
 
     public function getChurch(): ?string
@@ -122,6 +131,16 @@ class EventParticipant implements EntityExportableInterface
         return $this;
     }
 
+    public function isServer(): bool
+    {
+        return self::TYPE_SERVER === $this->getType();
+    }
+
+    public function isAttendee(): bool
+    {
+        return self::TYPE_ATTENDEE === $this->getType();
+    }
+
     public function getType(): ?string
     {
         return $this->type;
@@ -160,8 +179,7 @@ class EventParticipant implements EntityExportableInterface
 
     public function getFullName(): string
     {
-        $person = $this->getPerson();
-        return $person->getFirstName(). " " .$person->getLastName();
+        return $this->getPerson()->getFullName();
     }
 
     public function __toString(): string

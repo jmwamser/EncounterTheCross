@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class PersonType extends AbstractType
 {
@@ -15,6 +17,11 @@ class PersonType extends AbstractType
     {
         $builder
             ->add('firstName',null,[
+                'constraints' => [
+                    new NotNull(
+                        message: 'You forgot to tell us your First Name.'
+                    ),
+                ],
                 'label' => 'First Name',
                 'attr' => [
                     'placeholder' => 'First Name',
@@ -22,8 +29,14 @@ class PersonType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('lastName',null,[
+                'constraints' => [
+                    new NotNull(
+                        message: 'You forgot to tell us your Last Name.'
+                    ),
+                ],
                 'label' => 'Last Name',
                 'attr' => [
                     'placeholder' => 'Last Name',
@@ -31,8 +44,15 @@ class PersonType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('email',EmailType::class,[
+                'constraints' => [
+                    new NotNull(
+                        message: 'Whats your email address.'
+                    ),
+                    new Email(),
+                ],
                 'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'Email',
@@ -40,8 +60,14 @@ class PersonType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
+                'required' => true,
             ])
             ->add('phone',TelType::class,[
+                'constraints' => [
+                    new NotNull(
+                        message: 'You forgot to enter your phone number.'
+                    ),
+                ],
                 'label' => 'Phone',
                 'attr' => [
                     'placeholder' => 'Phone',

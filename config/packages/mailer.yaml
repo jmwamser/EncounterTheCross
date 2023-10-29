@@ -1,8 +1,12 @@
 framework:
     mailer:
+        message_bus: false
         dsn: '%env(MAILER_DSN)%'
 
 when@dev:
     framework:
         mailer:
-            dsn: 'null://null'
+            message_bus: false
+            dsn: '%env(MAILER_DSN)%'
+            envelope:
+                recipients: [ 'jwamser@vortexglobal.com','jmwamser@me.com','jmwamser@gmail.com','jherbel@vortexglobal.com' ]

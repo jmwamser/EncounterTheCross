@@ -1,0 +1,11 @@
+{# START PAYMENT INFORMATION #}
+<row>
+    <columns>
+        <p>
+            <strong>Registration Amount:</strong> {{ registration.event.price|format_currency('USD') }}<br/>
+            <strong>Amount Paid:</strong> {{ 0|format_currency('USD') }}<br/>
+            <strong>Payment Method:</strong> {{ registration.paymentMethod }}
+        </p>
+    </columns>
+</row>
+{# END PAYMENT INFORMATION #}

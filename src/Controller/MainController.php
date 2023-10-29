@@ -2,16 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Location;
 use App\Repository\EventRepository;
-use App\Repository\LeaderRepository;
 use App\Repository\LocationRepository;
-use App\Repository\TestimonialRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Pagerfanta\Doctrine\ORM\QueryAdapter;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
