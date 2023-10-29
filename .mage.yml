@@ -18,8 +18,7 @@ magephp:
         - ./var/*
         - ./horizon-ui-chakra/*
         - ./tools/*
-        - ./.env.local
-        - ./migrations_mysql8.zip
+        - '*.local*'
 #        - ./var/cache/*
 #        - ./var/log/*
 #        - ./web/app_dev.php
@@ -27,6 +26,7 @@ magephp:
 #        - webserver1
 #        - webserver2
 #        - webserver3
+      # Runs on Local
       pre-deploy:
         - fs/remove: {file: './public/bundles', flags: '-Rf'}
         - fs/remove: {file: './public/build', flags: '-Rf'}
@@ -37,11 +37,16 @@ magephp:
         - yarn/build: { buildType: 'build' }
         - symfony/assets-install: { env: 'prod', target: 'public' }
         - release/zip/prepare
+      # Runs on all Hosts
       on-deploy:
 #        - symfony/cache-warmup: { env: 'dev' }
 #        - symfony/assets-install: { env: 'dev' }
+      # Runs on all Hosts
       on-release:
+        # GH Release Commands here
+      # Runs on all Hosts
       post-release:
+      # Runs on Local
       post-deploy:
         - fs/remove: { file: './public/bundles', flags: '-Rf' }
         - fs/remove: { file: './public/build', flags: '-Rf' }

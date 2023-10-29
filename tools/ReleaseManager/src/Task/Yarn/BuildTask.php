@@ -29,6 +29,9 @@ class BuildTask extends AbstractYarnTask
 
     protected function getYarnOptions(): array
     {
-        return ['flags' => '--non-interactive','buildType'=>'dev'];
+        return array_merge(
+            parent::getYarnOptions(),
+            ['buildType'=>'dev','flags' => '']
+        );
     }
 }

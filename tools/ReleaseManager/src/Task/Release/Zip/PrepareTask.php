@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools\MageTools\Task\Deploy\Zip;
+namespace App\Tools\MageTools\Task\Release\Zip;
 
 use Mage\Task\AbstractTask;
 use Mage\Task\Exception\ErrorException;
@@ -55,7 +55,7 @@ class PrepareTask extends AbstractTask
     protected function getExcludes(): string
     {
         $excludes = $this->runtime->getMergedOption('exclude', []);
-        $excludes = array_merge(['.git','*'.DIRECTORY_SEPARATOR.'.DS_Store','*.zip'], array_filter($excludes));
+        $excludes = array_merge(['*.git*','*.idea*','*.DS_Store','*.zip'], array_filter($excludes));
 
         foreach ($excludes as &$exclude) {
 

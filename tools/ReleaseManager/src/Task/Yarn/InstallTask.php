@@ -29,6 +29,9 @@ class InstallTask extends AbstractYarnTask
 
     protected function getYarnOptions(): array
     {
-        return ['flags' => '--non-interactive --no-progress',];
+        return array_merge(
+            parent::getYarnOptions(),
+            ['flags' => '--non-interactive --no-progress']
+        );
     }
 }
