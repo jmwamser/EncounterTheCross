@@ -19,13 +19,12 @@ use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class LeaderCrudController extends AbstractCrudController
 {
-    private RoleHierarchyInterface $roleHierarchy;
-    private RoleListFinder $roleFinder;
 
-    public function __construct(RoleHierarchyInterface $roleHierarchy,RoleListFinder $roleFinder)
-    {
-        $this->roleHierarchy = $roleHierarchy;
+    public function __construct(
+        private RoleHierarchyInterface $roleHierarchy,
+        private RoleListFinder $roleFinder,
         $this->roleFinder = $roleFinder;
+    ){
     }
     public static function getEntityFqcn(): string
     {
@@ -57,17 +56,19 @@ class LeaderCrudController extends AbstractCrudController
          * This list is to determine what roles the current user can assign to the current Leader Object
          * Default List = $securityUserRoles
          */
-        $roles = $pageName === Crud::PAGE_NEW || $pageName === Crud::PAGE_EDIT ?
-            $this->roleFinder->getRolesAccessableToUserOrFullList($this->getUser())// is either and ADMIN or SUPER_ADMIN
-            : $this->getInstancesRoles();
-        yield ChoiceField::new('roles')
-            ->setChoices(
-                RoleFormatter::formatRolesForForm($roles)
-            )
-            ->allowMultipleChoices()
-            ->renderExpanded()
-            ->renderAsBadges()
-        ;
+        if ($this->isGranted(Role::SUPER_ADMIN)) {
+            $roles = $pageName === Crud::PAGE_NEW || $pageName === Crud::PAGE_EDIT ?
+                $this->roleFinder->getRolesAccessableToUserOrFullList($this->getUser())// is either an ADMIN or SUPER_ADMIN
+                : $this->getInstancesRoles();
+            yield ChoiceField::new('roles')
+                ->setChoices(
+                    RoleFormatter::formatRolesForForm($roles)
+                )
+                ->allowMultipleChoices()
+                ->renderExpanded()
+                ->renderAsBadges()
+            ;
+        }
     }
 
     public function configureActions(Actions $actions): Actions
