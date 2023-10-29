@@ -66,9 +66,7 @@ class LaunchPointCrudController extends LocationCrudController
     {
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $qb);
-
-        return $qb;
+        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $qb);
     }
 
     private function findLatLonCordinates($entityInstance)

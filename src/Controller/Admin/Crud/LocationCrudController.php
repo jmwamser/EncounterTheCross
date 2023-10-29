@@ -48,9 +48,14 @@ class LocationCrudController extends AbstractCrudController
             yield AssociationField::new('eventAttendees', 'LifeTime Attendees')
                 ->hideOnForm()
             ;
-            yield AssociationField::new('launchPointEvents');
+            yield AssociationField::new('launchPointEvents')
+                ->autocomplete()
+            ;
             yield AssociationField::new('launchPointContacts')
-                ->setFormTypeOptionIfNotSet('by_reference', false);
+                ->setFormTypeOptionIfNotSet('by_reference', false)
+                ->autocomplete()
+//                ->allowMultipleChoices()
+            ;
             yield ColorField::new('pinColor');
         }
 

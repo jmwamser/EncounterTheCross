@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait AddressTrait
 {
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     protected ?string $line1 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -29,7 +29,7 @@ trait AddressTrait
         return $this->line1;
     }
 
-    public function setLine1(string $line1): self
+    public function setLine1(?string $line1): self
     {
         $this->line1 = $line1;
 

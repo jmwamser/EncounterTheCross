@@ -73,6 +73,7 @@ class EventCrudController extends AbstractCrudController
         }
         $launchPoints = AssociationField::new('launchPoints')
 //            ->setFormType(ChoiceType::class)
+            ->autocomplete()
             ->setQueryBuilder(function(QueryBuilder $queryBuilder){
                 LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $queryBuilder);
             })
