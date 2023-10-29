@@ -9,12 +9,19 @@ use App\Service\RoleManager\RoleFormatter;
 use App\Service\RoleManager\RoleListFinder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class LeaderCrudController extends AbstractCrudController
@@ -23,9 +30,10 @@ class LeaderCrudController extends AbstractCrudController
     public function __construct(
         private RoleHierarchyInterface $roleHierarchy,
         private RoleListFinder $roleFinder,
-        $this->roleFinder = $roleFinder;
+        private UserPasswordHasherInterface $passwordHasher
     ){
     }
+
     public static function getEntityFqcn(): string
     {
         return Leader::class;
@@ -38,6 +46,11 @@ class LeaderCrudController extends AbstractCrudController
             ->renderAsEmbeddedForm(PersonCrudController::class)
         ;
         yield EmailField::new('email');
+        yield TextField::new('plainPassword')
+            ->setFormTypeOption('label','Password')
+            ->onlyOnForms()
+            ->hideWhenUpdating()
+        ;
         yield DateField::new('updatedAt')
             ->hideOnForm();
         yield DateField::new('createdAt')
@@ -73,9 +86,9 @@ class LeaderCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return parent::configureActions($actions)
+        return parent::configureActions($actions);
             //TODO: Add invitation Action for new Leaders
-            ->remove(Crud::PAGE_INDEX,Crud::PAGE_NEW);
+//            ->remove(Crud::PAGE_INDEX,Crud::PAGE_NEW);
     }
 
 
@@ -94,5 +107,48 @@ class LeaderCrudController extends AbstractCrudController
 
         // if instance was null then return Role set to a User with no assigned roles
         return $instanceRoles ?? [Role::USER];
+    }
+
+    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
+    {
+        $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
+        return $this->addPasswordEventListener($formBuilder);
+    }
+
+//    public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
+//    {
+//        $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
+//        return $this->addPasswordEventListener($formBuilder);
+//    }
+
+    private function addPasswordEventListener(FormBuilderInterface $formBuilder): FormBuilderInterface
+    {
+        return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
+    }
+
+    private function hashPassword(): \Closure
+    {
+        return function($event) {
+            $form = $event->getForm();
+            if (!$form->isValid()) {
+                return;
+            }
+
+            $password = $form->get('plainPassword')->getData();
+            if ($password === null) {
+                $form->getData()
+                    // This will work for us if this is only happening on create.
+                    ->setPassword(md5(rand()))
+                    ->eraseCredentials()
+                ;
+                return;
+            }
+
+            $hash = $this->passwordHasher->hashPassword($this->getUser(), $password);
+            $form->getData()
+                ->setPassword($hash)
+                ->eraseCredentials()
+            ;
+        };
     }
 }
