@@ -89,6 +89,7 @@ class EventCrudController extends AbstractCrudController
 
         yield $launchPoints;
         yield MoneyField::new('price')
+            ->setStoredAsCents(false)
             ->setCurrency('USD');
         yield Field::new('TotalServers')
             ->hideOnForm();
