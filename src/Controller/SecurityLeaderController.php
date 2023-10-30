@@ -23,6 +23,8 @@ class SecurityLeaderController extends AbstractController
         return $this->render('security/login.html.twig', [
             'username_parameter' => 'email',
             'password_parameter' => 'password',
+            'forgot_password_enabled' => true,
+            'forgot_password_path' => '/reset-password',
             'csrf_token_intention' => 'authenticate',
             'last_username' => $lastUsername,
             'error' => $error
