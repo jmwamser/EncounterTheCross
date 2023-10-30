@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\EventParticipant;
 use App\Entity\Leader;
 use App\Entity\Location;
+use App\Entity\Testimonial;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -70,6 +71,9 @@ class MainDashboardController extends AbstractDashboardController
             Location::class)
             ->setController(LaunchPointCrudController::class)
         ;
+
+        yield MenuItem::section('Testimonies');
+        yield MenuItem::linkToCrud('Testimonial', 'fas fa-list', Testimonial::class);
 
         yield MenuItem::section('Leadership');
         yield MenuItem::linkToCrud('Leaders', 'fas fa-list', Leader::class);
