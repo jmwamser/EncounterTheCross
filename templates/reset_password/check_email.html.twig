@@ -1,8 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'reset_password/base.reset.html.twig' %}
+
 
 {% block title %}Password Reset Email Sent{% endblock %}
 
-{% block body %}
+{% block wrapper_wrapper %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
     {% if canEmail %}
         <p>
             If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
