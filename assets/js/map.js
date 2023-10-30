@@ -29,7 +29,7 @@ let pins = JSON.parse(mapWrapper.dataset.pins).map((Location) => {
             anchor: [0.5, 46],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
-            src: 'https://localhost:8000/map/pin/'+color.substring(1)
+            src: window.location.origin+'/map/pin/'+color.substring(1)
         })
     });
     iconFeature.setStyle(style);
