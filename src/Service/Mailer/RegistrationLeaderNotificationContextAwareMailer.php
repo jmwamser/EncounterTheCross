@@ -4,10 +4,13 @@ namespace App\Service\Mailer;
 
 use App\Entity\EventParticipant;
 use App\Repository\LeaderRepository;
+use App\Settings\Global\SystemSettings;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\MailerInterface as Mailer;
 use Symfony\Component\Mime\Email;
+use Tzunghaor\SettingsBundle\Service\SettingsService;
 
 final class RegistrationLeaderNotificationContextAwareMailer extends AbstractContextAwareMailer
 {
@@ -20,12 +23,16 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
 
     const CONTEXT_REGISTRATION_OBJECT = 'registration';
 
+    private SystemSettings $settings;
+
     public function __construct(
         Mailer $mailer,
         LoggerInterface $logger,
         private LeaderRepository $leaderRepository,
+        SettingsService $globalSettings,
     ){
         parent::__construct($mailer, $logger);
+        $this->settings = $globalSettings->getSection(SystemSettings::class);
     }
 
     /**
@@ -50,6 +57,15 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
                 ucfirst($registration->isServer() ? EventParticipant::TYPE_SERVER : EventParticipant::TYPE_ATTENDEE),
                 $event->getName() ?? 'Registration for Encounter'
             ));
+        }
+
+        if ($this->settings->isDebugEmails()) {
+            $toEmails = array_map(function(string $email) {
+                return ['email' => $email];
+            },$this->settings->getDebugEmailAddresses());
+            $email->to(...$this->createToAddresses($toEmails));
+
+            return $email;
         }
 
 

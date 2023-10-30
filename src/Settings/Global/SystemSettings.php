@@ -16,6 +16,11 @@ class SystemSettings
 //    private SystemModeEnum $mode = SystemModeEnum::RUNNING;
 
     #[Setting]
+    private array $debugEmailAddresses = [];
+
+    private bool $debugEmails = false;
+
+    #[Setting]
     private bool $maintenanceMode = false;
 
     public function isEmailNotificationsTurnedOn(): bool
@@ -52,5 +57,27 @@ class SystemSettings
     {
         $this->maintenanceMode = $maintenanceMode;
     }
+
+    public function getDebugEmailAddresses(): array
+    {
+        return $this->debugEmailAddresses;
+    }
+
+    public function setDebugEmailAddresses(array $debugEmailAddresses): void
+    {
+        $this->debugEmailAddresses = $debugEmailAddresses;
+    }
+
+    public function isDebugEmails(): bool
+    {
+        return $this->debugEmails;
+    }
+
+    public function setDebugEmails(bool $debugEmails): void
+    {
+        $this->debugEmails = $debugEmails;
+    }
+
+
 
 }

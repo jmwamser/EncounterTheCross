@@ -68,7 +68,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
             $toEmails = array_map(function(array|Address $toEmail) {
                 return $toEmail instanceof Address
                     ? $toEmail
-                    : new Address($toEmail['Email'],$toEmail['Name']);
+                    : new Address($toEmail['Email'] ?? $toEmail['email'],$toEmail['Name'] ?? '');
             },$toEmails);
         }
 
