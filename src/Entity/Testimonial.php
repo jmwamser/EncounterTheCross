@@ -24,7 +24,7 @@ class Testimonial
     #[ORM\Column]
     private ?bool $sharable = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $attendedAt = null;
 
     #[ORM\Column(length: 255)]
