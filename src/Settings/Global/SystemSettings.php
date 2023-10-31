@@ -23,6 +23,9 @@ class SystemSettings
     #[Setting]
     private bool $maintenanceMode = false;
 
+    #[Setting]
+    private bool $registrationDeadlineInforced = false;
+
     public function isEmailNotificationsTurnedOn(): bool
     {
         return $this->isEmailNotifications();
@@ -78,6 +81,13 @@ class SystemSettings
         $this->debugEmails = $debugEmails;
     }
 
+    public function isRegistrationDeadlineInforced(): bool
+    {
+        return $this->registrationDeadlineInforced;
+    }
 
-
+    public function setRegistrationDeadlineInforced(bool $registrationDeadlineInforced): void
+    {
+        $this->registrationDeadlineInforced = $registrationDeadlineInforced;
+    }
 }
