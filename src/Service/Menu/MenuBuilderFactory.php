@@ -7,12 +7,15 @@ use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class MenuBuilderFactory
 {
     //TODO: get routeProvider
-    public function __construct(private readonly GrayscaleMenuBuilder $menuBuilder)
-    {
+    public function __construct(
+        private readonly GrayscaleMenuBuilder $menuBuilder,
+//        private UrlGeneratorInterface $router,
+    ){
     }
 
     public function createMainMenu(): ItemInterface
@@ -22,28 +25,28 @@ final class MenuBuilderFactory
         //About Page
         $mainMenu->addChild(
             'About', [
-                'uri' => '/#about',
+                'uri' => '/men/#about',
             ])
         ;
 
         // Testimony Pages
         $mainMenu->addChild(
             'Testimonials', [
-            'uri' => '/#testimonials'
+            'uri' => '/men/#testimonials'
         ])
         ;
 
         // Register Pages
         $mainMenu->addChild(
             'Register', [
-                'uri' => '/register'
+                'uri' => '/men/register'
             ]
         );
 
         // Contact - Launch Point Pages
         $mainMenu->addChild(
             'Contact', [
-                'uri' => '/contact',
+                'uri' => '/men/contact',
             ]
         );
 

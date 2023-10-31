@@ -28,6 +28,16 @@ DirectoryIndex index.php
     RewriteCond %{HTTPS} off
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+    # Prevent access of upgrade site vendor folder and composer.json or .lock
+    RewriteRule ^vendor/(.*)?$ / [F,L]
+    RewriteRule ^composer\.(lock|json)$ / [F,L]
+
+    # prevent hiddle file access
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
     # project in a subdirectory, the base path will be prepended to allow proper
