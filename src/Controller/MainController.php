@@ -34,7 +34,7 @@ class MainController extends AbstractController
     public function contactLaunchPoints(LocationRepository $launchPointRespository)
     {
         //TODO: convert into Twig Component
-        $launchPoints = $launchPointRespository->getAllActiveLaunchPoints();
+        $launchPoints = $launchPointRespository->getAllActiveLaunchPoints(['name' => 'asc']);
 
         $pins = [];
         foreach($launchPoints as $launchPoint) {

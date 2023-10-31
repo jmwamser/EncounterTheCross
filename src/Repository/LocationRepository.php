@@ -60,10 +60,17 @@ class LocationRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
-    public function getAllActiveLaunchPoints(): array
+    public function getAllActiveLaunchPoints(array $sort = []): array
     {
+        $qb = $this->findActiveLoctionsQueryBuilderByType(Location::TYPE_LAUNCH_POINT);
 
-        return $this->findActiveLoctionsQueryBuilderByType(Location::TYPE_LAUNCH_POINT)
+        $alias = $qb->getRootAliases();
+
+        foreach ($sort as $by => $direction) {
+            $qb = $qb->addOrderBy($alias[0].'.'.$by,$direction);
+        }
+
+        return $qb
             ->getQuery()
             ->getResult();
     }
