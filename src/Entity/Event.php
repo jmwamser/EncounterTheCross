@@ -34,6 +34,7 @@ class Event
     private ?Location $location = null;
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'launchPointEvents')]
+    #[ORM\OrderBy(['name'=>'asc'])]
     private Collection $launchPoints;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventParticipant::class)]
