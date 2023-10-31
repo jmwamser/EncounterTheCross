@@ -6,6 +6,7 @@ use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
@@ -85,6 +86,7 @@ class LocationCrudController extends AbstractCrudController
         yield Field::new('country')
             ->hideOnIndex()
         ;
+        yield BooleanField::new('active');
     }
 
     protected function isEventLocation(): bool

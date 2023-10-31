@@ -62,19 +62,37 @@ class LocationRepository extends ServiceEntityRepository
 
     public function getAllActiveLaunchPoints(): array
     {
-        return $this->findActiveLoctionsByType(Location::TYPE_LAUNCH_POINT);
+
+        return $this->findActiveLoctionsQueryBuilderByType(Location::TYPE_LAUNCH_POINT)
+            ->getQuery()
+            ->getResult();
     }
 
     public function getAllActiveEventLocations(): array
     {
-        return $this->findActiveLoctionsByType(Location::TYPE_EVENT);
+        return $this->findActiveLoctionsQueryBuilderByType(Location::TYPE_EVENT)
+            ->getQuery()
+            ->getResult();
     }
 
-    private function findActiveLoctionsByType(string $type): array
+    private function findActiveLoctionsQueryBuilderByType(string $type): QueryBuilder
     {
-        return $this->findBy([
-            'type' => $type,
-        ]);
+        $qb = $this->createQueryBuilder('lp');
+        $qb
+            ->andWhere(
+                $qb->expr()->eq('lp.type',':type')
+            )
+            ->andWhere(
+                $qb->expr()->eq(
+                    'lp.active',
+                    ':active'
+                )
+            )
+            ->setParameter('active',true)
+            ->setParameter('type',$type)
+        ;
+
+        return $qb;
     }
 
 //    /**

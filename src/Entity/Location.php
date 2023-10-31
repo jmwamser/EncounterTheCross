@@ -45,6 +45,9 @@ class Location
     #[ORM\Column(length: 255,nullable: true)]
     private ?string $pinColor = null;
 
+    #[ORM\Column()]
+    private bool $active = true;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -274,6 +277,16 @@ class Location
         $this->pinColor = $pinColor;
 
         return $this;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
     }
 
 }

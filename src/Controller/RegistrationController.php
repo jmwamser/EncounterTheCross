@@ -23,6 +23,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route(
+    '/men'
+)]
 class RegistrationController extends AbstractController
 {
     public function __construct(

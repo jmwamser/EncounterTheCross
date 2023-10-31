@@ -5,6 +5,9 @@ TODO: description of the site here
 ## Production Setup
 Here is the flow of a release from compile to installation.
 
+** FOR PRODUCTION WE WILL NEED A UPGRADE.PHP SCRIPT **
+FOLLOW THIS GUIDE FOR SETUP https://medium.com/@runawaycoin/deploying-symfony-4-application-to-shared-hosting-with-just-ftp-access-e65d2c5e0e3d
+
 ### Developer Actions
 #### A. Create Release in Version Control
 1. Merge `DEV` branch into `Master` branch
