@@ -75,3 +75,12 @@ tools/ReleaseManager/logs/
 bin/mage
 
 bin/yaml-lint
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
