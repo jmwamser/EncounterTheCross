@@ -10,28 +10,19 @@ use Symfony\Component\Yaml\Yaml;
 
 class PlatformReleaseTask extends AbstractTask
 {
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return 'smaug/symfony/platform-release';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getDescription(): string
     {
         return '[Symfony] Platform release (update version in parameters.yml)';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function execute(): bool
     {
-        //TODO rework for local tags
+        // TODO rework for local tags
         /** @var Process $process */
         $process = $this->runtime->runLocalCommand('git describe');
 

@@ -8,27 +8,18 @@ use Symfony\Component\Process\Process;
 
 class DatabaseBackUpTask extends AbstractSymfonyTask
 {
-    /**
-     * @inheritDoc
-     */
     public function getName(): string
     {
         return 'smaug/backup/database-backup';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getDescription(): string
     {
         $options = $this->getOptions();
 
-        return '[Backup] Database backup: ' . $options['database'];
+        return '[Backup] Database backup: '.$options['database'];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function execute(): bool
     {
         $options = $this->getOptions();
@@ -65,9 +56,6 @@ class DatabaseBackUpTask extends AbstractSymfonyTask
         return $process->isSuccessful();
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getSymfonyOptions(): array
     {
         return [

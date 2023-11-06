@@ -67,7 +67,7 @@ class LocationRepository extends ServiceEntityRepository
         $alias = $qb->getRootAliases();
 
         foreach ($sort as $by => $direction) {
-            $qb = $qb->addOrderBy($alias[0].'.'.$by,$direction);
+            $qb = $qb->addOrderBy($alias[0].'.'.$by, $direction);
         }
 
         return $qb
@@ -87,7 +87,7 @@ class LocationRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('lp');
         $qb
             ->andWhere(
-                $qb->expr()->eq('lp.type',':type')
+                $qb->expr()->eq('lp.type', ':type')
             )
             ->andWhere(
                 $qb->expr()->eq(
@@ -95,35 +95,35 @@ class LocationRepository extends ServiceEntityRepository
                     ':active'
                 )
             )
-            ->setParameter('active',true)
-            ->setParameter('type',$type)
+            ->setParameter('active', true)
+            ->setParameter('type', $type)
         ;
 
         return $qb;
     }
 
-//    /**
-//     * @return Location[] Returns an array of Location objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Location[] Returns an array of Location objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('l.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Location
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Location
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

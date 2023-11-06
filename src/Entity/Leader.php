@@ -28,8 +28,8 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
 
     private ?string $plainPassword;
 
-    #[ORM\OneToOne(targetEntity:Person::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id',nullable: false)]
+    #[ORM\OneToOne(targetEntity: Person::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id', nullable: false)]
     private ?Person $person = null;
 
     #[ORM\ManyToOne(inversedBy: 'launchPointContacts')]
@@ -37,16 +37,17 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * !! KEY OVERLAP ISSUES - SET TO TRUE IF IT COULD HAPPEN !!
-     * @param bool $forceMerge This sets the key to the role that is default,
-     *      This will make sure when providing Instance
-     *      Roles we don't overwrite anything while including this role as well.
-     * @return array
+     *
+     * @param bool $forceMerge this sets the key to the role that is default,
+     *                         This will make sure when providing Instance
+     *                         Roles we don't overwrite anything while including this role as well
      */
     public static function DEFAULT_ROLES(bool $forceMerge = false): array
     {
         if ($forceMerge) {
             return [Role::DEFAULT => Role::DEFAULT];
         }
+
         return [Role::DEFAULT];
     }
 
@@ -115,20 +116,14 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-         $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
 
-    /**
-     * @param string|null $plainPassword
-     */
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
@@ -166,6 +161,7 @@ class Leader implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         $person = $this->getPerson();
+
         return $person->getFullName()." ({$this->getEmail()})";
     }
 }

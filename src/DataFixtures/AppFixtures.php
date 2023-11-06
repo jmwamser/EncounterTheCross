@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\EventParticipant;
 use App\Factory\EventFactory;
 use App\Factory\EventParticipantFactory;
 use App\Factory\LeaderFactory;
@@ -16,11 +15,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        //Create Admin `Leader` so you can login
-        LeaderFactory::createOne(['email'=>'dev@dev.com','roles'=>[Role::FULL]]);
-        LeaderFactory::createOne(['roles'=>[Role::LEADER_EVENT,Role::LIMITED_FULL]]);
-        LeaderFactory::createOne(['roles'=>[Role::LEADER_EVENT,Role::LIMITED_FULL]]);
-        LeaderFactory::createOne(['roles'=>[Role::LEADER_EVENT,Role::LIMITED_FULL]]);
+        // Create Admin `Leader` so you can login
+        LeaderFactory::createOne(['email' => 'dev@dev.com', 'roles' => [Role::FULL]]);
+        LeaderFactory::createOne(['roles' => [Role::LEADER_EVENT, Role::LIMITED_FULL]]);
+        LeaderFactory::createOne(['roles' => [Role::LEADER_EVENT, Role::LIMITED_FULL]]);
+        LeaderFactory::createOne(['roles' => [Role::LEADER_EVENT, Role::LIMITED_FULL]]);
         LeaderFactory::createMany(15);
 
         // Create all Launch Points to use
@@ -30,9 +29,9 @@ class AppFixtures extends Fixture
         EventFactory::createMany(2);
 
         // Create people that will go to the events
-        //Servers
+        // Servers
         EventParticipantFactory::new('server')->many(130)->create();
-        //Attendees
+        // Attendees
         EventParticipantFactory::new('attendee')->many(400)->create();
 
         // Create the Testimonials

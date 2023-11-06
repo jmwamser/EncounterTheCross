@@ -23,9 +23,9 @@ class ContactPersonType extends AbstractType
     {
         $builder
             ->add('relationship', ChoiceType::class, [
-                'choices' => array_combine( $this->relationType, $this->relationType),
+                'choices' => array_combine($this->relationType, $this->relationType),
 //                "choices_as_values" => true,
-                'choice_value' => function($choice) {
+                'choice_value' => function ($choice) {
                     return $choice;
                 },
                 'label' => 'Relationship to Contact Person',

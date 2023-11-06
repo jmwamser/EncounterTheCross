@@ -19,7 +19,7 @@ class BuildTask extends AbstractYarnTask
     public function execute(): bool
     {
         $options = $this->getOptions();
-        $cmd = sprintf('yarn %s %s',$options['buildType'], $options['flags']);
+        $cmd = sprintf('yarn %s %s', $options['buildType'], $options['flags']);
 
         /** @var Process $process */
         $process = $this->runtime->runCommand(trim($cmd), intval($options['timeout']));
@@ -31,7 +31,7 @@ class BuildTask extends AbstractYarnTask
     {
         return array_merge(
             parent::getYarnOptions(),
-            ['buildType'=>'dev','flags' => '']
+            ['buildType' => 'dev', 'flags' => '']
         );
     }
 }

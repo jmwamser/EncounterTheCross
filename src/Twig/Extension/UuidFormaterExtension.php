@@ -22,7 +22,7 @@ class UuidFormaterExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('encodeUuid', [UuidFormaterRuntime::class, 'encodeUuid'],['is_safe'=>['html']]),
+            new TwigFunction('encodeUuid', [UuidFormaterRuntime::class, 'encodeUuid'], ['is_safe' => ['html']]),
         ];
     }
 }

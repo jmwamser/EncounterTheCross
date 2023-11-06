@@ -6,7 +6,6 @@ use App\Entity\Event;
 use App\Repository\Traits\UuidFinderTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Event>
@@ -45,6 +44,7 @@ class EventRepository extends ServiceEntityRepository
 
     /**
      * @return Event|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findUpcomingEvent()
@@ -54,14 +54,13 @@ class EventRepository extends ServiceEntityRepository
         $qb
             ->select('e')
             ->andWhere(
-                $qb->expr()->gte('e.start',':today')
+                $qb->expr()->gte('e.start', ':today')
             )
-            ->setParameter('today',date('Y-m-d H:i:s', strtotime('tomorrow') - 1))
-            ->orderBy('e.start','ASC')
+            ->setParameter('today', date('Y-m-d H:i:s', strtotime('tomorrow') - 1))
+            ->orderBy('e.start', 'ASC')
             ->setMaxResults(1)
         ;
 
         return $qb->getQuery()->getOneOrNullResult();
     }
-
 }

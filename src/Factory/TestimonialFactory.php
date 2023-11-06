@@ -12,21 +12,21 @@ use Zenstruck\Foundry\RepositoryProxy;
 /**
  * @extends ModelFactory<Testimonial>
  *
- * @method        Testimonial|Proxy create(array|callable $attributes = [])
- * @method static Testimonial|Proxy createOne(array $attributes = [])
- * @method static Testimonial|Proxy find(object|array|mixed $criteria)
- * @method static Testimonial|Proxy findOrCreate(array $attributes)
- * @method static Testimonial|Proxy first(string $sortedField = 'id')
- * @method static Testimonial|Proxy last(string $sortedField = 'id')
- * @method static Testimonial|Proxy random(array $attributes = [])
- * @method static Testimonial|Proxy randomOrCreate(array $attributes = [])
+ * @method        Testimonial|Proxy                     create(array|callable $attributes = [])
+ * @method static Testimonial|Proxy                     createOne(array $attributes = [])
+ * @method static Testimonial|Proxy                     find(object|array|mixed $criteria)
+ * @method static Testimonial|Proxy                     findOrCreate(array $attributes)
+ * @method static Testimonial|Proxy                     first(string $sortedField = 'id')
+ * @method static Testimonial|Proxy                     last(string $sortedField = 'id')
+ * @method static Testimonial|Proxy                     random(array $attributes = [])
+ * @method static Testimonial|Proxy                     randomOrCreate(array $attributes = [])
  * @method static TestimonialRepository|RepositoryProxy repository()
- * @method static Testimonial[]|Proxy[] all()
- * @method static Testimonial[]|Proxy[] createMany(int $number, array|callable $attributes = [])
- * @method static Testimonial[]|Proxy[] createSequence(iterable|callable $sequence)
- * @method static Testimonial[]|Proxy[] findBy(array $attributes)
- * @method static Testimonial[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static Testimonial[]|Proxy[] randomSet(int $number, array $attributes = [])
+ * @method static Testimonial[]|Proxy[]                 all()
+ * @method static Testimonial[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static Testimonial[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static Testimonial[]|Proxy[]                 findBy(array $attributes)
+ * @method static Testimonial[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static Testimonial[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class TestimonialFactory extends ModelFactory
 {

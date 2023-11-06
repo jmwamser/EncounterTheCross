@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/7/23
  * Project: EncounterTheCross
  * File Name: LaunchPointCrudController.php
@@ -17,17 +18,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use Exception;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class LaunchPointCrudController extends LocationCrudController
 {
     public function __construct(
         private HttpClientInterface $httpClient
-    ){
+    ) {
     }
 
     public function createEntity(string $entityFqcn)
@@ -46,7 +44,6 @@ class LaunchPointCrudController extends LocationCrudController
 
         parent::updateEntity($entityManager, $entityInstance);
     }
-
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
@@ -71,19 +68,19 @@ class LaunchPointCrudController extends LocationCrudController
 
     private function findLatLonCordinates($entityInstance)
     {
-        if ($entityInstance instanceof Location && $this->isLaunchPoint() && $entityInstance->getType() === Location::TYPE_LAUNCH_POINT) {
+        if ($entityInstance instanceof Location && $this->isLaunchPoint() && Location::TYPE_LAUNCH_POINT === $entityInstance->getType()) {
             if (
-                $entityInstance->getGeolocation() !== null && ($entityInstance->getGeolocation()['status'] ?? '') !== 'SUCCESS'
-                || $entityInstance->getGeolocation() === null
-            )
+                null !== $entityInstance->getGeolocation() && ($entityInstance->getGeolocation()['status'] ?? '') !== 'SUCCESS'
+                || null === $entityInstance->getGeolocation()
+            ) {
                 try {
                     // Make sure we have the Latitude and Longitude of the Launch Point
-                    $response = $this->httpClient->request(Request::METHOD_GET,'https://nominatim.openstreetmap.org/search?format=json&q='.$entityInstance->getLongAddress(true));
+                    $response = $this->httpClient->request(Request::METHOD_GET, 'https://nominatim.openstreetmap.org/search?format=json&q='.$entityInstance->getLongAddress(true));
 
                     $data = $response->toArray();
 
-                    if (count($data) === 0) {
-                        throw new Exception('Address did not return a Lat/Long to use');
+                    if (0 === count($data)) {
+                        throw new \Exception('Address did not return a Lat/Long to use');
                     }
 
                     $entityInstance->setGeolocation([
@@ -92,16 +89,14 @@ class LaunchPointCrudController extends LocationCrudController
                         'color' => '',
                         'status' => 'SUCCESS',
                     ]);
-
-                }
-                catch (\Exception $e) {
+                } catch (\Exception $e) {
                     $entityInstance->setGeolocation([
                         'latitude' => null,
                         'longitude' => null,
                         'status' => 'Failed Getting MetaData from openstreetmap',
                     ]);
                 }
+            }
         }
     }
-
 }

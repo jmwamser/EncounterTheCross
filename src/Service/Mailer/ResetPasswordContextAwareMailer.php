@@ -3,7 +3,6 @@
 namespace App\Service\Mailer;
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class ResetPasswordContextAwareMailer extends AbstractContextAwareMailer

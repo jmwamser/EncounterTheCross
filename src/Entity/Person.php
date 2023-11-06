@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Traits\CoreEntityTrait;
-use App\Entity\Traits\EntityIdTrait;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -148,13 +147,11 @@ class Person
 
     public function getFullName(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
     }
 
     public function __toString(): string
     {
-        return $this->getFirstName()." ".$this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
     }
-
-
 }

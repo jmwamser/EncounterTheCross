@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Traits\CoreEntityTrait;
-use App\Entity\Traits\EntityIdTrait;
 use App\Repository\ContactPersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -95,10 +94,9 @@ class ContactPerson
     {
         return $this->getDetails()->getFullName();
     }
+
     public function __toString(): string
     {
-        return $this?->details->__ToString() ?? '';
+        return $this->details->__toString() ?? '';
     }
-
-
 }

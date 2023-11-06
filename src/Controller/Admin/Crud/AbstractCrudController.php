@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/7/23
  * Project: EncounterTheCross
  * File Name: AbstractCrudController.php
@@ -10,8 +11,6 @@ namespace App\Controller\Admin\Crud;
 
 use App\Controller\Admin\Crud\Field\Field;
 use App\Controller\Admin\Crud\Field\UuidField;
-use App\Entity\Location;
-use App\Repository\LocationRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -19,7 +18,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController as BaseAbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use Symfony\Component\Form\Extension\Core\Type\UuidType;
 
 abstract class AbstractCrudController extends BaseAbstractCrudController
 {
@@ -27,11 +25,11 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
     {
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        //TODO: filter out Deleted Entities unless Role:FULL
+        // TODO: filter out Deleted Entities unless Role:FULL
         $expr = $qb->expr();
-//        $qb->andWhere(
-//            $expr->isNull('entity.deletedAt')
-//        );
+        //        $qb->andWhere(
+        //            $expr->isNull('entity.deletedAt')
+        //        );
 
         return $qb;
     }

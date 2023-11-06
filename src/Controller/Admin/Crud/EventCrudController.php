@@ -13,14 +13,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class EventCrudController extends AbstractCrudController
 {
@@ -41,30 +37,29 @@ class EventCrudController extends AbstractCrudController
         /** @var Event $entity */
         $entity = parent::createEntity($entityFqcn);
 
-        array_map(function(Location $launchPoint) use ($entity) {
+        array_map(function (Location $launchPoint) use ($entity) {
             $entity->addLaunchPoint($launchPoint);
         }, $this->locationRepository->getAllActiveLaunchPoints());
 
         return $entity;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         // dynamic settings
         $location = AssociationField::new('location')
-            ->setQueryBuilder(function(QueryBuilder $queryBuilder){
+            ->setQueryBuilder(function (QueryBuilder $queryBuilder) {
                 LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_EVENT, $queryBuilder);
             })
         ;
-        if ($pageName !== Crud::PAGE_NEW) {
+        if (Crud::PAGE_NEW !== $pageName) {
             $location
                 ->autocomplete()
                 ->setCrudController(EventLocationCrudController::class)
             ;
         } else {
             $location
-                //TODO allow adding new locations on event creation
+                // TODO allow adding new locations on event creation
 //                ->renderAsEmbeddedForm(LocationCrudController::class)
                 ->setFormTypeOption(
                     'placeholder', 'Select Location Type',
@@ -74,7 +69,7 @@ class EventCrudController extends AbstractCrudController
         $launchPoints = AssociationField::new('launchPoints')
 //            ->setFormType(ChoiceType::class)
             ->autocomplete()
-            ->setQueryBuilder(function(QueryBuilder $queryBuilder){
+            ->setQueryBuilder(function (QueryBuilder $queryBuilder) {
                 LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $queryBuilder);
             })
         ;
@@ -84,7 +79,7 @@ class EventCrudController extends AbstractCrudController
         yield DateField::new('start');
         yield DateField::new('end')
             ->onlyOnForms();
-        yield DateField::new( 'registrationDeadLineServers');
+        yield DateField::new('registrationDeadLineServers');
         yield $location;
 
         yield $launchPoints;
@@ -95,7 +90,6 @@ class EventCrudController extends AbstractCrudController
             ->hideOnForm();
         yield Field::new('TotalAttendees')
             ->hideOnForm();
-
     }
 
     public function configureActions(Actions $actions): Actions
@@ -108,7 +102,7 @@ class EventCrudController extends AbstractCrudController
         ;
 
         return parent::configureActions($actions)
-            ->add(Crud::PAGE_INDEX,$exportAction);
+            ->add(Crud::PAGE_INDEX, $exportAction);
     }
 
     public function export(AdminContext $adminContext, XlsExporter $exporter)
@@ -119,9 +113,6 @@ class EventCrudController extends AbstractCrudController
         }
 
         return $exporter->createResponse($event->getEventParticipants()->toArray());
-//        $spreadsheet = $spreadsheetGenerator->createSheet();
-
+        //        $spreadsheet = $spreadsheetGenerator->createSheet();
     }
-
-
 }

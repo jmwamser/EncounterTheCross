@@ -23,7 +23,6 @@ final class Version20231031180148 extends AbstractMigration
         $this->addSql('ALTER TABLE location ADD active TINYINT(1) DEFAULT NULL');
         $this->addSql('UPDATE location set active = 1');
         $this->addSql('ALTER TABLE location MODIFY active TINYINT(1) NOT NULL');
-
     }
 
     public function down(Schema $schema): void

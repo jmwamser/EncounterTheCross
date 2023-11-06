@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,7 +15,7 @@ class SiteTenantController extends AbstractController
     )]
     public function redirectToSite(string $subdomain): Response
     {
-        if ($subdomain === 'women') {
+        if ('women' === $subdomain) {
             return $this->womenSubDirectory();
         }
 
@@ -34,11 +33,11 @@ class SiteTenantController extends AbstractController
 
     #[Route(
         '/{site}',
-        requirements: ['site'=>'women'],
+        requirements: ['site' => 'women'],
         host: 'www.encounterthecross.com',
     )]
     public function womenSubDirectory()
     {
-        return $this->redirect("https://women.encounterthecross.com");
+        return $this->redirect('https://women.encounterthecross.com');
     }
 }

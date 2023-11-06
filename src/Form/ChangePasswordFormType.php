@@ -36,10 +36,10 @@ class ChangePasswordFormType extends AbstractType
                         ]),
                         new Regex([
                             'pattern' => '/\d+/i',
-                            'message' => "Missing a number in your password",
+                            'message' => 'Missing a number in your password',
                         ]),
-                        //regex -> to have at elast one special char from the list
-                        //note: list of special-char is [#?!@$%^&*-]. Adjust to suite your needs
+                        // regex -> to have at elast one special char from the list
+                        // note: list of special-char is [#?!@$%^&*-]. Adjust to suite your needs
                         new Regex([
                             'pattern' => '/[#?!@$%^&*-]+/i',
                             'message' => "Missing a special charter from this list: '#?!@$%^&*-'",

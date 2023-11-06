@@ -7,10 +7,9 @@ use App\Repository\PersonRepository;
 
 class PersonManager
 {
-
     public function __construct(
         private PersonRepository $personRepository
-    ){
+    ) {
     }
 
     /**
@@ -23,7 +22,7 @@ class PersonManager
         ]);
 
         if (null === $found) {
-            //TODO: issue here could be duplicates of a contact person place holder.
+            // TODO: issue here could be duplicates of a contact person place holder.
             $found = $this->personRepository->findOneBy([
                 'phone' => $person->getPhone(),
             ]);

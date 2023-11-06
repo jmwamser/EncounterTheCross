@@ -12,21 +12,21 @@ use Zenstruck\Foundry\RepositoryProxy;
 /**
  * @extends ModelFactory<Location>
  *
- * @method        Location|Proxy create(array|callable $attributes = [])
- * @method static Location|Proxy createOne(array $attributes = [])
- * @method static Location|Proxy find(object|array|mixed $criteria)
- * @method static Location|Proxy findOrCreate(array $attributes)
- * @method static Location|Proxy first(string $sortedField = 'id')
- * @method static Location|Proxy last(string $sortedField = 'id')
- * @method static Location|Proxy random(array $attributes = [])
- * @method static Location|Proxy randomOrCreate(array $attributes = [])
+ * @method        Location|Proxy                     create(array|callable $attributes = [])
+ * @method static Location|Proxy                     createOne(array $attributes = [])
+ * @method static Location|Proxy                     find(object|array|mixed $criteria)
+ * @method static Location|Proxy                     findOrCreate(array $attributes)
+ * @method static Location|Proxy                     first(string $sortedField = 'id')
+ * @method static Location|Proxy                     last(string $sortedField = 'id')
+ * @method static Location|Proxy                     random(array $attributes = [])
+ * @method static Location|Proxy                     randomOrCreate(array $attributes = [])
  * @method static LocationRepository|RepositoryProxy repository()
- * @method static Location[]|Proxy[] all()
- * @method static Location[]|Proxy[] createMany(int $number, array|callable $attributes = [])
- * @method static Location[]|Proxy[] createSequence(iterable|callable $sequence)
- * @method static Location[]|Proxy[] findBy(array $attributes)
- * @method static Location[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static Location[]|Proxy[] randomSet(int $number, array $attributes = [])
+ * @method static Location[]|Proxy[]                 all()
+ * @method static Location[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static Location[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static Location[]|Proxy[]                 findBy(array $attributes)
+ * @method static Location[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static Location[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class LocationFactory extends ModelFactory
 {
@@ -61,7 +61,7 @@ final class LocationFactory extends ModelFactory
 
     public function launchPoint(): self
     {
-        return $this->addState(['type' => Location::TYPE_LAUNCH_POINT,'pinColor' => self::faker()->hexColor()]);
+        return $this->addState(['type' => Location::TYPE_LAUNCH_POINT, 'pinColor' => self::faker()->hexColor()]);
     }
 
     public function event(): self
@@ -71,7 +71,7 @@ final class LocationFactory extends ModelFactory
 
     public static function allLaunchPoints($min = 1)
     {
-        if ($launchPoints = self::findBy(['type'=> Location::TYPE_LAUNCH_POINT])) {
+        if ($launchPoints = self::findBy(['type' => Location::TYPE_LAUNCH_POINT])) {
             return $launchPoints;
         }
 

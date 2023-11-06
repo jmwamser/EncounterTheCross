@@ -2,7 +2,6 @@
 
 namespace App\Service\Menu;
 
-use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 
 interface MenuBuilderInterface

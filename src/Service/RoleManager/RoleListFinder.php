@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/8/23
  * Project: EncounterTheCross
  * File Name: RoleListFinder.php
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @link https://stackoverflow.com/a/36900807 Original Idea from here
+ * @see https://stackoverflow.com/a/36900807 Original Idea from here
  */
 class RoleListFinder
 {

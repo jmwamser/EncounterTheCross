@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 7/9/23
  * Project: EncounterTheCross
  * File Name: StateType.php
@@ -16,67 +17,65 @@ use Symfony\Component\Validator\Constraints\NotNull;
 class StateType extends AbstractType
 {
     private $states = [
-        "Please Select One" => null,
-        "Alabama" => "AL",
-        "Alaska" => "AK",
-        "Arizona" => "AZ",
-        "Arkansas" => "AR",
-        "California" => "CA",
-        "Colorado" => "CO",
-        "Connecticut" => "CT",
-        "Delaware" => "DE",
-        "Florida" => "FL",
-        "Georgia" => "GA",
-        "Hawaii" => "HI",
-        "Idaho"=> "ID",
-        "Illinois" => "IL",
-        "Indiana" => "IN",
-        "Iowa" => "IA",
-        "Kansas" => "KS",
-        "Kentucky" => "KY",
-        "Louisiana" => "LA",
-        "Maine" => "ME",
-        "Maryland" => "MD",
-        "Massachusetts" => "MA",
-        "Michigan" => "MI",
-        "Minnesota" => "MN",
-        "Mississippi" => "MS",
-        "Missouri" => "MO",
-        "Montana" => "MT",
-        "Nebraska" => "NE",
-        "Nevada" => "NV",
-        "New Hampshire" => "NH",
-        "New Jersey" => "NJ",
-        "New Mexico" => "NM",
-        "New York" => "NY",
-        "North Carolina" => "NC",
-        "North Dakota" => "ND",
-        "Ohio" => "OH",
-        "Oklahoma" => "OK",
-        "Oregon" => "OR",
-        "Pennsylvania" => "PA",
-        "Rhode Island" => "RI",
-        "South Carolina" => "SC",
-        "South Dakota" => "SD",
-        "Tennessee" => "TN",
-        "Texas" => "TX",
-        "Utah" => "UT",
-        "Vermont" => "VT",
-        "Virginia" => "VA",
-        "Washington" => "WA",
-        "West Virginia" => "WV",
-        "Wisconsin" => "WI",
-        "Wyoming" => "WY"
+        'Please Select One' => null,
+        'Alabama' => 'AL',
+        'Alaska' => 'AK',
+        'Arizona' => 'AZ',
+        'Arkansas' => 'AR',
+        'California' => 'CA',
+        'Colorado' => 'CO',
+        'Connecticut' => 'CT',
+        'Delaware' => 'DE',
+        'Florida' => 'FL',
+        'Georgia' => 'GA',
+        'Hawaii' => 'HI',
+        'Idaho' => 'ID',
+        'Illinois' => 'IL',
+        'Indiana' => 'IN',
+        'Iowa' => 'IA',
+        'Kansas' => 'KS',
+        'Kentucky' => 'KY',
+        'Louisiana' => 'LA',
+        'Maine' => 'ME',
+        'Maryland' => 'MD',
+        'Massachusetts' => 'MA',
+        'Michigan' => 'MI',
+        'Minnesota' => 'MN',
+        'Mississippi' => 'MS',
+        'Missouri' => 'MO',
+        'Montana' => 'MT',
+        'Nebraska' => 'NE',
+        'Nevada' => 'NV',
+        'New Hampshire' => 'NH',
+        'New Jersey' => 'NJ',
+        'New Mexico' => 'NM',
+        'New York' => 'NY',
+        'North Carolina' => 'NC',
+        'North Dakota' => 'ND',
+        'Ohio' => 'OH',
+        'Oklahoma' => 'OK',
+        'Oregon' => 'OR',
+        'Pennsylvania' => 'PA',
+        'Rhode Island' => 'RI',
+        'South Carolina' => 'SC',
+        'South Dakota' => 'SD',
+        'Tennessee' => 'TN',
+        'Texas' => 'TX',
+        'Utah' => 'UT',
+        'Vermont' => 'VT',
+        'Virginia' => 'VA',
+        'Washington' => 'WA',
+        'West Virginia' => 'WV',
+        'Wisconsin' => 'WI',
+        'Wyoming' => 'WY',
     ];
-    /**
-     * {@inheritdoc}
-     */
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            "choices" => $this->states,
-            "choices_as_values" => true,
-            'choice_value' => function($choice) {
+        $resolver->setDefaults([
+            'choices' => $this->states,
+            'choices_as_values' => true,
+            'choice_value' => function ($choice) {
                 return $choice;
             },
             'required' => true,
@@ -92,22 +91,16 @@ class StateType extends AbstractType
             'row_attr' => [
                 'class' => 'form-floating',
             ],
-        ));
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
-        return "vortex.form.states";
+        return 'vortex.form.states';
     }
 }

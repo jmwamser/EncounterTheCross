@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 2/25/23
  * Project: EncounterTheCross
  * File Name: AbstractEntity.php
@@ -8,13 +9,13 @@
 
 namespace App\Entity\Traits;
 
+use App\Service\UuidManager\UuidFactory;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
-use App\Service\UuidManager\UuidFactory;
 
 /**
- * @link https://titouangalopin.com/posts/4dzpjwHfpm0eqvNt9G0trK/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine Why UUID & INT for our ID fields
- * @link https://medium.com/@galopintitouan/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine-71763721b9a9 Why UUID & INT for our ID fields - (Medium)
+ * @see https://titouangalopin.com/posts/4dzpjwHfpm0eqvNt9G0trK/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine Why UUID & INT for our ID fields
+ * @see https://medium.com/@galopintitouan/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine-71763721b9a9 Why UUID & INT for our ID fields - (Medium)
  *
  * Using INT & UUID for the ID connections will allow better performance.
  * The idea here is that we will use INT as the AutoIncrement ID and then each will still
@@ -30,10 +31,10 @@ trait EntityIdTrait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", options: ["unsigned" => true])]
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
     protected ?int $id;
 
-    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\Column(type: 'uuid', unique: true)]
     protected ?Uuid $rowPointer = null;
 
     public function getId(): ?int

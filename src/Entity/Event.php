@@ -3,12 +3,10 @@
 namespace App\Entity;
 
 use App\Entity\Traits\CoreEntityTrait;
-use App\Entity\Traits\EntityIdTrait;
 use App\Exception\InvalidLocationType;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,13 +32,13 @@ class Event
     private ?Location $location = null;
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'launchPointEvents')]
-    #[ORM\OrderBy(['name'=>'asc'])]
+    #[ORM\OrderBy(['name' => 'asc'])]
     private Collection $launchPoints;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: EventParticipant::class)]
     private Collection $eventParticipants;
 
-    #[ORM\Column(type: 'decimal',precision: 20,scale: 8)]
+    #[ORM\Column(type: 'decimal', precision: 20, scale: 8)]
     private ?string $price = null;
 
     public function __construct()
@@ -105,7 +103,7 @@ class Event
     public function setLocation(?Location $location): self
     {
         if (Location::TYPE_EVENT !== $location->getType()) {
-            throw new InvalidLocationType('Location',Location::TYPE_EVENT);
+            throw new InvalidLocationType('Location', Location::TYPE_EVENT);
         }
 
         $this->location = $location;
@@ -140,9 +138,9 @@ class Event
     public function getTotalServers(): int
     {
         $total = 0;
-        foreach($this->getEventParticipants()->getIterator() as $server) {
-            if ($server->getType() === EventParticipant::TYPE_SERVER) {
-                $total++;
+        foreach ($this->getEventParticipants()->getIterator() as $server) {
+            if (EventParticipant::TYPE_SERVER === $server->getType()) {
+                ++$total;
             }
         }
 
@@ -154,15 +152,14 @@ class Event
         $total = 0;
 
         /** @var EventParticipant $attendee */
-        foreach($this->getEventParticipants()->getIterator() as $attendee) {
-            if ($attendee->getType() === EventParticipant::TYPE_ATTENDEE) {
-                $total++;
+        foreach ($this->getEventParticipants()->getIterator() as $attendee) {
+            if (EventParticipant::TYPE_ATTENDEE === $attendee->getType()) {
+                ++$total;
             }
         }
 
         return $total;
     }
-
 
     public function __toString(): string
     {

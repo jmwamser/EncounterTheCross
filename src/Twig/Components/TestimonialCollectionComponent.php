@@ -3,9 +3,6 @@
 namespace App\Twig\Components;
 
 use App\Repository\TestimonialRepository;
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\NoReturn;
-use JetBrains\PhpStorm\ObjectShape;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +17,15 @@ final class TestimonialCollectionComponent
 {
     use GridConfigurationTrait;
 
-    const LAYOUT_FEATURED = 'Featured';
-    const LAYOUT_HALF_RIGHT = 'HalfRight';
-    const LAYOUT_HALF_LEFT = 'HalfLeft';
-    const LAYOUT_GRID = 'Grid';
-    const LAYOUT_MATH_ROUNDING_MODE_AUTO = 'Auto';
-    const LAYOUT_MATH_ROUNDING_MODE_DOWN = 'Lose';
-    const LAYOUT_MATH_ROUNDING_MODE_UP = 'Strict';
-    const TOTAL_GRID_COLUMNS = 12;
-    const MAX_PER_PAGE = 4;
+    public const LAYOUT_FEATURED = 'Featured';
+    public const LAYOUT_HALF_RIGHT = 'HalfRight';
+    public const LAYOUT_HALF_LEFT = 'HalfLeft';
+    public const LAYOUT_GRID = 'Grid';
+    public const LAYOUT_MATH_ROUNDING_MODE_AUTO = 'Auto';
+    public const LAYOUT_MATH_ROUNDING_MODE_DOWN = 'Lose';
+    public const LAYOUT_MATH_ROUNDING_MODE_UP = 'Strict';
+    public const TOTAL_GRID_COLUMNS = 12;
+    public const MAX_PER_PAGE = 4;
 
     #[ExposeInTemplate('isLayoutGrid')]
     private bool $grid = false;
@@ -55,7 +52,8 @@ final class TestimonialCollectionComponent
 
     public function __construct(
         private readonly TestimonialRepository $testimonialRepository,
-    ) {}
+    ) {
+    }
 
     public function hasPagination(): bool
     {
@@ -119,7 +117,7 @@ final class TestimonialCollectionComponent
             ->default(-1);
         $resolver->define('background')
             ->default(null)
-            ->allowedTypes('string','null')
+            ->allowedTypes('string', 'null')
             ->required();
 
         // Pagination
@@ -188,39 +186,38 @@ final class TestimonialCollectionComponent
         $this->setCardColumns([
             'breakpoints' => [
                 [
-                    "lg" => 7,
-                    "xl" => 8,
+                    'lg' => 7,
+                    'xl' => 8,
                 ],
                 [
-                    "lg" => 5,
-                    "xl" => 4,
-                ]
-            ]
+                    'lg' => 5,
+                    'xl' => 4,
+                ],
+            ],
         ]);
-
     }
 
     protected function setupHalfLayout(string $orientation): void
     {
-        $orientation === self::LAYOUT_HALF_RIGHT
+        self::LAYOUT_HALF_RIGHT === $orientation
             ? $this->rightOrientation = true
             : $this->rightOrientation = false;
 
         $this->setCardColumns([
-            'breakpoints' => [['lg' => 6,]]
+            'breakpoints' => [['lg' => 6]],
         ]);
     }
 
     protected function setupGridLayout(string $gridMode, int $columns = 6): void
     {
         $this->grid = true;
-        //Ex: ( ( 12 / 3 ) * 100) / 100 = 4
+        // Ex: ( ( 12 / 3 ) * 100) / 100 = 4
         $cardColumns = $this->cardSizeAlgorithm($columns);
-        //makes sure we always have an even number
+        // makes sure we always have an even number
         $mathType = match ($gridMode) {
-            self::LAYOUT_MATH_ROUNDING_MODE_DOWN => function($columnAlgorithm) {return floor($columnAlgorithm);},
-            self::LAYOUT_MATH_ROUNDING_MODE_UP => function($columnAlgorithm) {return ceil($columnAlgorithm);},
-            default => function($columnAlgorithm) {return round($columnAlgorithm);},
+            self::LAYOUT_MATH_ROUNDING_MODE_DOWN => function ($columnAlgorithm) {return floor($columnAlgorithm); },
+            self::LAYOUT_MATH_ROUNDING_MODE_UP => function ($columnAlgorithm) {return ceil($columnAlgorithm); },
+            default => function ($columnAlgorithm) {return round($columnAlgorithm); },
         };
         $size = $mathType($cardColumns);
         $this->setCardColumns($size);
@@ -229,6 +226,6 @@ final class TestimonialCollectionComponent
 
     private function cardSizeAlgorithm(int $columns): float|int
     {
-        return ( ( self::TOTAL_GRID_COLUMNS / $columns ) * 100) / 100;
+        return ((self::TOTAL_GRID_COLUMNS / $columns) * 100) / 100;
     }
 }

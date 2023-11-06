@@ -26,6 +26,6 @@ abstract class AbstractYarnTask extends AbstractTask
      */
     protected function getYarnOptions(): array
     {
-        return ['timeout'=>120];
+        return ['timeout' => 120];
     }
 }

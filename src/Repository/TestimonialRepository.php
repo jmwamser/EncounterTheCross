@@ -6,7 +6,6 @@ use App\Entity\Testimonial;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Testimonial>
@@ -59,10 +58,10 @@ class TestimonialRepository extends ServiceEntityRepository
             ->select('t')
             ->setMaxResults(4)
             ->andWhere(
-                $qb->expr()->eq('t.sharable',':sharable')
+                $qb->expr()->eq('t.sharable', ':sharable')
             )
             ->andWhere(
-                $qb->expr()->eq('t.approved',':approved')
+                $qb->expr()->eq('t.approved', ':approved')
             )
             ->andWhere(
                 $qb->expr()->isNull('t.deletedAt')
@@ -74,29 +73,28 @@ class TestimonialRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-//    /**
-//     * @return Testimonial[] Returns an array of Testimonial objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Testimonial[] Returns an array of Testimonial objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('t')
+    //            ->andWhere('t.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('t.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Testimonial
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
+    //    public function findOneBySomeField($value): ?Testimonial
+    //    {
+    //        return $this->createQueryBuilder('t')
+    //            ->andWhere('t.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

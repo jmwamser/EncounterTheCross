@@ -9,5 +9,4 @@ use App\Exception\ExceptionInterface;
  */
 class LogicException extends \LogicException implements ExceptionInterface
 {
-
 }

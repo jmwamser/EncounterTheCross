@@ -19,6 +19,5 @@ class PersonCrudController extends AbstractCrudController
         yield Field::new('firstName');
         yield Field::new('lastName');
         yield TelephoneField::new('phone');
-
     }
 }

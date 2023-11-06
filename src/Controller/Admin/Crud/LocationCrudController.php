@@ -24,7 +24,7 @@ class LocationCrudController extends AbstractCrudController
         // TODO look into a HiddenField::class
         yield ChoiceField::new('type')
             ->renderAsNativeWidget()
-            ->setChoices(array_combine(Location::TYPES(),Location::TYPES()))
+            ->setChoices(array_combine(Location::TYPES(), Location::TYPES()))
             ->onlyOnForms()
             ->setFormTypeOption(
                 'disabled',
@@ -36,14 +36,13 @@ class LocationCrudController extends AbstractCrudController
             )
         ;
         // use for Event Location CRUD
-//        yield Field::new('events');
+        //        yield Field::new('events');
         // use for Launch Point CRUD
-//        yield Field::new('launchPointEvents');
+        //        yield Field::new('launchPointEvents');
 
         // Where is the Event Location
         yield Field::new('shortAddress', 'Where is it?')
             ->onlyOnIndex();
-
 
         if ($this->isLaunchPoint()) {
             yield AssociationField::new('eventAttendees', 'LifeTime Attendees')
@@ -65,7 +64,6 @@ class LocationCrudController extends AbstractCrudController
             yield CollectionField::new('events')
                 ->hideOnForm();
         }
-
 
         // address fields
         yield Field::new('line1', 'Address Line 1')
@@ -92,12 +90,12 @@ class LocationCrudController extends AbstractCrudController
     protected function isEventLocation(): bool
     {
         // Get what type of Location this is, NULL value is ok for this.
-        return $this->getContext()->getCrud()->getControllerFqcn() === EventLocationCrudController::class;
+        return EventLocationCrudController::class === $this->getContext()->getCrud()->getControllerFqcn();
     }
 
     protected function isLaunchPoint(): bool
     {
         // Get what type of Location this is, NULL value is ok for this.
-        return $this->getContext()->getCrud()->getControllerFqcn() === LaunchPointCrudController::class;
+        return LaunchPointCrudController::class === $this->getContext()->getCrud()->getControllerFqcn();
     }
 }

@@ -4,13 +4,11 @@ namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CoreEntityTrait;
-use App\Entity\Traits\EntityIdTrait;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\ArrayShape;
-use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
@@ -42,7 +40,7 @@ class Location
     #[ORM\OneToMany(mappedBy: 'launchPoint', targetEntity: Leader::class)]
     private Collection $launchPointContacts;
 
-    #[ORM\Column(length: 255,nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $pinColor = null;
 
     #[ORM\Column()]
@@ -58,9 +56,10 @@ class Location
 
     public function getShortAddress(): string
     {
-        $city = empty($city = $this->getCity() ?? '') ? $city : $city.", ";
-        $state = empty($state = $this->getState() ?? '') ? $state : $state." ";
+        $city = empty($city = $this->getCity() ?? '') ? $city : $city.', ';
+        $state = empty($state = $this->getState() ?? '') ? $state : $state.' ';
         $zip = $this->getZipcode() ?? '';
+
         return $city.$state.$zip;
     }
 
@@ -69,7 +68,7 @@ class Location
         $cityStateZip = $this->getShortAddress();
 
         if ($url) {
-            return urlencode($this->getLine1().", ".$cityStateZip.", ".$this->getCountry());
+            return urlencode($this->getLine1().', '.$cityStateZip.', '.$this->getCountry());
         }
 
         return $this->getLine1()."\n".$cityStateZip."\n".$this->getCountry();
@@ -89,7 +88,8 @@ class Location
 
     public static function TYPES(): array
     {
-        $oClass = new ReflectionClass(static::class);
+        $oClass = new \ReflectionClass(static::class);
+
         return $oClass->getConstants();
     }
 
@@ -130,7 +130,7 @@ class Location
 
     public function setType(string $type): self
     {
-        if(!in_array($type,self::TYPES())) {
+        if (!in_array($type, self::TYPES())) {
             throw new \InvalidArgumentException('Invalid Type provided for Location');
         }
 
@@ -198,10 +198,10 @@ class Location
 
     public function __toString(): string
     {
-        return $this->getName() ?? "";
+        return $this->getName() ?? '';
     }
 
-    #[ArrayShape(["latitude"=>"int","longitude"=>"int","color"=>"string","status"=>"string"])]
+    #[ArrayShape(['latitude' => 'int', 'longitude' => 'int', 'color' => 'string', 'status' => 'string'])]
     public function getGeolocation(): ?array
     {
         return $this->geolocation;
@@ -220,7 +220,7 @@ class Location
             return false;
         }
 
-        if ($this->getGeolocation()['status'] !== 'SUCCESS') {
+        if ('SUCCESS' !== $this->getGeolocation()['status']) {
             return false;
         }
 
@@ -288,5 +288,4 @@ class Location
     {
         $this->active = $active;
     }
-
 }
