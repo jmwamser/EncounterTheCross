@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ec2f8433bd56469396ade6e424a86aa",
+    "content-hash": "0015bd409b86ba0aa3db06fcc9b9b30f",
     "packages": [
         {
             "name": "andres-montanez/magallanes",
@@ -1462,9 +1462,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": ">=8.1"
-    },
+    "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

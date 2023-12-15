@@ -27,7 +27,14 @@
     <columns>
         <p>
             {% set event = registration.event %}
-            You have registered as an attendee for the {{ event.start|date("F") }} {{ event.start|date("j") }}-{{ event.end|date('j') }}, {{ event.start|date("Y") }} Men’s Encounter.  It will be held at {{ event.location.name }} in {{ event.location.city }}, {{ event.location.state }}.
+            You have registered as
+            {% if registration.isServer %}
+                a server
+            {% else %}
+                an attendee
+            {% endif %}
+            for the {{ event.start|date("F") }} {{ event.start|date("j") }}-{{ event.end|date('j') }}, {{ event.start|date("Y") }} Men’s Encounter.  It will be held at {{ event.location.name }} in {{ event.location.city }}, {{ event.location.state }}.
+
         </p>
     </columns>
 </row>

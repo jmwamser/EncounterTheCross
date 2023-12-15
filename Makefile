@@ -1,7 +1,9 @@
 .DEFAULT_GOAL := help
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 
-bin = ./vendor/bin
+# should run this with the 'symfony php' so the script switches to the correct php version. I have an alias for this though
+bin = vendor/bin
+php_bin := symfony php $(bin)
 
 help: ## This help message
 	@printf "\033[33mUsage:\033[0m\n  make [target]\n\n\033[33mTargets:\033[0m\n"
@@ -40,35 +42,35 @@ clean: ## Removes all build dependencies (vendor, node_modules)
 
 # Build Tooling
 cs-fixer: ## Code styling fixer
-	@$(bin)/php-cs-fixer fix --config=.php-cs-fixer.php --quiet
+	@$(php_bin)/php-cs-fixer fix --config=.php-cs-fixer.php --quiet
 
 lint: ## PHP, YAML & Twig Syntax Checking
-	@$(bin)/parallel-lint -j 10 src/ --no-progress --colors --blame && bin/console lint:yaml config/ && bin/console lint:twig templates/
+	@$(php_bin)/parallel-lint -j 10 src/ --no-progress --colors --blame && bin/console lint:yaml config/ && bin/console lint:twig templates/
 
 lint-ci:
-	$(bin)/parallel-lint -j 10 src/ --no-progress --colors --checkstyle > report.xml && bin/console lint:yaml -n config/ && bin/console lint:twig -n templates/
+	$(php_bin)/parallel-lint -j 10 src/ --no-progress --colors --checkstyle > report.xml && bin/console lint:yaml -n config/ && bin/console lint:twig -n templates/
 
 phpmd: ## PHP Mess Detection
-	@$(bin)/phpmd src/ ansi phpmd.xml
+	@$(php_bin)/phpmd src/ ansi phpmd.xml
 
 phpmd-ci:
-	@$(bin)/phpmd src/ github phpmd.xml
+	@$(php_bin)/phpmd src/ github phpmd.xml
 
 phpmd-baseline: ## PHP Mess Detection. Generate Baseline
-	@$(bin)/phpmd src/ ansi phpmd.xml --generate-baseline
+	@$(php_bin)/phpmd src/ ansi phpmd.xml --generate-baseline
 
 phpstan: ## PHP Static Analyzer
-	@$(bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon
+	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon
 
 phpstan-ci:
-	@$(bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.neon
+	@$(php_bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.neon
 
 phpstan-baseline: ## PHP Static Analyzer. Generate Baseline.
-	@$(bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon --allow-empty-baseline
+	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon --allow-empty-baseline
 
 # Testing. Requires installing Pest. (Not included by default).
 pest: ## PHP Tests (extended off PHPUnit)
-	$(bin)/pest --colors=always -c build/pest/phpunit.xml
+	$(php_bin)/pest --colors=always -c build/pest/phpunit.xml
 
 unit-tests: # PHPUnit Tests
 	vendor/bin/phpunit --testsuite unit
