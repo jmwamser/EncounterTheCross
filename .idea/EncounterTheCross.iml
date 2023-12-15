@@ -236,6 +236,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/yosymfony/parser-utils" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yosymfony/toml" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/zeek/zeek-build-process" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/module-doctrine2" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
