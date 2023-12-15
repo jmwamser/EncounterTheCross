@@ -84,4 +84,4 @@ bin/yaml-lint
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
-!/tools/ReleaseManager/.idea/
+/tools/ReleaseManager/.idea/
