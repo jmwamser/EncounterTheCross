@@ -14,6 +14,7 @@
   <violation rule="PHPMD\Rule\UnusedPrivateField" file="src/Controller/Admin/Crud/Field/Field.php"/>
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/LeaderCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LeaderCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LocationCrudController.php"/>
@@ -23,6 +24,7 @@
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Controller/MainController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/RegistrationController.php"/>
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Controller/RegistrationController.php"/>
+  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/RegistrationController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/ResetPasswordController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="src/Controller/ResetPasswordController.php" method="checkEmail"/>
   <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/SecurityLeaderController.php"/>
@@ -68,6 +70,7 @@
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Repository/TestimonialRepository.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Repository/Traits/UuidFinderTrait.php"/>
   <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="src/Security/LeaderAuthenticator.php" method="onAuthenticationSuccess"/>
+  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Service/Exporter/XlsExporter.php"/>
   <violation rule="PHPMD\Rule\Naming\LongClassName" file="src/Service/Mailer/RegistrationLeaderNotificationContextAwareMailer.php"/>
   <violation rule="PHPMD\Rule\UnusedLocalVariable" file="src/Service/Mailer/RegistrationThankYouContextAwareMailer.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateMethod" file="src/Service/RoleManager/RoleFormatter.php" method="formatUserReadableArray"/>
