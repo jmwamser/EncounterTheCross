@@ -4,9 +4,6 @@ namespace App\Service\Mailer;
 
 use App\Entity\EventParticipant;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface as Mailer;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 final class RegistrationThankYouContextAwareMailer extends AbstractContextAwareMailer
@@ -18,11 +15,8 @@ final class RegistrationThankYouContextAwareMailer extends AbstractContextAwareM
         self::CONTEXT_REGISTRATION_OBJECT => EventParticipant::class,
     ];
 
-    const CONTEXT_REGISTRATION_OBJECT = 'registration';
+    public const CONTEXT_REGISTRATION_OBJECT = 'registration';
 
-    /**
-     * @inheritDoc
-     */
     public function configureEmail(TemplatedEmail|Email $email): TemplatedEmail
     {
         assert($email instanceof TemplatedEmail);
@@ -31,12 +25,12 @@ final class RegistrationThankYouContextAwareMailer extends AbstractContextAwareM
             ->htmlTemplate('email/registration/thankyou.html.twig')
         ;
 
-        if (array_key_exists(self::CONTEXT_REGISTRATION_OBJECT,$email->getContext())) {
+        if (array_key_exists(self::CONTEXT_REGISTRATION_OBJECT, $email->getContext())) {
             $registration = $email->getContext()[self::CONTEXT_REGISTRATION_OBJECT];
             assert($registration instanceof EventParticipant);
             $event = $registration->getEvent();
 
-            //Create a more detailed subject line
+            // Create a more detailed subject line
             $email->subject(sprintf(
                 'Encounter %s Registration Confirmation',
                 ucfirst($registration->isServer() ? EventParticipant::TYPE_SERVER : EventParticipant::TYPE_ATTENDEE),
@@ -45,5 +39,4 @@ final class RegistrationThankYouContextAwareMailer extends AbstractContextAwareM
 
         return $email;
     }
-
 }

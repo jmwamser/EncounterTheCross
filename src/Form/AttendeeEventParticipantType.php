@@ -4,13 +4,10 @@ namespace App\Form;
 
 use App\Entity\EventParticipant;
 use App\Entity\Location;
-use App\Repository\LocationRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +22,7 @@ class AttendeeEventParticipantType extends AbstractType
 
         $builder
             ->add('person', PersonType::class)
-            ->add('line1',null,[
+            ->add('line1', null, [
                 'label' => 'Address',
                 'attr' => [
                     'placeholder' => 'Address',
@@ -40,7 +37,7 @@ class AttendeeEventParticipantType extends AbstractType
                     ),
                 ],
             ])
-            ->add('line2',null,[
+            ->add('line2', null, [
                 'label' => 'Address 2',
                 'attr' => [
                     'placeholder' => 'Address 2',
@@ -49,7 +46,7 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-            ->add('city',null,[
+            ->add('city', null, [
                 'label' => 'City',
                 'attr' => [
                     'placeholder' => 'City',
@@ -65,7 +62,7 @@ class AttendeeEventParticipantType extends AbstractType
                 ],
             ])
             ->add('state', StateType::class)
-            ->add('zipcode',null,[
+            ->add('zipcode', null, [
                 'label' => 'Zip',
                 'attr' => [
                     'placeholder' => 'Zip',
@@ -80,13 +77,13 @@ class AttendeeEventParticipantType extends AbstractType
                     ),
                 ],
             ])
-            ->add('country',HiddenType::class,[
+            ->add('country', HiddenType::class, [
                 'data' => Countries::exists('US') ? 'US' : '',
             ])
 
             ->add('attendeeContactPerson', ContactPersonType::class)
 
-            ->add('church',null,[
+            ->add('church', null, [
                 'label' => 'What church do you attend (if any)?',
                 'attr' => [
                     'placeholder' => 'What church do you attend (if any)?',
@@ -95,7 +92,7 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-            ->add('invitedBy',null,[
+            ->add('invitedBy', null, [
                 'label' => 'Who invited you?',
                 'attr' => [
                     'placeholder' => 'Who invited you?',
@@ -105,26 +102,26 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-            ->add('type', HiddenType::class,[
+            ->add('type', HiddenType::class, [
                 'data' => EventParticipant::TYPE_ATTENDEE,
             ])
 
-            ->add('questionsOrComments', TextareaType::class,[
+            ->add('questionsOrComments', TextareaType::class, [
                 'label' => 'Questions or Comments?',
                 'attr' => [
                     'placeholder' => 'Questions or Comments?',
-                    'style' => "height: 100px",
+                    'style' => 'height: 100px',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
                 'required' => false,
             ])
-            ->add('healthConcerns',TextareaType::class,[
+            ->add('healthConcerns', TextareaType::class, [
                 'label' => 'Concerns?',
                 'attr' => [
                     'placeholder' => 'Concerns?',
-                    'style' => "height: 100px",
+                    'style' => 'height: 100px',
                 ],
                 'help' => 'Let us know if you have any dietary concerns, physical limitations or health concerns',
                 'row_attr' => [
@@ -149,11 +146,11 @@ class AttendeeEventParticipantType extends AbstractType
             $launchPointOptions['choices'] = $data->getEvent()->getLaunchPoints()->toArray();
         }
         $builder
-            ->add('launchPoint',null,$launchPointOptions)
-            ->add('paymentMethod',ChoiceType::class,[
+            ->add('launchPoint', null, $launchPointOptions)
+            ->add('paymentMethod', ChoiceType::class, [
                 'label' => 'Payment Method',
                 'required' => true,
-                'choices' => array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
+                'choices' => array_combine(['Pay at the door', 'Apply for Scholarship'], EventParticipant::PAYMENT_METHODS),
                 'placeholder' => 'Select Payment Method',
                 'attr' => [
                     'placeholder' => 'Payment Method',
@@ -162,7 +159,6 @@ class AttendeeEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-
 
         ;
     }

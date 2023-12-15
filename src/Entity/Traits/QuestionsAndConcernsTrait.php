@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 2/25/23
  * Project: EncounterTheCross
  * File Name: QuestionsAndConcernsTrait.php
@@ -31,17 +32,11 @@ trait QuestionsAndConcernsTrait
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getHealthConcerns(): ?string
     {
         return $this->healthConcerns;
     }
 
-    /**
-     * @param string|null $healthConcerns
-     */
     public function setHealthConcerns(?string $healthConcerns): void
     {
         $this->healthConcerns = $healthConcerns;

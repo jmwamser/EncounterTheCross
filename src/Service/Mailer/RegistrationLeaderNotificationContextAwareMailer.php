@@ -7,7 +7,6 @@ use App\Repository\LeaderRepository;
 use App\Settings\Global\SystemSettings;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\MailerInterface as Mailer;
 use Symfony\Component\Mime\Email;
 use Tzunghaor\SettingsBundle\Service\SettingsService;
@@ -21,7 +20,7 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
         self::CONTEXT_REGISTRATION_OBJECT => EventParticipant::class,
     ];
 
-    const CONTEXT_REGISTRATION_OBJECT = 'registration';
+    public const CONTEXT_REGISTRATION_OBJECT = 'registration';
 
     private SystemSettings $settings;
 
@@ -30,14 +29,11 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
         LoggerInterface $logger,
         private LeaderRepository $leaderRepository,
         SettingsService $globalSettings,
-    ){
+    ) {
         parent::__construct($mailer, $logger);
         $this->settings = $globalSettings->getSection(SystemSettings::class);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function configureEmail(TemplatedEmail|Email $email): TemplatedEmail|Email
     {
         assert($email instanceof TemplatedEmail);
@@ -46,12 +42,12 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
             ->htmlTemplate('email/registration/notification.html.twig')
         ;
 
-        if (array_key_exists(self::CONTEXT_REGISTRATION_OBJECT,$email->getContext())) {
+        if (array_key_exists(self::CONTEXT_REGISTRATION_OBJECT, $email->getContext())) {
             $registration = $email->getContext()[self::CONTEXT_REGISTRATION_OBJECT];
             assert($registration instanceof EventParticipant);
             $event = $registration->getEvent();
 
-            //Create a more detailed subject line
+            // Create a more detailed subject line
             $email->subject(sprintf(
                 '%s Registration for %s',
                 ucfirst($registration->isServer() ? EventParticipant::TYPE_SERVER : EventParticipant::TYPE_ATTENDEE),
@@ -60,20 +56,17 @@ final class RegistrationLeaderNotificationContextAwareMailer extends AbstractCon
         }
 
         if ($this->settings->isDebugEmails()) {
-            $toEmails = array_map(function(string $email) {
+            $toEmails = array_map(function (string $email) {
                 return ['email' => $email];
-            },$this->settings->getDebugEmailAddresses());
+            }, $this->settings->getDebugEmailAddresses());
             $email->to(...$this->createToAddresses($toEmails));
 
             return $email;
         }
-
 
         $toEmails = $this->leaderRepository->findAllLeadersWithNotificationOnAndActive();
         $email->to(...$this->createToAddresses($toEmails));
 
         return $email;
     }
-
-
 }

@@ -49,17 +49,17 @@ class PrepareTask extends AbstractTask
 
         /** @var Process $process */
         $process = $this->runtime->runLocalCommand($cmdTar, 300);
+
         return $process->isSuccessful();
     }
 
     protected function getExcludes(): string
     {
         $excludes = $this->runtime->getMergedOption('exclude', []);
-        $excludes = array_merge(['*.git*','*.idea*','*.DS_Store','*.zip'], array_filter($excludes));
+        $excludes = array_merge(['*.git*', '*.idea*', '*.DS_Store', '*.zip'], array_filter($excludes));
 
         foreach ($excludes as &$exclude) {
-
-            $exclude = '-x "' . $exclude . '"';
+            $exclude = '-x "'.$exclude.'"';
         }
 
         return implode(' ', $excludes);

@@ -6,9 +6,7 @@ use App\Entity\Leader;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Service\Mailer\ResetPasswordContextAwareMailer;
-use App\Settings\SystemSettings;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +27,8 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     public function __construct(
-        private ResetPasswordHelperInterface    $resetPasswordHelper,
-        private EntityManagerInterface          $entityManager,
+        private ResetPasswordHelperInterface $resetPasswordHelper,
+        private EntityManagerInterface $entityManager,
         private ResetPasswordContextAwareMailer $resetPasswordMailer,
     ) {
     }
@@ -152,17 +150,17 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-             $this->addFlash('reset_password_error', sprintf(
-                 '%s - %s',
-                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-             ));
+            $this->addFlash('reset_password_error', sprintf(
+                '%s - %s',
+                $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+            ));
 
-            return $this->redirectToRoute('app_check_email',['resetToken'=>null,]);
+            return $this->redirectToRoute('app_check_email', ['resetToken' => null]);
         }
 
         if ($this->getGlobalSettings()->isEmailNotificationsTurnedOn()) {
-            $this->resetPasswordMailer->send([new Address($user->getEmail(),$user->getFullName())],['resetToken'=>$resetToken,]);
+            $this->resetPasswordMailer->send([new Address($user->getEmail(), $user->getFullName())], ['resetToken' => $resetToken]);
         }
 
         // Store the token object in session for retrieval in check-email route.

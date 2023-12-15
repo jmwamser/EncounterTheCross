@@ -12,21 +12,21 @@ use Zenstruck\Foundry\RepositoryProxy;
 /**
  * @extends ModelFactory<ContactPerson>
  *
- * @method        ContactPerson|Proxy create(array|callable $attributes = [])
- * @method static ContactPerson|Proxy createOne(array $attributes = [])
- * @method static ContactPerson|Proxy find(object|array|mixed $criteria)
- * @method static ContactPerson|Proxy findOrCreate(array $attributes)
- * @method static ContactPerson|Proxy first(string $sortedField = 'id')
- * @method static ContactPerson|Proxy last(string $sortedField = 'id')
- * @method static ContactPerson|Proxy random(array $attributes = [])
- * @method static ContactPerson|Proxy randomOrCreate(array $attributes = [])
+ * @method        ContactPerson|Proxy                     create(array|callable $attributes = [])
+ * @method static ContactPerson|Proxy                     createOne(array $attributes = [])
+ * @method static ContactPerson|Proxy                     find(object|array|mixed $criteria)
+ * @method static ContactPerson|Proxy                     findOrCreate(array $attributes)
+ * @method static ContactPerson|Proxy                     first(string $sortedField = 'id')
+ * @method static ContactPerson|Proxy                     last(string $sortedField = 'id')
+ * @method static ContactPerson|Proxy                     random(array $attributes = [])
+ * @method static ContactPerson|Proxy                     randomOrCreate(array $attributes = [])
  * @method static ContactPersonRepository|RepositoryProxy repository()
- * @method static ContactPerson[]|Proxy[] all()
- * @method static ContactPerson[]|Proxy[] createMany(int $number, array|callable $attributes = [])
- * @method static ContactPerson[]|Proxy[] createSequence(iterable|callable $sequence)
- * @method static ContactPerson[]|Proxy[] findBy(array $attributes)
- * @method static ContactPerson[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static ContactPerson[]|Proxy[] randomSet(int $number, array $attributes = [])
+ * @method static ContactPerson[]|Proxy[]                 all()
+ * @method static ContactPerson[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static ContactPerson[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static ContactPerson[]|Proxy[]                 findBy(array $attributes)
+ * @method static ContactPerson[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static ContactPerson[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class ContactPersonFactory extends ModelFactory
 {
@@ -65,9 +65,9 @@ final class ContactPersonFactory extends ModelFactory
         ];
     }
 
-    public static function findByPersonDetailsOrCreate($email,$phone)
+    public static function findByPersonDetailsOrCreate($email, $phone)
     {
-        return self::new(['details'=>PersonFactory::findByEmailOrPhoneOrCreate($email,$phone)]);
+        return self::new(['details' => PersonFactory::findByEmailOrPhoneOrCreate($email, $phone)]);
     }
 
     /**

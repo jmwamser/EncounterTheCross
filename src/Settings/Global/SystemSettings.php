@@ -10,10 +10,10 @@ class SystemSettings
     #[Setting]
     private bool $emailNotifications = false;
 
-//    #[Setting(
-////        enum: []
-//    )]
-//    private SystemModeEnum $mode = SystemModeEnum::RUNNING;
+    //    #[Setting(
+    // //        enum: []
+    //    )]
+    //    private SystemModeEnum $mode = SystemModeEnum::RUNNING;
 
     #[Setting]
     private array $debugEmailAddresses = [];
@@ -41,15 +41,15 @@ class SystemSettings
         $this->emailNotifications = $emailNotifications;
     }
 
-//    public function getMode(): SystemModeEnum
-//    {
-//        return $this->mode;
-//    }
-//
-//    public function setMode(SystemModeEnum $mode): void
-//    {
-//        $this->mode = $mode;
-//    }
+    //    public function getMode(): SystemModeEnum
+    //    {
+    //        return $this->mode;
+    //    }
+    //
+    //    public function setMode(SystemModeEnum $mode): void
+    //    {
+    //        $this->mode = $mode;
+    //    }
 
     public function isMaintenanceMode(): bool
     {

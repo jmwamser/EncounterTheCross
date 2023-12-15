@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/7/23
  * Project: EncounterTheCross
  * File Name: EventLocationCrudController.php
@@ -8,7 +9,6 @@
 
 namespace App\Controller\Admin\Crud;
 
-use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Location;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class EventLocationCrudController extends LocationCrudController
 {
@@ -30,7 +29,6 @@ class EventLocationCrudController extends LocationCrudController
 
         return $entity;
     }
-
 
     public function configureCrud(Crud $crud): Crud
     {

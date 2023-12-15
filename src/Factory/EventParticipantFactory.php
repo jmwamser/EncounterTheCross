@@ -3,8 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\EventParticipant;
-use App\Entity\Location;
-use App\Entity\Person;
 use App\Repository\EventParticipantRepository;
 use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
@@ -14,21 +12,21 @@ use Zenstruck\Foundry\RepositoryProxy;
 /**
  * @extends ModelFactory<EventParticipant>
  *
- * @method        EventParticipant|Proxy create(array|callable $attributes = [])
- * @method static EventParticipant|Proxy createOne(array $attributes = [])
- * @method static EventParticipant|Proxy find(object|array|mixed $criteria)
- * @method static EventParticipant|Proxy findOrCreate(array $attributes)
- * @method static EventParticipant|Proxy first(string $sortedField = 'id')
- * @method static EventParticipant|Proxy last(string $sortedField = 'id')
- * @method static EventParticipant|Proxy random(array $attributes = [])
- * @method static EventParticipant|Proxy randomOrCreate(array $attributes = [])
+ * @method        EventParticipant|Proxy                     create(array|callable $attributes = [])
+ * @method static EventParticipant|Proxy                     createOne(array $attributes = [])
+ * @method static EventParticipant|Proxy                     find(object|array|mixed $criteria)
+ * @method static EventParticipant|Proxy                     findOrCreate(array $attributes)
+ * @method static EventParticipant|Proxy                     first(string $sortedField = 'id')
+ * @method static EventParticipant|Proxy                     last(string $sortedField = 'id')
+ * @method static EventParticipant|Proxy                     random(array $attributes = [])
+ * @method static EventParticipant|Proxy                     randomOrCreate(array $attributes = [])
  * @method static EventParticipantRepository|RepositoryProxy repository()
- * @method static EventParticipant[]|Proxy[] all()
- * @method static EventParticipant[]|Proxy[] createMany(int $number, array|callable $attributes = [])
- * @method static EventParticipant[]|Proxy[] createSequence(iterable|callable $sequence)
- * @method static EventParticipant[]|Proxy[] findBy(array $attributes)
- * @method static EventParticipant[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static EventParticipant[]|Proxy[] randomSet(int $number, array $attributes = [])
+ * @method static EventParticipant[]|Proxy[]                 all()
+ * @method static EventParticipant[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static EventParticipant[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static EventParticipant[]|Proxy[]                 findBy(array $attributes)
+ * @method static EventParticipant[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static EventParticipant[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class EventParticipantFactory extends ModelFactory
 {
@@ -49,16 +47,15 @@ final class EventParticipantFactory extends ModelFactory
     {
         $type = self::faker()->randomElement(EventParticipant::TYPES());
 
-
         $typeDefaults = [];
-        if (EventParticipant::TYPE_ATTENDEE === $type){
-            //TODO: Fill out the required fields per `type` (ATTENDEE)
+        if (EventParticipant::TYPE_ATTENDEE === $type) {
+            // TODO: Fill out the required fields per `type` (ATTENDEE)
             $contactEmail = self::faker()->email();
             $contactPhone = self::faker()->phoneNumber();
-            $typeDefaults['attendeeContactPerson'] = $this->findByPersonDetailsOrCreate($contactEmail,$contactPhone);
+            $typeDefaults['attendeeContactPerson'] = $this->findByPersonDetailsOrCreate($contactEmail, $contactPhone);
         }
-        if (EventParticipant::TYPE_SERVER === $type){
-            //TODO: Fill out the required fields per `type` (SERVER)
+        if (EventParticipant::TYPE_SERVER === $type) {
+            // TODO: Fill out the required fields per `type` (SERVER)
         }
 
         $eventLaunchPoints = EventFactory::randomOrCreate()->getLaunchPoints();
@@ -80,7 +77,7 @@ final class EventParticipantFactory extends ModelFactory
             'zipcode' => self::faker()->postcode(),
             'event' => EventFactory::randomOrCreate(),
             'paymentMethod' => self::faker()->randomElement(EventParticipant::PAYMENT_METHODS),
-        ],$typeDefaults);
+        ], $typeDefaults);
     }
 
     public function server()
@@ -99,7 +96,7 @@ final class EventParticipantFactory extends ModelFactory
         ]);
     }
 
-    protected function findByPersonDetailsOrCreate($email = null,$phone = null)
+    protected function findByPersonDetailsOrCreate($email = null, $phone = null)
     {
         if (null === $email) {
             $email = self::faker()->email();
@@ -108,7 +105,7 @@ final class EventParticipantFactory extends ModelFactory
             $phone = self::faker()->phoneNumber();
         }
 
-        return ContactPersonFactory::findByPersonDetailsOrCreate($email,$phone);
+        return ContactPersonFactory::findByPersonDetailsOrCreate($email, $phone);
     }
 
     /**

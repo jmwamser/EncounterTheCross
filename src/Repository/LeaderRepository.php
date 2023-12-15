@@ -61,8 +61,8 @@ class LeaderRepository extends ServiceEntityRepository implements PasswordUpgrad
     {
         $qb = $this->createQueryBuilder('l');
         $qb
-            ->leftJoin('l.person','p')
-            ->select('l.email as Email',"CONCAT(p.firstName,' ',p.lastName) as Name")
+            ->leftJoin('l.person', 'p')
+            ->select('l.email as Email', "CONCAT(p.firstName,' ',p.lastName) as Name")
         ;
 
         return $qb
@@ -84,42 +84,41 @@ class LeaderRepository extends ServiceEntityRepository implements PasswordUpgrad
         $query->setParameter('role', Role::LEADER_EVENT);
 
         return $query->getResult();
-//        $qb = $this->createQueryBuilder('l');
-//
-//        $qb
-//            ->select('l')
-////            ->andWhere(
-////                "JSON_EXTRACT(l.roles, JSON_SEARCH(l.roles, 'one', ':role'))"
-////            )
-////            ->setParameter('role',Role::LEADER_EVENT)
-//            ->setMaxResults(3);
-//
-//        return $qb->getQuery()->getResult();
+        //        $qb = $this->createQueryBuilder('l');
+        //
+        //        $qb
+        //            ->select('l')
+        // //            ->andWhere(
+        // //                "JSON_EXTRACT(l.roles, JSON_SEARCH(l.roles, 'one', ':role'))"
+        // //            )
+        // //            ->setParameter('role',Role::LEADER_EVENT)
+        //            ->setMaxResults(3);
+        //
+        //        return $qb->getQuery()->getResult();
     }
 
-//    /**
-//     * @return Leader[] Returns an array of Leader objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Leader[] Returns an array of Leader objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('l.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Leader
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
+    //    public function findOneBySomeField($value): ?Leader
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

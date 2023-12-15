@@ -8,7 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Countries;
@@ -24,7 +23,7 @@ class ServerEventParticipantType extends AbstractType
 
         $builder
             ->add('person', PersonType::class)
-            ->add('line1',null,[
+            ->add('line1', null, [
                 'label' => 'Address',
                 'attr' => [
                     'placeholder' => 'Address',
@@ -39,7 +38,7 @@ class ServerEventParticipantType extends AbstractType
                     ),
                 ],
             ])
-            ->add('line2',null,[
+            ->add('line2', null, [
                 'label' => 'Address 2',
                 'attr' => [
                     'placeholder' => 'Address 2',
@@ -48,7 +47,7 @@ class ServerEventParticipantType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-            ->add('city',null,[
+            ->add('city', null, [
                 'label' => 'City',
                 'attr' => [
                     'placeholder' => 'City',
@@ -64,7 +63,7 @@ class ServerEventParticipantType extends AbstractType
                 ],
             ])
             ->add('state', StateType::class)
-            ->add('zipcode',null,[
+            ->add('zipcode', null, [
                 'label' => 'Zip',
                 'attr' => [
                     'placeholder' => 'Zip',
@@ -79,7 +78,7 @@ class ServerEventParticipantType extends AbstractType
                     ),
                 ],
             ])
-            ->add('country',HiddenType::class,[
+            ->add('country', HiddenType::class, [
                 'data' => Countries::exists('US') ? 'US' : '',
             ])
 
@@ -94,25 +93,25 @@ class ServerEventParticipantType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('type', HiddenType::class,[
+            ->add('type', HiddenType::class, [
                 'data' => EventParticipant::TYPE_SERVER,
             ])
-            ->add('questionsOrComments', TextareaType::class,[
+            ->add('questionsOrComments', TextareaType::class, [
                 'label' => 'Questions or Comments?',
                 'attr' => [
                     'placeholder' => 'Questions or Comments?',
-                    'style' => "height: 100px",
+                    'style' => 'height: 100px',
                 ],
                 'row_attr' => [
                     'class' => 'form-floating',
                 ],
                 'required' => false,
             ])
-            ->add('healthConcerns',TextareaType::class,[
+            ->add('healthConcerns', TextareaType::class, [
                 'label' => 'Concerns?',
                 'attr' => [
                     'placeholder' => 'Concerns?',
-                    'style' => "height: 100px",
+                    'style' => 'height: 100px',
                 ],
                 'help' => 'Let us know if you have any dietary concerns, physical limitations or health concerns',
                 'row_attr' => [
@@ -137,11 +136,11 @@ class ServerEventParticipantType extends AbstractType
             $launchPointOptions['choices'] = $data->getEvent()->getLaunchPoints()->toArray();
         }
         $builder
-            ->add('launchPoint',null,$launchPointOptions)
-            ->add('paymentMethod',ChoiceType::class,[
+            ->add('launchPoint', null, $launchPointOptions)
+            ->add('paymentMethod', ChoiceType::class, [
                 'label' => 'Payment Method',
                 'required' => true,
-                'choices' => ['Pay at the door'=>EventParticipant::PAYMENT_METHOD_ATDOOR],//array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
+                'choices' => ['Pay at the door' => EventParticipant::PAYMENT_METHOD_ATDOOR], // array_combine(['Pay at the door', 'Apply for Scholarship'],EventParticipant::PAYMENT_METHODS),
                 'placeholder' => 'Select Payment Method',
                 'attr' => [
                     'placeholder' => 'Payment Method',

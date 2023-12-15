@@ -1,6 +1,5 @@
 {
     "require": {
-        "php": ">=8.1",
         "andres-montanez/magallanes": "^5.0",
         "symfony/yaml": "^6.3",
         "z4kn4fein/php-semver": "^2.0"

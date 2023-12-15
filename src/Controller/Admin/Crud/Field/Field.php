@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/7/23
  * Project: EncounterTheCross
  * File Name: Field.php
@@ -17,7 +18,7 @@ final class Field implements FieldInterface
     use FieldTrait;
     private FieldDto $dto;
 
-    public static function new(string $propertyName, ?string $label = null)
+    public static function new(string $propertyName, string $label = null)
     {
         return (new self())
             ->setProperty($propertyName)

@@ -10,7 +10,8 @@ final class ContactEventLeadersComponent
 {
     public function __construct(
         private LeaderRepository $leaderRepository
-    ){}
+    ) {
+    }
 
     public function getEventLeaders()
     {

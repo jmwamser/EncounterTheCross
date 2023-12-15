@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Person;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +14,7 @@ class PersonPhoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName',null,[
+            ->add('firstName', null, [
                 'label' => 'First Name',
                 'attr' => [
                     'placeholder' => 'First Name',
@@ -30,7 +29,7 @@ class PersonPhoneType extends AbstractType
                     ),
                 ],
             ])
-            ->add('lastName',null,[
+            ->add('lastName', null, [
                 'label' => 'Last Name',
                 'attr' => [
                     'placeholder' => 'Last Name',
@@ -45,7 +44,7 @@ class PersonPhoneType extends AbstractType
                     ),
                 ],
             ])
-            ->add('phone',TelType::class,[
+            ->add('phone', TelType::class, [
                 'label' => 'Phone',
                 'attr' => [
                     'placeholder' => 'Phone',

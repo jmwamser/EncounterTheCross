@@ -2,12 +2,11 @@
 
 namespace App\Exception;
 
-
 use App\Exception\Core\LogicException;
 
 class MissingMailerContextRequiredValuesException extends LogicException
 {
-    public function __construct(string $key, bool $missing = true, ?\Throwable $previous = null)
+    public function __construct(string $key, bool $missing = true, \Throwable $previous = null)
     {
         // the MailerContext is MISSING the key BLAAA
         // the MailerContext has an INVALID value on key BLAA
@@ -17,5 +16,4 @@ class MissingMailerContextRequiredValuesException extends LogicException
             strtoupper($key)
         ), 0, $previous);
     }
-
 }

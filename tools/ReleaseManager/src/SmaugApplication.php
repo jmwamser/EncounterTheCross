@@ -19,10 +19,6 @@ class SmaugApplication extends MageApplication
         ));
     }
 
-
-    /**
-     * @inheritDoc
-     */
     protected function loadBuiltInCommands(): void
     {
         parent::loadBuiltInCommands();
@@ -31,9 +27,7 @@ class SmaugApplication extends MageApplication
     }
 
     /**
-     * Load the provided commands
-     *
-     * @param array $commands
+     * Load the provided commands.
      */
     protected function loadCommands(array $commands)
     {

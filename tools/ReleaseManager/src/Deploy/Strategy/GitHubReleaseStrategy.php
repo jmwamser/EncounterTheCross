@@ -55,16 +55,14 @@ class GitHubReleaseStrategy implements StrategyInterface
     }
 
     /**
-     * Check the runtime stage is correct
+     * Check the runtime stage is correct.
      *
      * @throws RuntimeException
      */
     private function checkStage(string $stage): void
     {
         if ($this->runtime->getStage() !== $stage) {
-            throw new RuntimeException(
-                sprintf('Invalid stage, got "%s" but expected "%s"', $this->runtime->getStage(), $stage)
-            );
+            throw new RuntimeException(sprintf('Invalid stage, got "%s" but expected "%s"', $this->runtime->getStage(), $stage));
         }
     }
 }

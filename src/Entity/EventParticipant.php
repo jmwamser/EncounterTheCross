@@ -202,7 +202,7 @@ class EventParticipant implements EntityExportableInterface
     public function toArray(): array
     {
         return [
-            'type'=> $this->getType(),
+            'type' => $this->getType(),
             'name' => $this->getFullName(),
             'email' => $this->getPerson()->getEmail(),
             'phone' => $this->getPerson()->getPhone(),

@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/7/23
  * Project: EncounterTheCross
  * File Name: Uuid.php
@@ -42,6 +43,6 @@ class UuidField implements FieldInterface
             // field is displayed in any CRUD page (index/detail/edit/new)
 //            ->addCssFiles('js/admin/field-map.css')
 //            ->addJsFiles('js/admin/field-map.js')
-            ;
+        ;
     }
 }

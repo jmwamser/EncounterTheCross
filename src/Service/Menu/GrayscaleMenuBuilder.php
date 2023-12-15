@@ -13,18 +13,18 @@ class GrayscaleMenuBuilder implements MenuBuilderInterface
     {
     }
 
-    const MAINMENU = 'root';
+    public const MAINMENU = 'root';
 
     public function build(): ItemInterface
     {
         $menu = $this->factory->createItem(self::MAINMENU)
-            ->setChildrenAttribute('class','navbar-nav ms-auto')
+            ->setChildrenAttribute('class', 'navbar-nav ms-auto')
         ;
 
         foreach ($this->items as $name => $options) {
-            $menu->addChild($name,$options)
-                ->setAttribute('class','nav-item')
-                ->setLinkAttribute('class','nav-link')
+            $menu->addChild($name, $options)
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link')
             ;
         }
 

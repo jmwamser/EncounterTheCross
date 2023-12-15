@@ -2,18 +2,14 @@
 
 namespace App\Service\Mailer;
 
-use App\Exception\Core\InvalidArgumentException;
 use App\Exception\Core\LogicException;
-use App\Exception\ExceptionInterface;
 use App\Exception\MissingMailerContextRequiredValuesException;
 use App\Exception\MultipleSendsMailerException;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface as Mailer;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use function Symfony\Component\String\s;
 
 abstract class AbstractContextAwareMailer implements MailerInterface
 {
@@ -24,23 +20,19 @@ abstract class AbstractContextAwareMailer implements MailerInterface
     public function __construct(
         private Mailer $mailer,
         protected LoggerInterface $logger,
-    ){
+    ) {
         $this->email = new TemplatedEmail();
     }
 
     /**
      * This method is specifically so you can setup the Email Subject, template or body, etc. This is after the submited context from the send method has been added but before we add the toEmails. Those will me merged later if you add some now.
-     *
-     * @param TemplatedEmail|Email $email
-     * @return TemplatedEmail|Email
      */
     abstract protected function configureEmail(TemplatedEmail|Email $email): TemplatedEmail|Email;
 
     /**
-     * @inheritDoc
      * @internal
      */
-    final public function send(string|array|null $toEmails = null,array $context = []): void
+    final public function send(string|array $toEmails = null, array $context = []): void
     {
         $email = $this->getEmail();
         $this->email = $email->context(
@@ -55,7 +47,6 @@ abstract class AbstractContextAwareMailer implements MailerInterface
     }
 
     /**
-     * @param string|array $toEmails
      * @return array<Address>|Address[]
      */
     protected function createToAddresses(string|array $toEmails): array
@@ -65,11 +56,11 @@ abstract class AbstractContextAwareMailer implements MailerInterface
         }
 
         if (is_array($toEmails)) {
-            $toEmails = array_map(function(array|Address $toEmail) {
+            $toEmails = array_map(function (array|Address $toEmail) {
                 return $toEmail instanceof Address
                     ? $toEmail
-                    : new Address($toEmail['Email'] ?? $toEmail['email'],$toEmail['Name'] ?? '');
-            },$toEmails);
+                    : new Address($toEmail['Email'] ?? $toEmail['email'], $toEmail['Name'] ?? '');
+            }, $toEmails);
         }
 
         return $toEmails;
@@ -80,7 +71,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
         return $this->mailer;
     }
 
-    private function handlePreventEmailSend(?string $message = null, ?array $context = [])
+    private function handlePreventEmailSend(string $message = null, ?array $context = [])
     {
         $exceptionMessage = $message ?? 'Had an issue generating the email, was unable to send.';
 
@@ -88,17 +79,16 @@ abstract class AbstractContextAwareMailer implements MailerInterface
             sprintf(
                 $exceptionMessage.' From class %s',
                 get_class($this)
-            )
-            ,$context ?? []);
+            ), $context ?? []);
     }
 
     private function validateContext(array $context): bool
     {
         $exception = null;
-//        dd(is_a('test this out','string',true),is_a('test this out','string'),is_a(['test this out',],'array'));
+        //        dd(is_a('test this out','string',true),is_a('test this out','string'),is_a(['test this out',],'array'));
         foreach (self::CONTEXT_REQUIREMENTS as $key => $objectType) {
             if (
-                array_key_exists($key,$context)
+                array_key_exists($key, $context)
             ) {
                 $exception = new MissingMailerContextRequiredValuesException(
                     key: $key,
@@ -107,7 +97,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
                 continue;
             }
 
-            if (is_a($context[$key],$objectType,true)) {
+            if (is_a($context[$key], $objectType, true)) {
                 $exception = new MissingMailerContextRequiredValuesException(
                     key: $key,
                     missing: false,
@@ -123,12 +113,12 @@ abstract class AbstractContextAwareMailer implements MailerInterface
 
     final protected function getEmail(): TemplatedEmail
     {
-        //The reason for this is we want a new email created each time we try to send on. That way the email ID is different each time. Other wise it creates a nightmare when looking at the emails.
-        if ($this->sendMultiple && $this->email === null) {
+        // The reason for this is we want a new email created each time we try to send on. That way the email ID is different each time. Other wise it creates a nightmare when looking at the emails.
+        if ($this->sendMultiple && null === $this->email) {
             $this->email = new TemplatedEmail();
         }
 
-        //IF the email is null at this point we are configure to send the email only one time.
+        // IF the email is null at this point we are configure to send the email only one time.
         if (null === $this->email) {
             throw new MultipleSendsMailerException(get_class($this));
         }
@@ -138,7 +128,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
 
     private function sendMail(array|string|null $toEmails): void
     {
-        if (null === $toEmails && empty($this->getEmail()->getTo()) ) {
+        if (null === $toEmails && empty($this->getEmail()->getTo())) {
             $this->handlePreventEmailSend(
                 message: 'There was no ToEmails configured, skipping sending email.',
                 context: $this->email?->getContext(),
@@ -148,15 +138,11 @@ abstract class AbstractContextAwareMailer implements MailerInterface
             return;
         }
 
-        //Make sure emails are in correct format
+        // Make sure emails are in correct format
         try {
-            $toEmails = array_merge($this->getEmail()->getTo(),$this->createToAddresses($toEmails ?? []));
-        }
-        catch (Exception $exception) {
-            throw new LogicException(
-                message: 'While converting all to emails to an Address, one was missing a value.',
-                previous: $exception,
-            );
+            $toEmails = array_merge($this->getEmail()->getTo(), $this->createToAddresses($toEmails ?? []));
+        } catch (\Exception $exception) {
+            throw new LogicException(message: 'While converting all to emails to an Address, one was missing a value.', previous: $exception);
         }
 
         $this->validateContext($this->getEmail()->getContext());

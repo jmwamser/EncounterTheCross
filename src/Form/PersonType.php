@@ -16,7 +16,7 @@ class PersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName',null,[
+            ->add('firstName', null, [
                 'constraints' => [
                     new NotNull(
                         message: 'You forgot to tell us your First Name.'
@@ -31,7 +31,7 @@ class PersonType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('lastName',null,[
+            ->add('lastName', null, [
                 'constraints' => [
                     new NotNull(
                         message: 'You forgot to tell us your Last Name.'
@@ -46,7 +46,7 @@ class PersonType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('email',EmailType::class,[
+            ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotNull(
                         message: 'Whats your email address.'
@@ -62,7 +62,7 @@ class PersonType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('phone',TelType::class,[
+            ->add('phone', TelType::class, [
                 'constraints' => [
                     new NotNull(
                         message: 'You forgot to enter your phone number.'

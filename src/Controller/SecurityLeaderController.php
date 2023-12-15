@@ -27,7 +27,7 @@ class SecurityLeaderController extends AbstractController
             'forgot_password_path' => '/reset-password',
             'csrf_token_intention' => 'authenticate',
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 

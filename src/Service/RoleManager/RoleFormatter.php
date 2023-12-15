@@ -2,6 +2,7 @@
 
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 4/8/23
  * Project: EncounterTheCross
  * File Name: RoleFormatter.php
@@ -14,9 +15,9 @@ class RoleFormatter
     public static function formatRolesForForm(array $roles): array
     {
         $keyValueRoles = self::formatRoleKeysToMatchValues($roles);
-        $valueRolesMap = array_map(function($role) {
+        $valueRolesMap = array_map(function ($role) {
             return self::formatUserReadableString($role);
-        },$keyValueRoles);
+        }, $keyValueRoles);
 
         return array_flip($valueRolesMap);
     }
@@ -52,8 +53,8 @@ class RoleFormatter
             // TODO Log Formatter issue
             // TODO Make RoleFormatterException::class
             throw $exception;
+
             return null;
         }
-
     }
 }

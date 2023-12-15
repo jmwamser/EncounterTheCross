@@ -1,6 +1,7 @@
 <?php
 /**
  * @Author: jwamser
+ *
  * @CreateAt: 2/25/23
  * Project: EncounterTheCross
  * File Name: InvalidLocationType.php
@@ -22,5 +23,4 @@ class InvalidLocationType extends \InvalidArgumentException
         );
         parent::__construct($message);
     }
-
 }

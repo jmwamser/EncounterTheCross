@@ -9,7 +9,6 @@ interface MailerInterface
 {
     /**
      * @param string|array<Address>|array{array{email:string, name:string}}|Address[] $toEmails
-     * @return void
      *
      * @throws TransportExceptionInterface
      */

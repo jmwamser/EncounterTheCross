@@ -3,14 +3,13 @@
 namespace App\Twig\Components;
 
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 
 trait GridConfigurationTrait
 {
     #[ExposeInTemplate('size')]
-    #[ArrayShape(["string"=>"int"])]
+    #[ArrayShape(['string' => 'int'])]
     private array $cardColumns;
 
     public function getCardColumns(): array
@@ -24,7 +23,7 @@ trait GridConfigurationTrait
     ): void {
         if (is_int($config)) {
             $config = [
-                'breakpoints' => [['lg' => $config,]]
+                'breakpoints' => [['lg' => $config]],
             ];
         }
         $resolver = new OptionsResolver();
@@ -33,12 +32,12 @@ trait GridConfigurationTrait
                 ->setPrototype(true)
                 ->setRequired(['lg'])
                 ->setDefaults([
-                    "xs" => null,
-                    "sm" => null,
-                    "md" => null,
-                    "lg" => null,
-                    "xl" => null,
-                    "xxl" => null,
+                    'xs' => null,
+                    'sm' => null,
+                    'md' => null,
+                    'lg' => null,
+                    'xl' => null,
+                    'xxl' => null,
                 ]);
         });
 

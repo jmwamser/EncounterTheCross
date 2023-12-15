@@ -1,0 +1,151 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property App\\\\Controller\\\\Admin\\\\Crud\\\\Field\\\\Field\\:\\:\\$dto is never read, only written\\.$#"
+			count: 1
+			path: src/Controller/Admin/Crud/Field/Field.php
+
+		-
+			message: "#^Property App\\\\Controller\\\\Admin\\\\Crud\\\\LeaderCrudController\\:\\:\\$roleHierarchy is never read, only written\\.$#"
+			count: 1
+			path: src/Controller/Admin/Crud/LeaderCrudController.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Controller/DevelopmentController.php
+
+		-
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
+			count: 1
+			path: src/Entity/ContactPerson.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\ArrayShape does not exist\\.$#"
+			count: 1
+			path: src/Entity/Location.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\Pure does not exist\\.$#"
+			count: 1
+			path: src/Exception/InvalidLocationType.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\Pure does not exist\\.$#"
+			count: 1
+			path: src/Exception/MultipleSendsMailerException.php
+
+		-
+			message: "#^Call to an undefined method Faker\\\\Generator\\:\\:state\\(\\)\\.$#"
+			count: 1
+			path: src/Factory/EventParticipantFactory.php
+
+		-
+			message: "#^Call to an undefined method Faker\\\\Generator\\:\\:state\\(\\)\\.$#"
+			count: 1
+			path: src/Factory/LocationFactory.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: src/Form/AttendeeEventParticipantType.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: src/Form/ServerEventParticipantType.php
+
+		-
+			message: "#^Call to static method getRowPointerFromBase32\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Repository/ContactPersonRepository.php
+
+		-
+			message: "#^Call to static method getRowPointerFromBase32\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Repository/EventParticipantRepository.php
+
+		-
+			message: "#^Call to static method getRowPointerFromBase32\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Repository/EventRepository.php
+
+		-
+			message: "#^Call to static method getRowPointerFromBase32\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Repository/LocationRepository.php
+
+		-
+			message: "#^Call to static method getRowPointerFromBase32\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Repository/PersonRepository.php
+
+		-
+			message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/Service/Mailer/AbstractContextAwareMailer.php
+
+		-
+			message: "#^Empty array passed to foreach\\.$#"
+			count: 1
+			path: src/Service/Mailer/AbstractContextAwareMailer.php
+
+		-
+			message: "#^Property App\\\\Service\\\\Mailer\\\\AbstractContextAwareMailer\\:\\:\\$email \\(Symfony\\\\Bridge\\\\Twig\\\\Mime\\\\TemplatedEmail\\|null\\) does not accept Symfony\\\\Component\\\\Mime\\\\Email\\.$#"
+			count: 1
+			path: src/Service/Mailer/AbstractContextAwareMailer.php
+
+		-
+			message: "#^Constant App\\\\Service\\\\Mailer\\\\RegistrationLeaderNotificationContextAwareMailer\\:\\:CONTEXT_REQUIREMENTS is unused\\.$#"
+			count: 1
+			path: src/Service/Mailer/RegistrationLeaderNotificationContextAwareMailer.php
+
+		-
+			message: "#^Constant App\\\\Service\\\\Mailer\\\\RegistrationThankYouContextAwareMailer\\:\\:CONTEXT_REQUIREMENTS is unused\\.$#"
+			count: 1
+			path: src/Service/Mailer/RegistrationThankYouContextAwareMailer.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Mime\\\\Email\\:\\:htmlTemplate\\(\\)\\.$#"
+			count: 1
+			path: src/Service/Mailer/ResetPasswordContextAwareMailer.php
+
+		-
+			message: "#^Static method App\\\\Service\\\\RoleManager\\\\RoleFormatter\\:\\:formatUserReadableArray\\(\\) is unused\\.$#"
+			count: 1
+			path: src/Service/RoleManager/RoleFormatter.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Service/RoleManager/RoleFormatter.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Settings/SettingsEnumConverter.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\ArrayShape does not exist\\.$#"
+			count: 1
+			path: src/Twig/Components/TestimonialCollectionComponent.php
+
+		-
+			message: "#^Match expression does not handle remaining value\\: string$#"
+			count: 1
+			path: src/Twig/Components/TestimonialCollectionComponent.php
+
+		-
+			message: "#^Property App\\\\Twig\\\\Components\\\\TestimonialCollectionComponent\\:\\:\\$cardsPerRow \\(int\\) does not accept float\\.$#"
+			count: 1
+			path: src/Twig/Components/TestimonialCollectionComponent.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\ArrayShape does not exist\\.$#"
+			count: 1
+			path: src/Twig/Components/TestimonialComponent.php
+
+		-
+			message: "#^Call to static method getBase32RowPointer\\(\\) on an unknown class UuidFactory\\.$#"
+			count: 1
+			path: src/Twig/Runtime/UuidFormaterRuntime.php

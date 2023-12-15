@@ -3,13 +3,9 @@
 namespace App\EventSubscriber;
 
 use App\Settings\Global\SystemSettings;
-use Doctrine\Migrations\Version\MigrationStatusCalculator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\IpUtils;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -23,14 +19,14 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
         private string $environment,
         SettingsService $globalSettings,
         private Environment $twig,
-    ){
+    ) {
         $this->settings = $globalSettings->getSection(SystemSettings::class);
     }
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($this->environment === 'dev') {
-            //We are in development environment, no need to lock things down.
+        if ('dev' === $this->environment) {
+            // We are in development environment, no need to lock things down.
             return;
         }
 

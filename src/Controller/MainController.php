@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Repository\EventRepository;
 use App\Repository\LocationRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(
     '/{site}',
-    defaults: ['site'=> 'men'],
-    requirements: ['site'=>'men'],
+    defaults: ['site' => 'men'],
+    requirements: ['site' => 'men'],
 )]
 class MainController extends AbstractController
 {
@@ -21,8 +20,7 @@ class MainController extends AbstractController
     )]
     public function index(
         EventRepository $eventRepository,
-    ): Response
-    {
+    ): Response {
         $nextEvent = $eventRepository->findUpcomingEvent();
 
         return $this->render('frontend/index.html.twig', [
@@ -33,11 +31,11 @@ class MainController extends AbstractController
     #[Route('/contact', name: 'app_launchpoints')]
     public function contactLaunchPoints(LocationRepository $launchPointRespository)
     {
-        //TODO: convert into Twig Component
+        // TODO: convert into Twig Component
         $launchPoints = $launchPointRespository->getAllActiveLaunchPoints(['name' => 'asc']);
 
         $pins = [];
-        foreach($launchPoints as $launchPoint) {
+        foreach ($launchPoints as $launchPoint) {
             if ($launchPoint->hasMappingLocation()) {
                 $pins[] = [
                     'lat' => $launchPoint->getLatitude(),
@@ -77,22 +75,21 @@ class MainController extends AbstractController
             cy="90.196"
             r="21.756">
     </circle>
-</svg>',200,['Content-Type' => 'image/svg+xml']);
+</svg>', 200, ['Content-Type' => 'image/svg+xml']);
     }
 
     #[Route('/testimonies', name: 'app_testimonies')]
     public function testimonies()
     {
-//        $queryBuilder = $testimonialRepository->findAllTestimoniesQueryBuilder();
-//        $adaptor = new QueryAdapter($queryBuilder);
-//        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
-//            $adaptor,
-//            $request->query->get('page', 1),
-//            9
-//        );
+        //        $queryBuilder = $testimonialRepository->findAllTestimoniesQueryBuilder();
+        //        $adaptor = new QueryAdapter($queryBuilder);
+        //        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+        //            $adaptor,
+        //            $request->query->get('page', 1),
+        //            9
+        //        );
 
-
-        return $this->render('frontend/testimonies.html.twig',[
+        return $this->render('frontend/testimonies.html.twig', [
 //            'pager' => $pagerfanta,
         ]);
     }

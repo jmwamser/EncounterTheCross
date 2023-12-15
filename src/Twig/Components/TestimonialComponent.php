@@ -3,10 +3,8 @@
 namespace App\Twig\Components;
 
 use App\Entity\Testimonial;
-use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
-use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 
 #[AsTwigComponent('testimonial')]
@@ -49,13 +47,8 @@ final class TestimonialComponent
         $resolver->setAllowedTypes('isLayoutGrid', 'bool');
         $resolver->setAllowedTypes('size', 'array');
         $resolver->setAllowedTypes('createWrapper', 'bool');
-        $resolver->setAllowedTypes('background', ['string','null']);
+        $resolver->setAllowedTypes('background', ['string', 'null']);
 
         return $resolver->resolve($data);
     }
-
-
-
-
-
 }

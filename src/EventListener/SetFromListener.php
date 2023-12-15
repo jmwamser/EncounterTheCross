@@ -14,7 +14,7 @@ class SetFromListener implements EventSubscriberInterface
         private ?string $fromEmail = null,
         private ?string $fromName = null,
         private LoggerInterface $logger,
-    ){
+    ) {
     }
 
     public static function getSubscribedEvents()
@@ -38,8 +38,9 @@ class SetFromListener implements EventSubscriberInterface
         if (null === $this->fromEmail || null === $this->fromName) {
             $this->logger->error(
                 'You don\'t have all the Mailer variables configured. You are missing the from address options. Take a look in your environment variables to see if you have them set.',
-                ['fromEmail'=> $this->fromEmail, 'fromName' => $this->fromName,]
+                ['fromEmail' => $this->fromEmail, 'fromName' => $this->fromName]
             );
+
             return;
         }
 

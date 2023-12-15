@@ -10,7 +10,6 @@ use Mage\Task\Exception\ErrorException;
 use Mage\Task\Exception\SkipException;
 use Mage\Task\ExecuteOnRollbackInterface;
 use Mage\Task\TaskFactory;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ZipCommand extends AbstractCommand
 {
-    /**
-     * @inheritDoc
-     */
     protected function configure(): void
     {
         $this
@@ -45,9 +41,6 @@ class ZipCommand extends AbstractCommand
         ;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->requireConfig();
@@ -58,7 +51,7 @@ class ZipCommand extends AbstractCommand
         try {
             $this->runtime->setEnvironment($input->getArgument('environment'));
 
-//            $strategy = $this->runtime->guessStrategy();
+            //            $strategy = $this->runtime->guessStrategy();
             $strategy = new GitHubReleaseStrategy();
             $strategy->setRuntime($this->runtime);
 
@@ -68,7 +61,7 @@ class ZipCommand extends AbstractCommand
             $this->log(sprintf('Environment: %s', $this->runtime->getEnvironment()));
 
             if ($this->runtime->getEnvOption('releases', false)) {
-//                $this->runtime->generateReleaseId();
+                //                $this->runtime->generateReleaseId();
                 // TODO build in the sem version lib here
                 $this->runtime->setReleaseId($input->getArgument('version'));
                 $output->writeln(sprintf('    Release ID: <fg=green>%s</>', $this->runtime->getReleaseId()));
@@ -81,15 +74,15 @@ class ZipCommand extends AbstractCommand
 
             $output->writeln(sprintf('    Strategy: <fg=green>%s</>', $strategy->getName()));
 
-            if (($input->getOption('branch') !== false) && ($input->getOption('tag') !== false)) {
+            if ((false !== $input->getOption('branch')) && (false !== $input->getOption('tag'))) {
                 throw new RuntimeException('Branch and Tag options are mutually exclusive.');
             }
 
-            if ($input->getOption('branch') !== false) {
+            if (false !== $input->getOption('branch')) {
                 $this->runtime->setEnvOption('branch', $input->getOption('branch'));
             }
 
-            if ($input->getOption('tag') !== false) {
+            if (false !== $input->getOption('tag')) {
                 $this->runtime->setEnvOption('branch', false);
                 $this->runtime->setEnvOption('tag', $input->getOption('tag'));
                 $output->writeln(sprintf('    Tag: <fg=green>%s</>', $this->runtime->getEnvOption('tag')));
@@ -99,7 +92,6 @@ class ZipCommand extends AbstractCommand
                 $output->writeln(sprintf('    Branch: <fg=green>%s</>', $this->runtime->getEnvOption('branch')));
             }
 
-
             $output->writeln('');
 
             // Run "Pre Deploy" Tasks
@@ -108,25 +100,24 @@ class ZipCommand extends AbstractCommand
                 throw $this->getException();
             }
 
-//            // Run "On Deploy" Tasks
-//            $this->runtime->setStage(Runtime::ON_DEPLOY);
-//            $this->runOnHosts($output, $strategy->getOnDeployTasks());
-//
-//            // Run "On Release" Tasks
-//            $this->runtime->setStage(Runtime::ON_RELEASE);
-//            $this->runOnHosts($output, $strategy->getOnReleaseTasks());
-//
-//            // Run "Post Release" Tasks
-//            $this->runtime->setStage(Runtime::POST_RELEASE);
-//            $this->runOnHosts($output, $strategy->getPostReleaseTasks());
+            //            // Run "On Deploy" Tasks
+            //            $this->runtime->setStage(Runtime::ON_DEPLOY);
+            //            $this->runOnHosts($output, $strategy->getOnDeployTasks());
+            //
+            //            // Run "On Release" Tasks
+            //            $this->runtime->setStage(Runtime::ON_RELEASE);
+            //            $this->runOnHosts($output, $strategy->getOnReleaseTasks());
+            //
+            //            // Run "Post Release" Tasks
+            //            $this->runtime->setStage(Runtime::POST_RELEASE);
+            //            $this->runOnHosts($output, $strategy->getPostReleaseTasks());
 
             // Run "Post Deploy" Tasks
             $this->runtime->setStage(Runtime::POST_DEPLOY);
             if (!$this->runTasks($output, $strategy->getPostDeployTasks())) {
                 throw $this->getException();
             }
-        }
-        catch (RuntimeException $exception) {
+        } catch (RuntimeException $exception) {
             $output->writeln('');
             $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
             $output->writeln('');
@@ -137,23 +128,26 @@ class ZipCommand extends AbstractCommand
 
         return intval($this->statusCode);
     }
+
     /**
-     * Runs all the tasks
+     * Runs all the tasks.
      *
      * @param string[] $tasks
+     *
      * @throws RuntimeException
      */
     protected function runTasks(OutputInterface $output, array $tasks): bool
     {
-        if (count($tasks) == 0) {
+        if (0 == count($tasks)) {
             $output->writeln(
                 sprintf('    No tasks defined for <fg=black;options=bold>%s</> stage', $this->getStageName())
             );
             $output->writeln('');
+
             return true;
         }
 
-        if ($this->runtime->getHostName() !== null) {
+        if (null !== $this->runtime->getHostName()) {
             $output->writeln(
                 sprintf(
                     '    Starting <fg=black;options=bold>%s</> tasks on host <fg=black;options=bold>%s</>:',
@@ -174,7 +168,7 @@ class ZipCommand extends AbstractCommand
             $this->log(sprintf('Running task %s (%s)', $task->getDescription(), $task->getName()));
 
             if ($this->runtime->inRollback() && !$task instanceof ExecuteOnRollbackInterface) {
-                $succeededTasks++;
+                ++$succeededTasks;
                 $output->writeln('<fg=yellow>SKIPPED</>');
                 $this->log(
                     sprintf(
@@ -186,7 +180,7 @@ class ZipCommand extends AbstractCommand
             } else {
                 try {
                     if ($task->execute()) {
-                        $succeededTasks++;
+                        ++$succeededTasks;
                         $output->writeln('<fg=green>OK</>');
                         $this->log(
                             sprintf('Task %s (%s) finished with OK', $task->getDescription(), $task->getName())
@@ -199,7 +193,7 @@ class ZipCommand extends AbstractCommand
                         );
                     }
                 } catch (SkipException $exception) {
-                    $succeededTasks++;
+                    ++$succeededTasks;
                     $output->writeln('<fg=yellow>SKIPPED</>');
                     $this->log(
                         sprintf(
@@ -222,7 +216,7 @@ class ZipCommand extends AbstractCommand
                 }
             }
 
-            if ($this->statusCode !== 0) {
+            if (0 !== $this->statusCode) {
                 break;
             }
         }
@@ -243,11 +237,11 @@ class ZipCommand extends AbstractCommand
         );
         $output->writeln('');
 
-        return ($succeededTasks == $totalTasks);
+        return $succeededTasks == $totalTasks;
     }
 
     /**
-     * Exception for halting the the current process
+     * Exception for halting the the current process.
      */
     protected function getException(): RuntimeException
     {

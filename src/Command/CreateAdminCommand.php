@@ -7,14 +7,11 @@ use App\Entity\Person;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 #[AsCommand(
     name: 'app:create-admin',
@@ -26,8 +23,7 @@ class CreateAdminCommand extends Command
         private UserPasswordHasherInterface $passwordHasher,
         private EntityManagerInterface $em,
         string $name = null
-    )
-    {
+    ) {
         parent::__construct($name);
     }
 
@@ -40,17 +36,16 @@ class CreateAdminCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $roles = ["ROLE_SUPER_ADMIN"];
+        $roles = ['ROLE_SUPER_ADMIN'];
 
         $io = new SymfonyStyle($input, $output);
         $email = $input->getOption('userEmail');
 
         if (!$email) {
-            $email = $io->ask("What is the admins email address?");
+            $email = $io->ask('What is the admins email address?');
         }
 
         $passwordplain = $io->ask('Whats the password the user will use?');
-
 
         $person = new Person();
         $person
@@ -67,7 +62,7 @@ class CreateAdminCommand extends Command
             ->setPerson($person)
         ;
 
-        $admin->setPassword($this->passwordHasher->hashPassword($admin,$passwordplain));
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, $passwordplain));
 
         $this->em->persist($person);
         $this->em->persist($admin);
