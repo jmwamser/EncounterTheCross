@@ -27,26 +27,34 @@ class FunctionalTester extends \Codeception\Actor
 {
     use _generated\FunctionalTesterActions;
 
-    #[Given('I am logged in as a Leader')]
+    /**
+     * @Given /^I am logged in as a Leader$/
+     */
     public function iAmLoggedInAsALeader()
     {
         throw new IncompleteTestError();
     }
 
-    #[Given('I am on the "<arg1>" List Page')]
+    /**
+     * @Then /^I should not see a "([^"]*)" action$/
+     */
+    public function iShouldNotSeeAAction($arg1)
+    {
+        throw new IncompleteTestError();
+    }
+
+    /**
+     * @Given /^I am on the "([^"]*)" List Page$/
+     */
     public function iAmOnTheListPage($arg1)
     {
         throw new IncompleteTestError();
     }
 
-    #[When('I click on the action menu for an "<arg1>"')]
+    /**
+     * @When /^I click on the action menu for an "([^"]*)"$/
+     */
     public function iClickOnTheActionMenuForAn($arg1)
-    {
-        throw new IncompleteTestError();
-    }
-
-    #[Then('I should not see a "<arg1>" action')]
-    public function iShouldNotSeeAAction($arg1)
     {
         throw new IncompleteTestError();
     }
