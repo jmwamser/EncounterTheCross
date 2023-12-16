@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01a64e042c444793d9f09e58d80d9566",
+    "content-hash": "d7887d753fb6deca28cfd2f3d8d53cde",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2365,6 +2365,122 @@
             "time": "2023-12-03T09:10:34+00:00"
         },
         {
+            "name": "guzzlehttp/psr7",
+            "version": "2.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "45b30f99ac27b5ca93cb4831afe16285f57b8221"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/45b30f99ac27b5ca93cb4831afe16285f57b8221",
+                "reference": "45b30f99ac27b5ca93cb4831afe16285f57b8221",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5 || ^8.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "ralouphie/getallheaders": "^3.0"
+            },
+            "provide": {
+                "psr/http-factory-implementation": "1.0",
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "http-interop/http-factory-tests": "^0.9",
+                "phpunit/phpunit": "^8.5.36 || ^9.6.15"
+            },
+            "suggest": {
+                "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
+            },
+            "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "George Mponos",
+                    "email": "gmponos@gmail.com",
+                    "homepage": "https://github.com/gmponos"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/Nyholm"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://github.com/sagikazarmark"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "email": "webmaster@tubo-world.de",
+                    "homepage": "https://github.com/Tobion"
+                },
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com",
+                    "homepage": "https://sagikazarmark.hu"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "psr-7",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "support": {
+                "issues": "https://github.com/guzzle/psr7/issues",
+                "source": "https://github.com/guzzle/psr7/tree/2.6.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/Nyholm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/psr7",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-12-03T20:05:35+00:00"
+        },
+        {
             "name": "jean85/pretty-package-versions",
             "version": "2.0.5",
             "source": {
@@ -3427,84 +3543,6 @@
             "time": "2023-08-04T17:13:40+00:00"
         },
         {
-            "name": "nyholm/psr7",
-            "version": "1.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nyholm/psr7.git",
-                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nyholm/psr7/zipball/aa5fc277a4f5508013d571341ade0c3886d4d00e",
-                "reference": "aa5fc277a4f5508013d571341ade0c3886d4d00e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.1 || ^2.0"
-            },
-            "provide": {
-                "php-http/message-factory-implementation": "1.0",
-                "psr/http-factory-implementation": "1.0",
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "http-interop/http-factory-tests": "^0.9",
-                "php-http/message-factory": "^1.0",
-                "php-http/psr7-integration-tests": "^1.0",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.4",
-                "symfony/error-handler": "^4.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.8-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Nyholm\\Psr7\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tobias Nyholm",
-                    "email": "tobias.nyholm@gmail.com"
-                },
-                {
-                    "name": "Martijn van der Ven",
-                    "email": "martijn@vanderven.se"
-                }
-            ],
-            "description": "A fast PHP7 implementation of PSR-7",
-            "homepage": "https://tnyholm.se",
-            "keywords": [
-                "psr-17",
-                "psr-7"
-            ],
-            "support": {
-                "issues": "https://github.com/Nyholm/psr7/issues",
-                "source": "https://github.com/Nyholm/psr7/tree/1.8.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Zegnat",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nyholm",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-11-13T09:31:12+00:00"
-        },
-        {
             "name": "pagerfanta/pagerfanta",
             "version": "v3.8.0",
             "source": {
@@ -4310,16 +4348,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.24.4",
+            "version": "1.24.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "6bd0c26f3786cd9b7c359675cb789e35a8e07496"
+                "reference": "fedf211ff14ec8381c9bf5714e33a7a552dd1acc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/6bd0c26f3786cd9b7c359675cb789e35a8e07496",
-                "reference": "6bd0c26f3786cd9b7c359675cb789e35a8e07496",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fedf211ff14ec8381c9bf5714e33a7a552dd1acc",
+                "reference": "fedf211ff14ec8381c9bf5714e33a7a552dd1acc",
                 "shasum": ""
             },
             "require": {
@@ -4351,9 +4389,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.4"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.5"
             },
-            "time": "2023-11-26T18:29:22+00:00"
+            "time": "2023-12-16T09:33:33+00:00"
         },
         {
             "name": "psr/cache",
@@ -4871,6 +4909,50 @@
                 "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
             "time": "2021-10-29T13:26:27+00:00"
+        },
+        {
+            "name": "ralouphie/getallheaders",
+            "version": "3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ralouphie/getallheaders.git",
+                "reference": "120b605dfeb996808c31b6477290a714d356e822"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
+                "reference": "120b605dfeb996808c31b6477290a714d356e822",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^5 || ^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/getallheaders.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                }
+            ],
+            "description": "A polyfill for getallheaders.",
+            "support": {
+                "issues": "https://github.com/ralouphie/getallheaders/issues",
+                "source": "https://github.com/ralouphie/getallheaders/tree/develop"
+            },
+            "time": "2019-03-08T08:55:37+00:00"
         },
         {
             "name": "ramsey/collection",
@@ -5784,16 +5866,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "cd9864b47c367450e14ab32f78fdbf98c44c26b6"
+                "reference": "a550a7c99daeedef3f9d23fb82e3531525ff11fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/cd9864b47c367450e14ab32f78fdbf98c44c26b6",
-                "reference": "cd9864b47c367450e14ab32f78fdbf98c44c26b6",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a550a7c99daeedef3f9d23fb82e3531525ff11fd",
+                "reference": "a550a7c99daeedef3f9d23fb82e3531525ff11fd",
                 "shasum": ""
             },
             "require": {
@@ -5858,7 +5940,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.0"
+                "source": "https://github.com/symfony/console/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -5874,7 +5956,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T16:41:16+00:00"
+            "time": "2023-11-30T10:54:28+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -6199,16 +6281,16 @@
         },
         {
             "name": "symfony/doctrine-messenger",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/doctrine-messenger.git",
-                "reference": "c7369937287ecd017e9e6f60482818efa62d51a7"
+                "reference": "7131e998fea2140a8f4203230d025696d2a07d3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/doctrine-messenger/zipball/c7369937287ecd017e9e6f60482818efa62d51a7",
-                "reference": "c7369937287ecd017e9e6f60482818efa62d51a7",
+                "url": "https://api.github.com/repos/symfony/doctrine-messenger/zipball/7131e998fea2140a8f4203230d025696d2a07d3e",
+                "reference": "7131e998fea2140a8f4203230d025696d2a07d3e",
                 "shasum": ""
             },
             "require": {
@@ -6251,7 +6333,7 @@
             "description": "Symfony Doctrine Messenger Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/doctrine-messenger/tree/v6.4.0"
+                "source": "https://github.com/symfony/doctrine-messenger/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -6267,7 +6349,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-20T16:41:16+00:00"
+            "time": "2023-12-01T09:25:07+00:00"
         },
         {
             "name": "symfony/dotenv",
@@ -6832,16 +6914,16 @@
         },
         {
             "name": "symfony/form",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/form.git",
-                "reference": "b3f597c5b271573b295494c8d85960165cfd2a22"
+                "reference": "10649ab710b58a04bcf1886f005ccab58d9cf0a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/form/zipball/b3f597c5b271573b295494c8d85960165cfd2a22",
-                "reference": "b3f597c5b271573b295494c8d85960165cfd2a22",
+                "url": "https://api.github.com/repos/symfony/form/zipball/10649ab710b58a04bcf1886f005ccab58d9cf0a4",
+                "reference": "10649ab710b58a04bcf1886f005ccab58d9cf0a4",
                 "shasum": ""
             },
             "require": {
@@ -6909,7 +6991,7 @@
             "description": "Allows to easily create, process and reuse HTML forms",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/form/tree/v6.4.0"
+                "source": "https://github.com/symfony/form/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -6925,20 +7007,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-06T11:00:25+00:00"
+            "time": "2023-11-30T11:08:34+00:00"
         },
         {
             "name": "symfony/framework-bundle",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/framework-bundle.git",
-                "reference": "981e016715b4a7f22f58c1d9fdf444311965d25e"
+                "reference": "ac22d760bf9ff4440a1b6c7caef34d38b44290aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/981e016715b4a7f22f58c1d9fdf444311965d25e",
-                "reference": "981e016715b4a7f22f58c1d9fdf444311965d25e",
+                "url": "https://api.github.com/repos/symfony/framework-bundle/zipball/ac22d760bf9ff4440a1b6c7caef34d38b44290aa",
+                "reference": "ac22d760bf9ff4440a1b6c7caef34d38b44290aa",
                 "shasum": ""
             },
             "require": {
@@ -7057,7 +7139,7 @@
             "description": "Provides a tight integration between Symfony components and the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/framework-bundle/tree/v6.4.0"
+                "source": "https://github.com/symfony/framework-bundle/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -7073,7 +7155,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-25T19:10:27+00:00"
+            "time": "2023-12-01T16:35:22+00:00"
         },
         {
             "name": "symfony/http-client",
@@ -9468,16 +9550,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v6.4.0",
+            "version": "v6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "39471236913df0c3cfcc90bec28c50f355d3c7ef"
+                "reference": "7ead272e62c9567df619ef3c49809bf934ddbc1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/39471236913df0c3cfcc90bec28c50f355d3c7ef",
-                "reference": "39471236913df0c3cfcc90bec28c50f355d3c7ef",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/7ead272e62c9567df619ef3c49809bf934ddbc1f",
+                "reference": "7ead272e62c9567df619ef3c49809bf934ddbc1f",
                 "shasum": ""
             },
             "require": {
@@ -9546,7 +9628,7 @@
             "description": "Handles serializing and deserializing data structures, including object graphs, into array structures or other formats like XML and JSON.",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/serializer/tree/v6.4.0"
+                "source": "https://github.com/symfony/serializer/tree/v6.4.1"
             },
             "funding": [
                 {
@@ -9562,7 +9644,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-29T10:01:06+00:00"
+            "time": "2023-12-01T14:54:37+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -11631,153 +11713,6 @@
                 "source": "https://github.com/eightyknots/phpspreadsheet-bundle/tree/v1.1.0"
             },
             "time": "2023-12-04T21:57:40+00:00"
-        },
-        {
-            "name": "yosymfony/parser-utils",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yosymfony/parser-utils.git",
-                "reference": "00bec9a12722b21f2baf7f9db35f127e90c162c9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yosymfony/parser-utils/zipball/00bec9a12722b21f2baf7f9db35f127e90c162c9",
-                "reference": "00bec9a12722b21f2baf7f9db35f127e90c162c9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Yosymfony\\ParserUtils\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Victor Puertas",
-                    "email": "vpgugr@gmail.com",
-                    "homepage": "http://yosymfony.com"
-                }
-            ],
-            "description": "Parser utilities",
-            "homepage": "http://github.com/yosymfony/toml",
-            "keywords": [
-                "lexer",
-                "parser"
-            ],
-            "support": {
-                "issues": "https://github.com/yosymfony/parser-utils/issues",
-                "source": "https://github.com/yosymfony/parser-utils/tree/master"
-            },
-            "time": "2018-06-29T15:31:11+00:00"
-        },
-        {
-            "name": "yosymfony/toml",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yosymfony/toml.git",
-                "reference": "bdab92ad920d0e36810a3a3e4a998d23f3498f8e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yosymfony/toml/zipball/bdab92ad920d0e36810a3a3e4a998d23f3498f8e",
-                "reference": "bdab92ad920d0e36810a3a3e4a998d23f3498f8e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1",
-                "yosymfony/parser-utils": "^2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Yosymfony\\Toml\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Victor Puertas",
-                    "email": "vpgugr@gmail.com",
-                    "homepage": "http://yosymfony.com"
-                }
-            ],
-            "description": "A PHP parser for TOML compatible with specification 0.4.0",
-            "homepage": "http://github.com/yosymfony/toml",
-            "keywords": [
-                "mojombo",
-                "parser",
-                "toml"
-            ],
-            "support": {
-                "issues": "https://github.com/yosymfony/toml/issues",
-                "source": "https://github.com/yosymfony/toml/tree/master"
-            },
-            "time": "2018-08-08T15:08:14+00:00"
-        },
-        {
-            "name": "zeek/zeek-build-process",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/redpandacoding/build-process.git",
-                "reference": "ec6bd2df2ae637b0ba1b28d0f40513516712ac1d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/redpandacoding/build-process/zipball/ec6bd2df2ae637b0ba1b28d0f40513516712ac1d",
-                "reference": "ec6bd2df2ae637b0ba1b28d0f40513516712ac1d",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0 || ^8.1",
-                "yosymfony/toml": "^1.0"
-            },
-            "default-branch": true,
-            "bin": [
-                "bin/zbp"
-            ],
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "ZeekBuildProcess\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "description": "Scaffold out the build process for Zeek Projects.",
-            "support": {
-                "source": "https://github.com/redpandacoding/build-process/tree/main"
-            },
-            "time": "2023-11-06T03:01:23+00:00"
         }
     ],
     "packages-dev": [
@@ -13231,122 +13166,6 @@
             "time": "2023-12-03T20:19:20+00:00"
         },
         {
-            "name": "guzzlehttp/psr7",
-            "version": "2.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "45b30f99ac27b5ca93cb4831afe16285f57b8221"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/45b30f99ac27b5ca93cb4831afe16285f57b8221",
-                "reference": "45b30f99ac27b5ca93cb4831afe16285f57b8221",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2.5 || ^8.0",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.1 || ^2.0",
-                "ralouphie/getallheaders": "^3.0"
-            },
-            "provide": {
-                "psr/http-factory-implementation": "1.0",
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.8.2",
-                "http-interop/http-factory-tests": "^0.9",
-                "phpunit/phpunit": "^8.5.36 || ^9.6.15"
-            },
-            "suggest": {
-                "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
-            },
-            "type": "library",
-            "extra": {
-                "bamarni-bin": {
-                    "bin-links": true,
-                    "forward-command": false
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "hello@gjcampbell.co.uk",
-                    "homepage": "https://github.com/GrahamCampbell"
-                },
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "George Mponos",
-                    "email": "gmponos@gmail.com",
-                    "homepage": "https://github.com/gmponos"
-                },
-                {
-                    "name": "Tobias Nyholm",
-                    "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/Nyholm"
-                },
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com",
-                    "homepage": "https://github.com/sagikazarmark"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "email": "webmaster@tubo-world.de",
-                    "homepage": "https://github.com/Tobion"
-                },
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com",
-                    "homepage": "https://sagikazarmark.hu"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "psr-7",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "support": {
-                "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.6.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/Nyholm",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/guzzlehttp/psr7",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-12-03T20:05:35+00:00"
-        },
-        {
             "name": "masterminds/html5",
             "version": "2.8.1",
             "source": {
@@ -14578,50 +14397,6 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.22"
             },
             "time": "2023-10-14T21:56:36+00:00"
-        },
-        {
-            "name": "ralouphie/getallheaders",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ralouphie/getallheaders.git",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5 || ^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/getallheaders.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
-                }
-            ],
-            "description": "A polyfill for getallheaders.",
-            "support": {
-                "issues": "https://github.com/ralouphie/getallheaders/issues",
-                "source": "https://github.com/ralouphie/getallheaders/tree/develop"
-            },
-            "time": "2019-03-08T08:55:37+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -16052,6 +15827,64 @@
             "time": "2023-11-07T14:57:07+00:00"
         },
         {
+            "name": "tavoniievez/module-foundry",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmwamser/module-foundry.git",
+                "reference": "3b794257ee526b5e1602d4eb1662c7258dab1294"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmwamser/module-foundry/zipball/3b794257ee526b5e1602d4eb1662c7258dab1294",
+                "reference": "3b794257ee526b5e1602d4eb1662c7258dab1294",
+                "shasum": ""
+            },
+            "require": {
+                "codeception/codeception": "^5.0",
+                "php": "^8.1",
+                "zenstruck/foundry": "^1.36"
+            },
+            "require-dev": {
+                "codeception/module-doctrine2": "^3.0",
+                "codeception/module-symfony": "^3.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gustavo Nieves"
+                },
+                {
+                    "name": "Jordan Wamser",
+                    "email": "jwamser@redpandacoding.com"
+                }
+            ],
+            "description": "Foundry module for Codeception",
+            "homepage": "https://codeception.com/",
+            "keywords": [
+                "codeception",
+                "foundry"
+            ],
+            "support": {
+                "source": "https://github.com/jmwamser/module-foundry/tree/main"
+            },
+            "time": "2023-12-16T13:41:22+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.2.2",
             "source": {
@@ -16100,6 +15933,153 @@
                 }
             ],
             "time": "2023-11-20T00:12:19+00:00"
+        },
+        {
+            "name": "yosymfony/parser-utils",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yosymfony/parser-utils.git",
+                "reference": "00bec9a12722b21f2baf7f9db35f127e90c162c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yosymfony/parser-utils/zipball/00bec9a12722b21f2baf7f9db35f127e90c162c9",
+                "reference": "00bec9a12722b21f2baf7f9db35f127e90c162c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yosymfony\\ParserUtils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Victor Puertas",
+                    "email": "vpgugr@gmail.com",
+                    "homepage": "http://yosymfony.com"
+                }
+            ],
+            "description": "Parser utilities",
+            "homepage": "http://github.com/yosymfony/toml",
+            "keywords": [
+                "lexer",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/yosymfony/parser-utils/issues",
+                "source": "https://github.com/yosymfony/parser-utils/tree/master"
+            },
+            "time": "2018-06-29T15:31:11+00:00"
+        },
+        {
+            "name": "yosymfony/toml",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yosymfony/toml.git",
+                "reference": "bdab92ad920d0e36810a3a3e4a998d23f3498f8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yosymfony/toml/zipball/bdab92ad920d0e36810a3a3e4a998d23f3498f8e",
+                "reference": "bdab92ad920d0e36810a3a3e4a998d23f3498f8e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "yosymfony/parser-utils": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yosymfony\\Toml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Victor Puertas",
+                    "email": "vpgugr@gmail.com",
+                    "homepage": "http://yosymfony.com"
+                }
+            ],
+            "description": "A PHP parser for TOML compatible with specification 0.4.0",
+            "homepage": "http://github.com/yosymfony/toml",
+            "keywords": [
+                "mojombo",
+                "parser",
+                "toml"
+            ],
+            "support": {
+                "issues": "https://github.com/yosymfony/toml/issues",
+                "source": "https://github.com/yosymfony/toml/tree/master"
+            },
+            "time": "2018-08-08T15:08:14+00:00"
+        },
+        {
+            "name": "zeek/zeek-build-process",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/redpandacoding/build-process.git",
+                "reference": "ec6bd2df2ae637b0ba1b28d0f40513516712ac1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/redpandacoding/build-process/zipball/ec6bd2df2ae637b0ba1b28d0f40513516712ac1d",
+                "reference": "ec6bd2df2ae637b0ba1b28d0f40513516712ac1d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0 || ^8.1",
+                "yosymfony/toml": "^1.0"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/zbp"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "ZeekBuildProcess\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Scaffold out the build process for Zeek Projects.",
+            "support": {
+                "source": "https://github.com/redpandacoding/build-process/tree/main"
+            },
+            "time": "2023-11-06T03:01:23+00:00"
         },
         {
             "name": "zenstruck/assert",
@@ -16312,7 +16292,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "zeek/zeek-build-process": 20
+        "zeek/zeek-build-process": 20,
+        "tavoniievez/module-foundry": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
