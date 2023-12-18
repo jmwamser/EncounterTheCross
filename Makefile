@@ -48,13 +48,13 @@ lint: ## PHP, YAML & Twig Syntax Checking
 	@$(php_bin)/parallel-lint -j 10 src/ --no-progress --colors --blame && bin/console lint:yaml config/ && bin/console lint:twig templates/
 
 lint-ci:
-	$(php_bin)/parallel-lint -j 10 src/ --no-progress --colors --checkstyle > report.xml && bin/console lint:yaml -n config/ && bin/console lint:twig -n templates/
+	$(bin)/parallel-lint -j 10 src/ --no-progress --colors --checkstyle > report.xml && bin/console lint:yaml -n config/ && bin/console lint:twig -n templates/
 
 phpmd: ## PHP Mess Detection
 	@$(php_bin)/phpmd src/ ansi phpmd.xml
 
 phpmd-ci:
-	@$(php_bin)/phpmd src/ github phpmd.xml
+	@$(bin)/phpmd src/ github phpmd.xml
 
 phpmd-baseline: ## PHP Mess Detection. Generate Baseline
 	@$(php_bin)/phpmd src/ ansi phpmd.xml --generate-baseline
@@ -63,7 +63,7 @@ phpstan: ## PHP Static Analyzer
 	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon
 
 phpstan-ci:
-	@$(php_bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.neon
+	@$(bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.neon
 
 phpstan-baseline: ## PHP Static Analyzer. Generate Baseline.
 	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon --allow-empty-baseline
