@@ -63,7 +63,7 @@ phpstan: ## PHP Static Analyzer
 	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon
 
 phpstan-ci:
-	@$(bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.neon
+	@$(bin)/phpstan analyse --memory-limit=512M --no-progress --error-format=github --configuration=phpstan.dist.neon
 
 phpstan-baseline: ## PHP Static Analyzer. Generate Baseline.
 	@$(php_bin)/phpstan analyse --memory-limit 512M --error-format=table --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon --allow-empty-baseline
