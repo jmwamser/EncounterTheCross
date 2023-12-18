@@ -9,9 +9,12 @@ class SiteTenantController extends AbstractController
 {
     #[Route(
         '/',
-        host: '{subdomain}.encounterthecross.com',
+        host: '{subdomain}{domain}',
         name: 'app_site_redirect',
-        requirements: ['subdomain' => 'men|women'],
+        requirements: [
+            'subdomain' => 'men|women|www|',
+            'domain' => '%public_domain_core%',
+        ],
     )]
     public function redirectToSite(string $subdomain): Response
     {
@@ -19,22 +22,17 @@ class SiteTenantController extends AbstractController
             return $this->womenSubDirectory();
         }
 
-        return $this->redirect("https://www.encounterthecross.com/{$subdomain}");
-    }
+        if ('www' === $subdomain || empty($subdomain)) {
+            return $this->render('frontend/split.index.html.twig');
+        }
 
-    #[Route(
-        '/',
-        host: 'www.encounterthecross.com',
-    )]
-    public function chooseYourSite(): Response
-    {
-        return $this->render('frontend/split.index.html.twig');
+        return $this->redirect("/{$subdomain}");
     }
 
     #[Route(
         '/{site}',
         requirements: ['site' => 'women'],
-        host: 'www.encounterthecross.com',
+        host: '%public_domains_allowed%',
     )]
     public function womenSubDirectory()
     {
