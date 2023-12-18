@@ -26,11 +26,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class LaunchPointCrudController extends LocationCrudController
 {
     public function __construct(
-        private HttpClientInterface $httpClient
+        private readonly HttpClientInterface $httpClient
     ) {
     }
 
-    public function createEntity(string $entityFqcn)
+    public function createEntity(string $entityFqcn): Location
     {
         /** @var Location $entity */
         $entity = parent::createEntity($entityFqcn);
@@ -70,12 +70,12 @@ class LaunchPointCrudController extends LocationCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $qb);
+        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $queryBuilder);
     }
 
-    private function findLatLonCordinates($entityInstance)
+    private function findLatLonCordinates($entityInstance): void
     {
         if ($entityInstance instanceof Location && $this->isLaunchPoint() && Location::TYPE_LAUNCH_POINT === $entityInstance->getType()) {
             if (

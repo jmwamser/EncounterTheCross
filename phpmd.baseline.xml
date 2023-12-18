@@ -12,7 +12,7 @@
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Controller/Admin/Crud/EventLocationCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/EventLocationCrudController.php"/>
   <violation rule="PHPMD\Rule\UnusedPrivateField" file="src/Controller/Admin/Crud/Field/Field.php"/>
-  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/LeaderCrudController.php"/>
