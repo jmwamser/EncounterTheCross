@@ -2,11 +2,18 @@
 
 namespace App\Tests;
 
+use App\Controller\Admin\Crud\EventCrudController;
+use App\Controller\Admin\Crud\EventLocationCrudController;
+use App\Controller\Admin\Crud\LaunchPointCrudController;
+use App\Controller\Admin\Crud\LeaderCrudController;
+use App\Controller\Admin\Crud\TestimonialCrudController;
+use App\Controller\Admin\MainDashboardController;
 use App\Entity\Leader;
 use Codeception\Attribute\Given;
 use Codeception\Attribute\Then;
 use Codeception\Attribute\When;
-use PHPUnit\Framework\IncompleteTestError;
+use Codeception\Exception\TestRuntimeException;
+use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestSelectors;
 use Zenstruck\Foundry\Test\Factories;
 
 /**
@@ -29,18 +36,17 @@ class FunctionalTester extends \Codeception\Actor
 {
     use _generated\FunctionalTesterActions;
 
+    // Database Setup
     use Factories;
+
+    // Easy Admin Selectors
+    use CrudTestSelectors;
 
     /**
      * @Given /^I am logged in as a Leader$/
      */
     public function iAmLoggedInAsALeader()
     {
-        // TODO: abstract this out into a reusable method, Args would be email and pass
-        $this->have(Leader::class, [
-            'email' => 'dev@dev.com',
-        ]);
-
         $this->amOnPage('/login');
         $this->seeElement('form');
         $this->submitForm('form', [
@@ -56,9 +62,9 @@ class FunctionalTester extends \Codeception\Actor
     /**
      * @Then /^I should not see a[n]? "([^"]*)" action?$/
      */
-    public function iShouldNotSeeAAction($action)
+    public function iShouldNotSeeAnAction($action)
     {
-        throw new IncompleteTestError();
+        $this->dontSeeElement($this->getActionSelector('delete'));
     }
 
     /**
@@ -66,7 +72,31 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iAmOnTheListPage($objectType)
     {
-        throw new IncompleteTestError();
+        match ($objectType) {
+            'Events' => $this->amOnAdminIndexPageFor(
+                MainDashboardController::class,
+                EventCrudController::class
+            ),
+            'Event Locations' => $this->amOnAdminIndexPageFor(
+                MainDashboardController::class,
+                EventLocationCrudController::class
+            ),
+            'Launch Points' => $this->amOnAdminIndexPageFor(
+                MainDashboardController::class,
+                LaunchPointCrudController::class
+            ),
+            'Testimonies' => $this->amOnAdminIndexPageFor(
+                MainDashboardController::class,
+                TestimonialCrudController::class
+            ),
+            'Leaders' => $this->amOnAdminIndexPageFor(
+                MainDashboardController::class,
+                LeaderCrudController::class
+            ),
+            default => throw new TestRuntimeException(sprintf('No object called %s, found in an Admin page.', $objectType))
+        };
+
+        $this->seeInCurrentUrl('crudAction=index');
     }
 
     /**
@@ -74,6 +104,6 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iClickOnTheActionMenuForAn($objectType)
     {
-        throw new IncompleteTestError();
+        $this->click('a[data-bs-toggle="dropdown"]', 'tbody tr:nth-child(1)');
     }
 }

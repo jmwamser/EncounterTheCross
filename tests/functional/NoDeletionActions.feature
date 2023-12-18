@@ -12,9 +12,9 @@ Feature: NoDeletionActions
     Then I should not see a "<action>" action
 
     Examples:
-      | object_type  | action  |
-      | Events       | delete |
-      | Locations    | delete |
-      | LaunchPoints | delete |
-      | Testimonies  | delete |
-      | Leaders      | delete |
+      | object_type     | action |
+      | Events          | delete |
+      | Event Locations | delete |
+      | Launch Points   | delete |
+      | Testimonies     | delete |
+      | Leaders         | delete |

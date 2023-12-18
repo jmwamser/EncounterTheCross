@@ -25,6 +25,7 @@ modules:
         -   Doctrine2:
                 depends: Symfony
                 cleanup: true
+        - Asserts:
 
 #        - Symfony:
 #            app_path: 'src'

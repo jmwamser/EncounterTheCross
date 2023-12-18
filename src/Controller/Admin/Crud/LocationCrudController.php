@@ -5,6 +5,8 @@ namespace App\Controller\Admin\Crud;
 use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -16,6 +18,13 @@ class LocationCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Location::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return parent::configureActions($actions)
+            ->disable(Action::DELETE, Action::BATCH_DELETE)
+        ;
     }
 
     public function configureFields(string $pageName): iterable
