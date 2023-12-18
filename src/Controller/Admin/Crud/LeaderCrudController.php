@@ -6,6 +6,7 @@ use App\Entity\Leader;
 use App\Service\RoleManager\Role;
 use App\Service\RoleManager\RoleFormatter;
 use App\Service\RoleManager\RoleListFinder;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
@@ -82,7 +83,9 @@ class LeaderCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return parent::configureActions($actions);
+        return parent::configureActions($actions)
+            ->disable(Action::DELETE, Action::BATCH_DELETE)
+        ;
         // TODO: Add invitation Action for new Leaders
         //            ->remove(Crud::PAGE_INDEX,Crud::PAGE_NEW);
     }

@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\Crud;
 
 use App\Entity\Testimonial;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -14,6 +16,13 @@ class TestimonialCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Testimonial::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return parent::configureActions($actions)
+            ->disable(Action::DELETE, Action::BATCH_DELETE)
+        ;
     }
 
     public function configureFields(string $pageName): iterable

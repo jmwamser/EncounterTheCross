@@ -102,7 +102,9 @@ class EventCrudController extends AbstractCrudController
         ;
 
         return parent::configureActions($actions)
-            ->add(Crud::PAGE_INDEX, $exportAction);
+            ->add(Crud::PAGE_INDEX, $exportAction)
+            ->disable(Action::DELETE, Action::BATCH_DELETE)
+        ;
     }
 
     public function export(AdminContext $adminContext, XlsExporter $exporter)

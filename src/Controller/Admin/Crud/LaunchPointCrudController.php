@@ -15,6 +15,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -24,11 +26,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class LaunchPointCrudController extends LocationCrudController
 {
     public function __construct(
-        private HttpClientInterface $httpClient
+        private readonly HttpClientInterface $httpClient
     ) {
     }
 
-    public function createEntity(string $entityFqcn)
+    public function createEntity(string $entityFqcn): Location
     {
         /** @var Location $entity */
         $entity = parent::createEntity($entityFqcn);
@@ -36,6 +38,13 @@ class LaunchPointCrudController extends LocationCrudController
         $entity->setType(Location::TYPE_LAUNCH_POINT);
 
         return $entity;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return parent::configureActions($actions)
+            ->disable(Action::DELETE, Action::BATCH_DELETE)
+        ;
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
@@ -61,12 +70,12 @@ class LaunchPointCrudController extends LocationCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $qb);
+        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_LAUNCH_POINT, $queryBuilder);
     }
 
-    private function findLatLonCordinates($entityInstance)
+    private function findLatLonCordinates($entityInstance): void
     {
         if ($entityInstance instanceof Location && $this->isLaunchPoint() && Location::TYPE_LAUNCH_POINT === $entityInstance->getType()) {
             if (
