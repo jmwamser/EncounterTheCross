@@ -64,3 +64,7 @@ jobs:
 
             - name: Release with MagePHP
               run: ./bin/mage deploy release
+
+            - name: Display log file if the previous step failed
+              if: failure()  # This step will run if any of the previous steps failed
+              run: cat path/to/directory/*.log
