@@ -21,6 +21,7 @@ magephp:
         - ./var/log/*
         - ./tools
         - ./horizon-ui-chakra/*
+        - ./vendor/netgen/content-browser/tests
       hosts:
         - 192.185.5.34:22
       pre-deploy:
