@@ -70,8 +70,7 @@ yarn-error.log
 
 tools/ReleaseManager/vendor/
 
-tools/ReleaseManager/logs/
-!tools/ReleaseManager/logs/.gitignore
+tools/ReleaseManager/logs/*.log
 
 bin/mage
 
