@@ -1,6 +1,6 @@
 magephp:
-  log_dir: ./tools/ReleaseManager/logs
-  log_limit: 10
+#  log_dir: ./tools/ReleaseManager/logs
+#  log_limit: 10
   custom_tasks:
     - 'App\Tools\MageTools\Task\Release\Zip\PrepareTask'
     - 'App\Tools\MageTools\Task\Symfony\DatabaseBackUpTask'
@@ -28,6 +28,7 @@ magephp:
         - symfony/assets-install: { env: 'prod', target: 'public' }
       on-deploy:
       on-release:
+        - fs/copy: { from: '.env.local.php', to: 'current/.env.local.php' }
       post-deploy:
 #        - composer/install: { flags: '--no-scripts' }
 #        - yarn/install
