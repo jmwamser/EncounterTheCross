@@ -1,0 +1,64 @@
+name: Release Workflow
+
+on:
+    release:
+        types: [created]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+            extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Start SSH agent
+              run: |
+                  ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+
+            - name: Add SSH key
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.HOSTGATOR_SSH_KEY }}
+                  SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+              run: |
+                  echo "$SSH_PRIVATE_KEY" | ssh-add -p "$SSH_PASSPHRASE" -
+            -   uses: actions/checkout@v4
+            -   name: Setup cache environment
+                id: extcache
+                uses: shivammathur/cache-extensions@v1
+                with:
+                    php-version: '8.1'
+                    extensions: ${{ env.extensions }}
+                    key: extensions-${{ hashFiles('composer.lock') }}
+            -   name: Cache extensions
+                uses: actions/cache@v3
+                with:
+                    path: ${{ steps.extcache.outputs.dir }}
+                    key: ${{ steps.extcache.outputs.key }}
+                    restore-keys: ${{ steps.extcache.outputs.key }}
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    extensions: ${{ env.extensions }}
+                    php-version: '8.1'
+                    coverage: none
+#                    tools: cs2pr
+
+            -   name: Cache composer dependencies
+                uses: actions/cache@v3
+                with:
+                    path: vendor
+                    key: composer-${{ hashFiles('composer.lock') }}
+
+            -   name: Validate composer.json and composer.lock
+                run: composer validate --strict
+
+            #       No Private Repos are being used
+            #      - name: Add HTTP basic auth credentials
+            #        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+
+            -   name: Run composer install
+                run: composer install --no-interaction --no-progress --ansi --prefer-dist
+            -   name: Release with MagePHP
+                run: ./bin/mage deploy release

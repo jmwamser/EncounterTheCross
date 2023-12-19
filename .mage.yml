@@ -8,6 +8,22 @@ magephp:
     - 'App\Tools\MageTools\Task\Yarn\BuildTask'
     - 'App\Tools\MageTools\Task\Yarn\InstallTask'
   environments:
+    release:
+      user: avbapt
+      branch: main
+      from: ./
+      releases: 4
+      host_path: /home3/avbapt/releases/production
+      exclude:
+        - ./var/cache/*
+        - ./var/log/*
+      hosts:
+        - 192.185.5.34:22
+      pre-deploy:
+        - task: tar
+          timeout: 800
+      on-deploy:
+      on-release:
     production:
 #      user: app
       branch: main

@@ -271,6 +271,7 @@
       <path value="$PROJECT_DIR$/vendor/zeek/zeek-build-process" />
       <path value="$PROJECT_DIR$/vendor/codeception/module-doctrine2" />
       <path value="$PROJECT_DIR$/vendor/tavoniievez/module-foundry" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
