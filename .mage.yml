@@ -17,13 +17,23 @@ magephp:
       exclude:
         - ./var/cache/*
         - ./var/log/*
+        - ./tools
+        - ./horizon-ui-chakra/*
       hosts:
         - 192.185.5.34:22
       pre-deploy:
-        - task: tar
-          timeout: 800
+        -   composer/install: { flags: '--no-dev --no-scripts -o' }
       on-deploy:
+        - composer/dump-autoload
+        - yarn/install
+        - yarn/build: { buildType: 'build' }
+        - symfony/assets-install: { env: 'prod', target: 'public' }
       on-release:
+      post-deploy:
+        - composer/install: { flags: '--no-scripts' }
+        - yarn/install
+        - yarn/build
+        - symfony/assets-install: { env: 'dev', target: 'public' }
     production:
 #      user: app
       branch: main
