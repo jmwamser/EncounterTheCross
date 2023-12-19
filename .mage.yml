@@ -25,12 +25,12 @@ magephp:
       hosts:
         - 192.185.5.34:2222
       pre-deploy:
-        -   composer/install: { flags: '--no-dev --no-scripts -o' }
-      on-deploy:
+        - composer/install: { flags: '--no-dev --no-scripts -o' }
         - composer/dump-autoload
         - yarn/install
         - yarn/build: { buildType: 'build' }
         - symfony/assets-install: { env: 'prod', target: 'public' }
+      on-deploy:
       on-release:
       post-deploy:
         - composer/install: { flags: '--no-scripts' }
