@@ -46,7 +46,7 @@ jobs:
               run: composer validate --strict
 
             - name: Run composer install
-              run: composer install --no-interaction --no-progress --ansi --prefer-dist --no-dev -o --no-scripts
+              run: composer install --no-interaction --no-progress --ansi --prefer-dist --no-dev -o
 
             #       No Private Repos are being used
             #      - name: Add HTTP basic auth credentials
