@@ -67,4 +67,4 @@ jobs:
 
             - name: Display log file if the previous step failed
               if: failure()  # This step will run if any of the previous steps failed
-              run: cat path/to/directory/*.log
+              run: cat .tools/ReleaseManager/*.log
