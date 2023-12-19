@@ -10,6 +10,16 @@ jobs:
         env:
             extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
         steps:
+            -   name: Start SSH agent
+                run: |
+                    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+
+            -   name: Add SSH key with passphrase
+                env:
+                    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                    SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+                run: |
+                    echo "$SSH_PRIVATE_KEY" | ssh-add -p "$SSH_PASSPHRASE" -
             - uses: actions/checkout@v4
             - name: Setup cache environment
               id: extcache
@@ -63,8 +73,4 @@ jobs:
               run: composer install --no-interaction --no-progress --ansi --prefer-dist -d ./tools/ReleaseManager
 
             - name: Release with MagePHP
-              run: ./bin/mage deploy release
-
-            - name: Display log file if the previous step failed
-              if: failure()  # This step will run if any of the previous steps failed
-              run: cat ./tools/ReleaseManager/*.log
+              run: ./bin/mage deploy release -vvv
