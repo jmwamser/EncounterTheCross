@@ -26,7 +26,7 @@ magephp:
       pre-deploy:
       on-deploy:
       on-release:
-        - fs/copy: { from: '.env.local.php', to: 'current/.env.local.php' }
+        - fs/copy: { from: '/home3/avbapt/releases/production/.env.local.php', to: '/home3/avbapt/releases/production/current/.env.local.php' }
       post-deploy:
 #        - composer/install: { flags: '--no-scripts' }
 #        - yarn/install
