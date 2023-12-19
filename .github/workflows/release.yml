@@ -5,7 +5,7 @@ on:
         types: [created]
 
 jobs:
-    build:
+    build-source-and-release:
         runs-on: ubuntu-latest
         env:
             extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
@@ -49,7 +49,7 @@ jobs:
             #        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
             - name: Setup NodeJS 18
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                   node-version: 18
 
@@ -61,6 +61,9 @@ jobs:
 
             - name: Compile the Release Manager
               run: composer install --no-interaction --no-progress --ansi --prefer-dist -d ./tools/ReleaseManager
+
+            - name: NEED LOG DIRECTORY
+              run: mkdir ./tools/ReleaseManager/logs
 
             - name: Release with MagePHP
               run: ./bin/mage deploy release
