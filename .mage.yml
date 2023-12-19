@@ -9,7 +9,7 @@ magephp:
     - 'App\Tools\MageTools\Task\Yarn\InstallTask'
   environments:
     release:
-      tar_create_path: gtar
+      tar_create_path: tar
       tar_extract_path: tar
       user: avbapt
       branch: main
