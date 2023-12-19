@@ -24,7 +24,6 @@ magephp:
       hosts:
         - 192.185.5.34:2222
       pre-deploy:
-        - symfony/assets-install: { env: 'prod', target: 'public' }
       on-deploy:
       on-release:
         - fs/copy: { from: '.env.local.php', to: 'current/.env.local.php' }
