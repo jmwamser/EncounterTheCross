@@ -25,7 +25,6 @@ magephp:
         - 192.185.5.34:2222
       pre-deploy:
       on-deploy:
-        - symfony/assets-install: { env: 'prod', target: 'public' }
       on-release:
         - fs/copy: { from: '/home3/avbapt/releases/production/.env.local.php', to: '/home3/avbapt/releases/production/current/.env.local.php' }
       post-deploy:
