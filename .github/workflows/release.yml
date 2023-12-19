@@ -10,16 +10,10 @@ jobs:
         env:
             extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
         steps:
-            -   name: Start SSH agent
-                run: |
-                    ssh-agent bash
-
-            -   name: Add SSH key with passphrase
-                env:
-                    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                    SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
-                run: |
-                    echo "$SSH_PRIVATE_KEY" | ssh-add -p "$SSH_PASSPHRASE" -
+            - name: Start SSH agent
+              uses: webfactory/ssh-agent@v0.4.1
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             - uses: actions/checkout@v4
             - name: Setup cache environment
               id: extcache
