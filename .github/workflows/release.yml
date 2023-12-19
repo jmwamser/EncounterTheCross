@@ -62,8 +62,5 @@ jobs:
             - name: Compile the Release Manager
               run: composer install --no-interaction --no-progress --ansi --prefer-dist -d ./tools/ReleaseManager
 
-            - name: NEED LOG DIRECTORY
-              run: mkdir ./tools/ReleaseManager/logs
-
             - name: Release with MagePHP
               run: ./bin/mage deploy release
