@@ -63,8 +63,4 @@ jobs:
               run: composer install --no-interaction --no-progress --ansi --prefer-dist -d ./tools/ReleaseManager
 
             - name: Release with MagePHP
-              run: ./bin/mage deploy release
-
-            - name: Display log file if the previous step failed
-              if: failure()  # This step will run if any of the previous steps failed
-              run: cat ./tools/ReleaseManager/*.log
+              run: ./bin/mage deploy release -vvv
