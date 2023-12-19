@@ -46,7 +46,7 @@ jobs:
             #        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
             - name: Setup NodeJS 18
-              run: actions/setup-node@v2
+              uses: actions/setup-node@v2
               with:
                   node-version: 18
 
