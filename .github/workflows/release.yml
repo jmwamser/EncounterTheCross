@@ -41,6 +41,9 @@ jobs:
             - name: Validate composer.json and composer.lock
               run: composer validate --strict
 
+            - name: Run composer install
+              run: composer install --no-interaction --no-progress --ansi --prefer-dist
+
             #       No Private Repos are being used
             #      - name: Add HTTP basic auth credentials
             #        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
@@ -56,7 +59,6 @@ jobs:
             - name: Build Yarn
               run: yarn && yarn build
 
-            - name: Run composer install
-              run: composer install --no-interaction --no-progress --ansi --prefer-dist
+
             - name: Release with MagePHP
               run: ./bin/mage deploy release
