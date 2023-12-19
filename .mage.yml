@@ -10,7 +10,7 @@ magephp:
   environments:
     release:
       tar_create_path: gtar
-      tar_extract_path: gtar
+      tar_extract_path: tar
       user: avbapt
       branch: main
       from: ./
