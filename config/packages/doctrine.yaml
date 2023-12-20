@@ -10,7 +10,7 @@ doctrine:
         #server_version: '15'
 
         # MySQL Server Version
-        server_version: '8'
+#        server_version: '8'
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

@@ -71,13 +71,13 @@ final class PersonFactory extends ModelFactory
         if ($person = self::findBy([
             'email' => $email,
         ])) {
-            return $person;
+            return $person[0];
         }
 
         if ($person = self::findBy([
             'phone' => $phone,
         ])) {
-            return $person;
+            return $person[0];
         }
 
         return null;
