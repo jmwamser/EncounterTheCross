@@ -8,6 +8,7 @@ namespace App\Tests\Helper;
 use App\DataFixtures\AppFixtures;
 use Codeception\Module\Symfony;
 use Codeception\TestInterface;
+use Codeception\Util\Locator;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGeneratorInterface;
@@ -16,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestFormAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestUrlGeneration;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\DomCrawler\Crawler;
 use Zenstruck\Foundry\Test\Factories;
 
 class Functional extends \Codeception\Module
@@ -41,7 +43,7 @@ class Functional extends \Codeception\Module
     {
         parent::_beforeSuite($settings);
 
-        $this->getModule('Doctrine2')->loadFixtures(AppFixtures::class);
+        $this->getModule('Doctrine2')->loadFixtures(AppFixtures::class, false);
     }
 
     public function _before(TestInterface $test)
@@ -52,6 +54,22 @@ class Functional extends \Codeception\Module
         if ($symfony->_getContainer()->has(AdminUrlGenerator::class)) {
             $this->adminUrlGenerator = $symfony->_getContainer()->get(AdminUrlGenerator::class);
         }
+    }
+
+    public function findFirstEntityId()
+    {
+        /** @var Symfony $symfony */
+        $symfony = $this->getModule('Symfony');
+
+        /** @var Crawler $table */
+        $table = $symfony->_findElements(Locator::firstElement('//table'));
+        //        $this->assertNotEmpty($tableBody);
+        //        $table = reset($tableBody);
+        //        dump($tableBody);
+        $this->assertEquals('table', $table->nodeName());
+        $tableRow = $table->filter('tbody')->filter('tr');
+
+        return $tableRow->attr('data-id');
     }
 
     // Index Generation
