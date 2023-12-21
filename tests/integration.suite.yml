@@ -1,0 +1,24 @@
+actor: IntegrationTester
+suite_namespace: App\Tests\Integration
+modules:
+    # enable helpers as array
+    enabled:
+        -   Asserts
+        -   Foundry:
+                depends: Doctrine2
+                factories:
+                    - \App\Factory\ContactPersonFactory
+                    - \App\Factory\EventFactory
+                    - \App\Factory\EventParticipantFactory
+                    - \App\Factory\LeaderFactory
+                    - \App\Factory\LocationFactory
+                    - \App\Factory\PersonFactory
+                    - \App\Factory\TestimonialFactory
+                cleanup: true
+        -   Symfony:
+                app_path: 'src'
+                environment: 'test'
+        -   Doctrine2:
+                depends: Symfony
+                cleanup: true
+        -   \App\Tests\Helper\Integration

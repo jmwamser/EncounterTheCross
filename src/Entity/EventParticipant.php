@@ -199,20 +199,42 @@ class EventParticipant implements EntityExportableInterface
         return $this;
     }
 
-    public function toArray(): array
+    private function generateSerializationArray(bool $extended = false): \Iterator
     {
-        return [
-            'type' => $this->getType(),
-            'name' => $this->getFullName(),
-            'email' => $this->getPerson()->getEmail(),
-            'phone' => $this->getPerson()->getPhone(),
-            'contactPerson' => $this->getAttendeeContactPerson()?->getDetails()->getFullName(),
-            'contactRelation' => $this->getAttendeeContactPerson()?->getRelationship(),
-            'contactPhone' => $this->getAttendeeContactPerson()?->getDetails()->getPhone(),
-            'invitedBy' => $this->getInvitedBy(),
-            'paid' => $this->paid ? 'X' : '',
-            'paymentMethod' => $this->paymentMethod ?? '',
-        ];
+        yield 'type' => $this->getType();
+        yield 'name' => $this->getFullName();
+        yield 'email' => $this->getPerson()->getEmail();
+        yield 'phone' => $this->getPerson()->getPhone();
+
+        if ($extended) {
+            $address = $this->getLine1().PHP_EOL
+                .$this->getLine2().PHP_EOL
+                .$this->getCity().', '.$this->getState().', '.$this->getZipcode().PHP_EOL;
+            yield 'address' => $address;
+        }
+
+        $contactPerson = $this->getAttendeeContactPerson();
+        yield 'contactPerson' => $contactPerson?->getDetails()->getFullName();
+        yield 'contactRelation' => $contactPerson?->getRelationship();
+        yield 'contactPhone' => $contactPerson?->getDetails()->getPhone();
+
+        yield 'invitedBy' => $this->getInvitedBy();
+
+        if ($extended) {
+            yield 'primaryChurch' => $this->getChurch();
+            yield 'servedTimes' => $this->getServerAttendedTimes();
+            yield 'concerns?' => $this->getHealthConcerns();
+            yield 'questions' => $this->getQuestionsOrComments();
+            yield 'launchPoint' => $this->getLaunchPoint()?->getName();
+        }
+
+        yield 'paid' => $this->paid ? 'X' : '';
+        yield 'paymentMethod' => $this->paymentMethod ?? '';
+    }
+
+    public function toArray(bool $extended = false): array
+    {
+        return iterator_to_array($this->generateSerializationArray($extended));
     }
 
     public function isPaid(): ?bool

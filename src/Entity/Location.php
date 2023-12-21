@@ -74,8 +74,12 @@ class Location
         return $this->getLine1()."\n".$cityStateZip."\n".$this->getCountry();
     }
 
-    public function getName(): ?string
+    public function getName(bool $truncate = false): ?string
     {
+        if ($truncate && (strlen($this->name) > 31)) {
+            return substr($this->name, 0, 28).'...';
+        }
+
         return $this->name;
     }
 

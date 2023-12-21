@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EventCrudController extends AbstractCrudController
 {
@@ -94,27 +95,45 @@ class EventCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $exportAction = Action::new('export_by_launch')
+        $exportByLaunchAction = Action::new('export_by_launch')
 //            ->addCssClass('btn btn-success')
 //            ->setIcon('fa fa-check-circle')
 //            ->displayAsButton()
             ->linkToCrudAction('export')
         ;
 
+        $exportAllAction = Action::new('export_all')
+            ->linkToCrudAction('exportAll')
+        ;
+
         return parent::configureActions($actions)
-            ->add(Crud::PAGE_INDEX, $exportAction)
+            ->add(Crud::PAGE_INDEX, $exportByLaunchAction)
+            ->add(Crud::PAGE_INDEX, $exportAllAction)
             ->disable(Action::DELETE, Action::BATCH_DELETE)
         ;
     }
 
-    public function export(AdminContext $adminContext, XlsExporter $exporter)
+    public function exportAll(AdminContext $adminContext, XlsExporter $exporter): StreamedResponse
     {
         $event = $adminContext->getEntity()->getInstance();
         if (!$event instanceof Event) {
             throw new \LogicException('Entity is missing or not an Event');
         }
 
-        return $exporter->createResponse($event->getEventParticipants()->toArray());
-        //        $spreadsheet = $spreadsheetGenerator->createSheet();
+        $spreadsheet = $exporter->createEventReport($event->getEventParticipants()->toArray());
+
+        return $exporter->streamSpreadSheetResponse($spreadsheet);
+    }
+
+    public function export(AdminContext $adminContext, XlsExporter $exporter): StreamedResponse
+    {
+        $event = $adminContext->getEntity()->getInstance();
+        if (!$event instanceof Event) {
+            throw new \LogicException('Entity is missing or not an Event');
+        }
+
+        $spreadsheet = $exporter->createEventReportByLaunchPoint($event->getEventParticipants()->toArray());
+
+        return $exporter->streamSpreadSheetResponse($spreadsheet);
     }
 }

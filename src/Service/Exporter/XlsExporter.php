@@ -3,21 +3,27 @@
 namespace App\Service\Exporter;
 
 use App\Entity\EventParticipant;
+use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\HeaderUtils;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yectep\PhpSpreadsheetBundle\Factory;
 
 class XlsExporter
 {
     public function __construct(
-        private Factory $spreadsheetFactory
+        private readonly Factory $spreadsheetFactory
     ) {
     }
 
-    public function createResponse(array $objectToExport, string $filename = 'export.xlsx'): Response
+    /**
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws \Exception
+     */
+    public function createEventReportByLaunchPoint(array $objectToExport): Spreadsheet
     {
         $spreadsheet = $this->spreadsheetFactory->createSpreadsheet();
 
@@ -55,21 +61,43 @@ class XlsExporter
         );
         $spreadsheet->removeSheetByIndex($sheetIndex);
 
-        $response = new StreamedResponse(function () use ($spreadsheet) {
-            //            $config = new ExporterConfig();
-            //            $exporter = new Exporter($config);
-            //            $exporter->export('php://output', $data);
+        return $spreadsheet;
+    }
 
-            $writer = new Xlsx($spreadsheet);
-            $writer->save('php://output');
-        });
-        $dispositionHeader = $response->headers->makeDisposition(
+    public function createEventReport(array $participants): Spreadsheet
+    {
+        $spreadsheet = $this->spreadsheetFactory->createSpreadsheet();
+        $worksheet = $spreadsheet->getSheetByName('Worksheet');
+
+        $worksheet->fromArray(array_merge([array_keys($participants[0]->toArray(true))], array_map(function (EventParticipant $participant) {
+            return $participant->toArray(true);
+        }, $participants)));
+
+        return $spreadsheet;
+    }
+
+    public function streamSpreadSheetResponse(
+        Spreadsheet $spreadsheet, $type = IOFactory::WRITER_XLSX, $status = 200, $headers = [], $writerOptions = []
+    ): StreamedResponse {
+        $dispositionHeader = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
-            $filename
+            'Export.xlsx'
         );
-        $response->headers->set('Content-Disposition', $dispositionHeader);
-        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-        return $response;
+        $headers = array_merge(
+            $headers,
+            [
+                'Content-Disposition' => $dispositionHeader,
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            ]
+        );
+
+        return $this->spreadsheetFactory->createStreamedResponse(
+            $spreadsheet,
+            $type,
+            $status,
+            $headers,
+            $writerOptions
+        );
     }
 }
