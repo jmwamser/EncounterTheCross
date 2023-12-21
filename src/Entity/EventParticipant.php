@@ -199,42 +199,48 @@ class EventParticipant implements EntityExportableInterface
         return $this;
     }
 
-    private function generateSerializationArray(bool $extended = false): \Iterator
+    public function getExtendedSerialization(): array
     {
-        yield 'type' => $this->getType();
-        yield 'name' => $this->getFullName();
-        yield 'email' => $this->getPerson()->getEmail();
-        yield 'phone' => $this->getPerson()->getPhone();
-
-        if ($extended) {
-            $address = $this->getLine1().PHP_EOL
-                .$this->getLine2().PHP_EOL
-                .$this->getCity().', '.$this->getState().', '.$this->getZipcode().PHP_EOL;
-            yield 'address' => $address;
-        }
+        $address = $this->getLine1().PHP_EOL
+            .$this->getLine2().PHP_EOL
+            .$this->getCity().', '.$this->getState().', '.$this->getZipcode().PHP_EOL;
 
         $contactPerson = $this->getAttendeeContactPerson();
-        yield 'contactPerson' => $contactPerson?->getDetails()->getFullName();
-        yield 'contactRelation' => $contactPerson?->getRelationship();
-        yield 'contactPhone' => $contactPerson?->getDetails()->getPhone();
 
-        yield 'invitedBy' => $this->getInvitedBy();
-
-        if ($extended) {
-            yield 'primaryChurch' => $this->getChurch();
-            yield 'servedTimes' => $this->getServerAttendedTimes();
-            yield 'concerns?' => $this->getHealthConcerns();
-            yield 'questions' => $this->getQuestionsOrComments();
-            yield 'launchPoint' => $this->getLaunchPoint()?->getName();
-        }
-
-        yield 'paid' => $this->paid ? 'X' : '';
-        yield 'paymentMethod' => $this->paymentMethod ?? '';
+        return [
+            'type' => $this->getType(),
+            'name' => $this->getFullName(),
+            'email' => $this->getPerson()->getEmail(),
+            'phone' => $this->getPerson()->getPhone(),
+            'address' => $address,
+            'contactPerson' => $contactPerson?->getDetails()->getFullName(),
+            'contactRelation' => $contactPerson?->getRelationship(),
+            'contactPhone' => $contactPerson?->getDetails()->getPhone(),
+            'invitedBy' => $this->getInvitedBy(),
+            'primaryChurch' => $this->getChurch(),
+            'servedTimes' => $this->getServerAttendedTimes(),
+            'concerns?' => $this->getHealthConcerns(),
+            'questions' => $this->getQuestionsOrComments(),
+            'launchPoint' => $this->getLaunchPoint()?->getName(),
+            'paid' => $this->paid ? 'X' : '',
+            'paymentMethod' => $this->paymentMethod ?? '',
+        ];
     }
 
-    public function toArray(bool $extended = false): array
+    public function getBasicSerialization(): array
     {
-        return iterator_to_array($this->generateSerializationArray($extended));
+        return [
+            'type' => $this->getType(),
+            'name' => $this->getFullName(),
+            'email' => $this->getPerson()->getEmail(),
+            'phone' => $this->getPerson()->getPhone(),
+            'contactPerson' => $this->getAttendeeContactPerson()?->getDetails()->getFullName(),
+            'contactRelation' => $this->getAttendeeContactPerson()?->getRelationship(),
+            'contactPhone' => $this->getAttendeeContactPerson()?->getDetails()->getPhone(),
+            'invitedBy' => $this->getInvitedBy(),
+            'paid' => $this->paid ? 'X' : '',
+            'paymentMethod' => $this->paymentMethod ?? '',
+        ];
     }
 
     public function isPaid(): ?bool

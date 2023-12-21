@@ -42,11 +42,11 @@ class XlsExporter
                 $launchPoints[$worksheetName][] = ['Launch Point:', $worksheetName, 'Exported At:', $exportTime->format('d/m/y H:i')];
                 $launchPoints[$worksheetName][] = []; // blank row
 
-                $launchPoints[$worksheetName][] = array_keys($participent->toArray());
+                $launchPoints[$worksheetName][] = array_keys($participent->getBasicSerialization());
                 $worksheets[$worksheetName] = new Worksheet($spreadsheet, $worksheetName);
             }
 
-            $launchPoints[$worksheetName][] = $participent->toArray();
+            $launchPoints[$worksheetName][] = $participent->getBasicSerialization();
         }
 
         foreach ($worksheets as $launchPointName => $worksheet) {
@@ -70,12 +70,15 @@ class XlsExporter
         $worksheet = $spreadsheet->getSheetByName('Worksheet');
 
         $worksheet->fromArray(array_merge([array_keys($participants[0]->toArray(true))], array_map(function (EventParticipant $participant) {
-            return $participant->toArray(true);
+            return $participant->getExtendedSerialization();
         }, $participants)));
 
         return $spreadsheet;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
     public function streamSpreadSheetResponse(
         Spreadsheet $spreadsheet, $type = IOFactory::WRITER_XLSX, $status = 200, $headers = [], $writerOptions = []
     ): StreamedResponse {
