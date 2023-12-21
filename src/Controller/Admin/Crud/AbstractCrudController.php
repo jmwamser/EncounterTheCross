@@ -23,15 +23,15 @@ abstract class AbstractCrudController extends BaseAbstractCrudController
 {
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
         // TODO: filter out Deleted Entities unless Role:FULL
-        $expr = $qb->expr();
+        //        $expr = $queryBuilder->expr();
         //        $qb->andWhere(
         //            $expr->isNull('entity.deletedAt')
         //        );
 
-        return $qb;
+        return $queryBuilder;
     }
 
     public function configureFields(string $pageName): iterable

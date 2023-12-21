@@ -12,7 +12,9 @@ use App\Entity\Leader;
 use Codeception\Attribute\Given;
 use Codeception\Attribute\Then;
 use Codeception\Attribute\When;
+use Codeception\Configuration;
 use Codeception\Exception\TestRuntimeException;
+use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestSelectors;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -41,6 +43,7 @@ class FunctionalTester extends \Codeception\Actor
 
     // Easy Admin Selectors
     use CrudTestSelectors;
+    use CrudTestIndexAsserts;
 
     /**
      * @Given /^I am logged in as a Leader$/
@@ -64,13 +67,23 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iShouldNotSeeAnAction($action)
     {
-        $this->dontSeeElement($this->getActionSelector('delete'));
+        $this->dontSeeElement($this->getActionSelector($action));
     }
 
     /**
-     * @Given /^I am on the "([^"]*)" List Page$/
+     * @Given /^I am on the "([^"]*)" "([^"]*)" Page$/
      */
-    public function iAmOnTheListPage($objectType)
+    public function iAmOnTheAdminPage($objectType, $page)
+    {
+        // Go to the list page before going to the details page
+        $this->iAmOnTheListPage($objectType);
+
+        if (in_array(strtolower($page), ['detail', 'details'])) {
+            $this->iAmOnTheDetailPage($objectType);
+        }
+    }
+
+    protected function iAmOnTheListPage($objectType)
     {
         match ($objectType) {
             'Events' => $this->amOnAdminIndexPageFor(
@@ -105,5 +118,104 @@ class FunctionalTester extends \Codeception\Actor
     public function iClickOnTheActionMenuForAn($objectType)
     {
         $this->click('a[data-bs-toggle="dropdown"]', 'tbody tr:nth-child(1)');
+    }
+
+    protected function iAmOnTheDetailPage($objectType)
+    {
+        match ($objectType) {
+            'Events' => $this->amOnAdminDetailPageFor(
+                MainDashboardController::class,
+                EventCrudController::class,
+                $this->findFirstEntityId()
+            ),
+            'Event Locations' => $this->amOnAdminDetailPageFor(
+                MainDashboardController::class,
+                EventLocationCrudController::class,
+                $this->findFirstEntityId()
+            ),
+            'Launch Points' => $this->amOnAdminDetailPageFor(
+                MainDashboardController::class,
+                LaunchPointCrudController::class,
+                $this->findFirstEntityId()
+            ),
+            'Testimonies' => $this->amOnAdminDetailPageFor(
+                MainDashboardController::class,
+                TestimonialCrudController::class,
+                $this->findFirstEntityId()
+            ),
+            'Leaders' => $this->amOnAdminDetailPageFor(
+                MainDashboardController::class,
+                LeaderCrudController::class,
+                $this->findFirstEntityId()
+            ),
+            default => throw new TestRuntimeException(sprintf('No object called %s, found in an Admin page.', $objectType))
+        };
+
+        $this->seeInCurrentUrl('crudAction=detail');
+    }
+
+    /**
+     * @Given /^I see "([^"]*)" action$/
+     */
+    public function iSeeAction($action)
+    {
+        $this->seeElement($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @When /^I click and download the "([^"]*)" action$/
+     */
+    public function iClickAndDownloadTheAction($action)
+    {
+        $this->receiveFileResponse($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @When /^I click the "([^"]*)" action$/
+     */
+    public function iClickTheAction($action)
+    {
+        $this->click($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @Then /^I receive the xlsx file$/
+     */
+    public function iReceiveTheXlsxFile()
+    {
+        $this->seeFileFound('Export.xlsx', Configuration::outputDir());
+    }
+
+    /**
+     * @Given /^I verify there are tabs$/
+     */
+    public function iVerifyThereAreTabs()
+    {
+        $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
+
+        $this->assertGreaterThan(1, $sheetCount);
+        $this->deleteExportFile('Export.xlsx');
+    }
+
+    /**
+     * @Given /^I verify there are not tabs$/
+     */
+    public function iVerifyThereAreNotTabs()
+    {
+        $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
+
+        $this->assertLessOrEquals(1, $sheetCount);
+        $this->deleteExportFile('Export.xlsx');
+    }
+
+    private static function createActionClass($action)
+    {
+        return strtolower(str_replace(' ', '_', $action));
     }
 }

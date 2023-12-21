@@ -80,7 +80,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\Acceptance\\": "tests/acceptance",
+            "App\\Tests\\Functional\\": "tests/functional",
+            "App\\Tests\\Integration\\": "tests/integration",
+            "App\\Tests\\Unit\\": "tests/unit",
+            "App\\Tests\\": "tests/_support"
         }
     },
     "replace": {
@@ -117,6 +121,7 @@
         "codeception/module-asserts": "^3.0",
         "codeception/module-db": "^3.1",
         "codeception/module-doctrine2": "^3.0",
+        "codeception/module-filesystem": "^3.0",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-symfony": "^3.1",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
@@ -134,9 +139,9 @@
         "symfony/phpunit-bridge": "^6.2",
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*",
-        "zenstruck/foundry": "^1.29",
+        "tavoniievez/module-foundry": "^2.0@dev",
         "zeek/zeek-build-process": "dev-main",
-        "tavoniievez/module-foundry": "^2.0@dev"
+        "zenstruck/foundry": "^1.29"
     },
     "repositories": [
         {

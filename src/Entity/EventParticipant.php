@@ -199,7 +199,35 @@ class EventParticipant implements EntityExportableInterface
         return $this;
     }
 
-    public function toArray(): array
+    public function getExtendedSerialization(): array
+    {
+        $address = $this->getLine1().PHP_EOL
+            .$this->getLine2().PHP_EOL
+            .$this->getCity().', '.$this->getState().', '.$this->getZipcode().PHP_EOL;
+
+        $contactPerson = $this->getAttendeeContactPerson();
+
+        return [
+            'type' => $this->getType(),
+            'name' => $this->getFullName(),
+            'email' => $this->getPerson()->getEmail(),
+            'phone' => $this->getPerson()->getPhone(),
+            'address' => $address,
+            'contactPerson' => $contactPerson?->getDetails()->getFullName(),
+            'contactRelation' => $contactPerson?->getRelationship(),
+            'contactPhone' => $contactPerson?->getDetails()->getPhone(),
+            'invitedBy' => $this->getInvitedBy(),
+            'primaryChurch' => $this->getChurch(),
+            'servedTimes' => $this->getServerAttendedTimes(),
+            'concerns?' => $this->getHealthConcerns(),
+            'questions' => $this->getQuestionsOrComments(),
+            'launchPoint' => $this->getLaunchPoint()?->getName(),
+            'paid' => $this->paid ? 'X' : '',
+            'paymentMethod' => $this->paymentMethod ?? '',
+        ];
+    }
+
+    public function getBasicSerialization(): array
     {
         return [
             'type' => $this->getType(),
