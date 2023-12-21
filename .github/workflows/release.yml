@@ -46,7 +46,12 @@ jobs:
               run: composer validate --strict
 
             - name: Run composer install
-              run: APP_ENV=prod DATABASE_URL=mysql://username:password@127.0.0.1:3306/dummy_db composer install --no-interaction --no-progress --ansi --prefer-dist --no-dev -o
+              run: APP_ENV=prod composer install --no-interaction --no-progress --ansi --prefer-dist --no-dev -o --no-scripts
+
+            - name: Install assets
+              run: |
+                export APP_ENV=prod
+                php bin/console assets:install
 
             #       No Private Repos are being used
             #      - name: Add HTTP basic auth credentials
