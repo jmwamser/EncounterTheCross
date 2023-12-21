@@ -12,6 +12,7 @@ use App\Entity\Leader;
 use Codeception\Attribute\Given;
 use Codeception\Attribute\Then;
 use Codeception\Attribute\When;
+use Codeception\Configuration;
 use Codeception\Exception\TestRuntimeException;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestSelectors;
@@ -168,7 +169,7 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iClickAndDownloadTheAction($action)
     {
-        $download = $this->receiveFileResponse($this->getActionSelector(
+        $this->receiveFileResponse($this->getActionSelector(
             self::createActionClass($action)
         ));
     }
@@ -188,12 +189,7 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iReceiveTheXlsxFile()
     {
-        $this->seeFileFound('Export.xlsx', implode(
-            DIRECTORY_SEPARATOR, [
-                'tests',
-                '_output',
-            ]
-        ));
+        $this->seeFileFound('Export.xlsx', Configuration::outputDir());
     }
 
     /**
@@ -204,7 +200,7 @@ class FunctionalTester extends \Codeception\Actor
         $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
 
         $this->assertGreaterThan(1, $sheetCount);
-        $this->assertTrue($this->deleteExportFile('Export.xlsx'));
+        $this->deleteExportFile('Export.xlsx');
     }
 
     /**
@@ -215,7 +211,7 @@ class FunctionalTester extends \Codeception\Actor
         $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
 
         $this->assertLessOrEquals(1, $sheetCount);
-        $this->assertTrue($this->deleteExportFile('Export.xlsx'));
+        $this->deleteExportFile('Export.xlsx');
     }
 
     private static function createActionClass($action)

@@ -12,7 +12,7 @@ Feature: RegistrationExport
     And I see "Export by Launch" action
     When I click and download the "Export by Launch" action
     Then I receive the xlsx file
-#    And I verify there are tabs
+    And I verify there are tabs
 
   Scenario: Export Registration List From Events Page
     Given I am on the "Events" "List" Page
@@ -20,4 +20,4 @@ Feature: RegistrationExport
     And I see "Export All" action
     When I click and download the "Export All" action
     Then I receive the xlsx file
-#    And I verify there are not tabs
+    And I verify there are not tabs

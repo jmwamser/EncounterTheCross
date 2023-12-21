@@ -162,32 +162,31 @@ class Functional extends \Codeception\Module
         $this->_saveFileToOutputDirectory($actionResponse, 'Export.xlsx');
     }
 
-    public function getSpreedSheetTabCount(string $spreadsheet): int
+    public function getSpreedSheetTabCount(string $filename): int
     {
+        // Get the output directory from Codeception's configuration
+        $outputDir = Configuration::outputDir();
+
+        // Full path where the file will be saved
+        $fullPath = $outputDir.$filename;
+
         $reader = IOFactory::createReader('Xlsx');
-        $spreadsheet = $reader->load(implode(
-            DIRECTORY_SEPARATOR, [
-                'tests',
-                '_output',
-                $spreadsheet,
-            ]
-        ));
+        $spreadsheet = $reader->load($fullPath);
 
         return $spreadsheet->getSheetCount();
     }
 
-    public function deleteExportFile(string $spreadsheet)
+    public function deleteExportFile(string $filename)
     {
         /** @var Filesystem $filesystem */
         $filesystem = $this->getModule('Filesystem');
 
-        $filesystem->deleteFile(implode(
-            DIRECTORY_SEPARATOR, [
-                'tests',
-                '_output',
-                $spreadsheet,
-            ]
-        ));
+        // Get the output directory from Codeception's configuration
+        $outputDir = Configuration::outputDir();
+
+        // Full path where the file will be saved
+        $fullPath = $outputDir.$filename;
+        $filesystem->deleteFile($fullPath);
     }
 
     // Crud Generation
