@@ -69,7 +69,7 @@ class XlsExporter
         $spreadsheet = $this->spreadsheetFactory->createSpreadsheet();
         $worksheet = $spreadsheet->getSheetByName('Worksheet');
 
-        $worksheet->fromArray(array_merge([array_keys($participants[0]->toArray(true))], array_map(function (EventParticipant $participant) {
+        $worksheet->fromArray(array_merge([array_keys($participants[0]->getExtendedSerialization())], array_map(function (EventParticipant $participant) {
             return $participant->getExtendedSerialization();
         }, $participants)));
 
