@@ -94,7 +94,7 @@ class EventCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $exportAction = Action::new('export_attending_list')
+        $exportAction = Action::new('export_by_launch')
 //            ->addCssClass('btn btn-success')
 //            ->setIcon('fa fa-check-circle')
 //            ->displayAsButton()
