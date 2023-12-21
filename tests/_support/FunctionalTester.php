@@ -66,7 +66,7 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iShouldNotSeeAnAction($action)
     {
-        $this->dontSeeElement($this->getActionSelector('delete'));
+        $this->dontSeeElement($this->getActionSelector($action));
     }
 
     /**
@@ -151,5 +151,75 @@ class FunctionalTester extends \Codeception\Actor
         };
 
         $this->seeInCurrentUrl('crudAction=detail');
+    }
+
+    /**
+     * @Given /^I see "([^"]*)" action$/
+     */
+    public function iSeeAction($action)
+    {
+        $this->seeElement($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @When /^I click and download the "([^"]*)" action$/
+     */
+    public function iClickAndDownloadTheAction($action)
+    {
+        $download = $this->receiveFileResponse($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @When /^I click the "([^"]*)" action$/
+     */
+    public function iClickTheAction($action)
+    {
+        $this->click($this->getActionSelector(
+            self::createActionClass($action)
+        ));
+    }
+
+    /**
+     * @Then /^I receive the xlsx file$/
+     */
+    public function iReceiveTheXlsxFile()
+    {
+        $this->seeFileFound('Export.xlsx', implode(
+            DIRECTORY_SEPARATOR, [
+                'tests',
+                '_output',
+            ]
+        ));
+    }
+
+    /**
+     * @Given /^I verify there are tabs$/
+     */
+    public function iVerifyThereAreTabs()
+    {
+        $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
+
+        $this->assertGreaterThan(1, $sheetCount);
+        $this->assertTrue($this->deleteExportFile('Export.xlsx'));
+    }
+
+    /**
+     * @Given /^I verify there are not tabs$/
+     */
+    public function iVerifyThereAreNotTabs()
+    {
+        $sheetCount = $this->getSpreedSheetTabCount('Export.xlsx');
+
+        $this->assertLessOrEquals(1, $sheetCount);
+        $this->assertTrue($this->deleteExportFile('Export.xlsx'));
+    }
+
+    private static function createActionClass($action)
+    {
+        return strtolower(str_replace(' ', '_', $action));
     }
 }

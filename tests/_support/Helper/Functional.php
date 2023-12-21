@@ -6,6 +6,8 @@ namespace App\Tests\Helper;
 // all public methods declared in helper class will be available in $I
 
 use App\DataFixtures\AppFixtures;
+use Codeception\Configuration;
+use Codeception\Module\Filesystem;
 use Codeception\Module\Symfony;
 use Codeception\TestInterface;
 use Codeception\Util\Locator;
@@ -16,8 +18,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestActions;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestFormAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestUrlGeneration;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Request;
 use Zenstruck\Foundry\Test\Factories;
 
 class Functional extends \Codeception\Module
@@ -125,6 +129,65 @@ class Functional extends \Codeception\Module
             $this->generateFilterRenderUrl($dashboard, $controller)
         );
         $symfony->seeResponseCodeIsSuccessful();
+    }
+
+    public function _saveFileToOutputDirectory($binaryContent, $filename)
+    {
+        // Get the output directory from Codeception's configuration
+        $outputDir = Configuration::outputDir();
+
+        // Full path where the file will be saved
+        $fullPath = $outputDir.$filename;
+
+        // Write the content to the file
+        file_put_contents($fullPath, $binaryContent);
+
+        $this->debug('File saved to: '.$fullPath);
+    }
+
+    public function receiveFileResponse(string $actionSelector)
+    {
+        /** @var Symfony $symfony */
+        $symfony = $this->getModule('Symfony');
+
+        /** @var Crawler $actionElement */
+        $actionElement = $symfony->_findElements($actionSelector);
+
+        $href = $actionElement->extract(['href']);
+        $this->assertIsArray($href);
+        $this->assertCount(2, $href);
+        $href = $href[0];
+
+        $actionResponse = $symfony->_request(Request::METHOD_GET, $href);
+        $this->_saveFileToOutputDirectory($actionResponse, 'Export.xlsx');
+    }
+
+    public function getSpreedSheetTabCount(string $spreadsheet): int
+    {
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load(implode(
+            DIRECTORY_SEPARATOR, [
+                'tests',
+                '_output',
+                $spreadsheet,
+            ]
+        ));
+
+        return $spreadsheet->getSheetCount();
+    }
+
+    public function deleteExportFile(string $spreadsheet)
+    {
+        /** @var Filesystem $filesystem */
+        $filesystem = $this->getModule('Filesystem');
+
+        $filesystem->deleteFile(implode(
+            DIRECTORY_SEPARATOR, [
+                'tests',
+                '_output',
+                $spreadsheet,
+            ]
+        ));
     }
 
     // Crud Generation

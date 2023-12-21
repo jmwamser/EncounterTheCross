@@ -25,24 +25,6 @@ modules:
         -   Doctrine2:
                 depends: Symfony
                 cleanup: true
+        - Filesystem:
         - Asserts:
-
-#        - Symfony:
-#            app_path: 'src'
-#            environment: 'test'
-#        - Doctrine2:
-#            depends: Symfony
-#            cleanup: true
-#        -   Foundry:
-#            depends: Doctrine2
-#            factories:
-#                - \App\Factory\ContactPersonFactory
-#                - \App\Factory\EventFactory
-#                - \App\Factory\EventParticipantFactory
-#                - \App\Factory\LeaderFactory
-#                - \App\Factory\LocationFactory
-#                - \App\Factory\PersonFactory
-#                - \App\Factory\TestimonialFactory
-#            cleanup: true
-#        - Asserts:
         - \App\Tests\Helper\Functional
