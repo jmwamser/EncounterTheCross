@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\EventParticipant;
 use App\Repository\Traits\UuidFinderTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,6 +41,23 @@ class EventParticipantRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public static function queryBuilderFilterToParentId($parentId, QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $expr = $queryBuilder->expr();
+        $queryBuilder->andWhere(
+            $expr->eq(
+                'entity.event',
+                ':event'
+            )
+        )
+            ->setParameter(
+                'event',
+                $parentId
+            );
+
+        return $queryBuilder;
     }
 
     //    /**

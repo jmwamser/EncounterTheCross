@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Controller\Admin\Crud\Extended\ParentCrudControllerInterface;
+use App\Controller\Admin\Crud\Extended\ParentCrudTrait;
 use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
@@ -19,8 +21,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class EventCrudController extends AbstractCrudController
+class EventCrudController extends AbstractCrudController implements ParentCrudControllerInterface
 {
+    use ParentCrudTrait;
+
     private LocationRepository $locationRepository;
 
     public function __construct(LocationRepository $locationRepository)
@@ -106,9 +110,17 @@ class EventCrudController extends AbstractCrudController
             ->linkToCrudAction('exportAll')
         ;
 
+        $registrations = Action::new('show_registrations')
+            ->linkToCrudAction('redirectToShowSubCrud')
+        ;
+
+        //        Action::new('view_registrations')->linkToRoute();
+
         return parent::configureActions($actions)
             ->add(Crud::PAGE_INDEX, $exportByLaunchAction)
             ->add(Crud::PAGE_INDEX, $exportAllAction)
+            ->add(Crud::PAGE_INDEX, $registrations)
+            ->add(Crud::PAGE_DETAIL, $registrations)
             ->disable(Action::DELETE, Action::BATCH_DELETE)
         ;
     }
@@ -135,5 +147,10 @@ class EventCrudController extends AbstractCrudController
         $spreadsheet = $exporter->createEventReportByLaunchPoint($event->getEventParticipants()->toArray());
 
         return $exporter->streamSpreadSheetResponse($spreadsheet);
+    }
+
+    protected function getSubCrudControllerClass(): string
+    {
+        return EventParticipantCrudController::class;
     }
 }

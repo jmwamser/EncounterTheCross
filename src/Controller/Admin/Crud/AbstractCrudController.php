@@ -9,6 +9,8 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Controller\Admin\Crud\Extended\CoreCrudTrait;
+use App\Controller\Admin\Crud\Extended\CrudControllerInterface;
 use App\Controller\Admin\Crud\Field\Field;
 use App\Controller\Admin\Crud\Field\UuidField;
 use Doctrine\ORM\QueryBuilder;
@@ -19,8 +21,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController as BaseAbs
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 
-abstract class AbstractCrudController extends BaseAbstractCrudController
+abstract class AbstractCrudController extends BaseAbstractCrudController implements CrudControllerInterface
 {
+    use CoreCrudTrait;
+
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);

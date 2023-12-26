@@ -65,7 +65,15 @@ class FunctionalTester extends \Codeception\Actor
     /**
      * @Then /^I should not see a[n]? "([^"]*)" action?$/
      */
-    public function iShouldNotSeeAnAction($action)
+    public function iShouldNotSeeAnAction($action): void
+    {
+        $this->dontSeeElement($this->getActionSelector($action));
+    }
+
+    /**
+     * @Then /^I should see a[n]? "([^"]*)" action?$/
+     */
+    public function iShouldSeeAnAction($action): void
     {
         $this->dontSeeElement($this->getActionSelector($action));
     }
@@ -75,6 +83,8 @@ class FunctionalTester extends \Codeception\Actor
      */
     public function iAmOnTheAdminPage($objectType, $page)
     {
+        // TODO: This will need adjusted for the other admin pages as well
+
         // Go to the list page before going to the details page
         $this->iAmOnTheListPage($objectType);
 
@@ -217,5 +227,13 @@ class FunctionalTester extends \Codeception\Actor
     private static function createActionClass($action)
     {
         return strtolower(str_replace(' ', '_', $action));
+    }
+
+    /**
+     * @Then /^I should see Form Field label of "([^"]*)"$/
+     */
+    public function iShouldSeeFormFieldDisplayOf($fieldLabel)
+    {
+        $this->see($fieldLabel);
     }
 }

@@ -56,7 +56,7 @@ class MainDashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Encounter Events');
         yield MenuItem::linkToCrud('Events', 'fas fa-list', Event::class);
-        //        yield MenuItem::linkToCrud('Events Participants', 'fas fa-list', EventParticipant::class);
+        //                yield MenuItem::linkToCrud('Events Participants', 'fas fa-list', EventParticipant::class);
         yield MenuItem::linkToCrud(
             'Event Locations',
             'fas fa-list',
