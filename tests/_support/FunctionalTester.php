@@ -126,6 +126,7 @@ class FunctionalTester extends \Codeception\Actor
 
     /**
      * @When /^I click on the action menu for a[n]? "([^"]*)"$/
+     * @When /^I click on the action row menu$/
      */
     public function iClickOnTheActionMenuForAn($objectType)
     {
