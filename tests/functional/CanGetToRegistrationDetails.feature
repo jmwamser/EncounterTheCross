@@ -11,7 +11,7 @@ Feature: CanGetToRegistrationDetails
     When I click on the action menu for an "Events"
     And I should see a "Show Registrations" action
     And I click the "Show Registrations" action
-    Then I see
+    Then I should be on "Event Participants" "List" Page
 #    Then
 #    Then I should see Form Field label of "Name"
 #    And I should see Form Field label of "Start"

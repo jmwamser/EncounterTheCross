@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Controller\Admin\Crud\EventCrudController;
 use App\Controller\Admin\Crud\EventLocationCrudController;
+use App\Controller\Admin\Crud\EventParticipantCrudController;
 use App\Controller\Admin\Crud\LaunchPointCrudController;
 use App\Controller\Admin\Crud\LeaderCrudController;
 use App\Controller\Admin\Crud\TestimonialCrudController;
@@ -14,6 +15,7 @@ use Codeception\Attribute\Then;
 use Codeception\Attribute\When;
 use Codeception\Configuration;
 use Codeception\Exception\TestRuntimeException;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestSelectors;
 use Zenstruck\Foundry\Test\Factories;
@@ -235,5 +237,35 @@ class FunctionalTester extends \Codeception\Actor
     public function iShouldSeeFormFieldDisplayOf($fieldLabel)
     {
         $this->see($fieldLabel);
+    }
+
+    /**
+     * @Then /^I should be on "([^"]*)" "([^"]*)" Page$/
+     */
+    public function iShouldBeOnPage($entityCrud, $page)
+    {
+        $crudActionPart = 'crudAction=';
+        $crudActionPart .= match (strtolower($page)) {
+            'list' => Crud::PAGE_INDEX,
+            'show' => Crud::PAGE_DETAIL,
+            'edit' => Crud::PAGE_EDIT,
+            'new' => Crud::PAGE_NEW,
+
+            default => $this->fail('Not able to verifiy all the options'),
+        };
+
+        $this->seeInCurrentUrl($crudActionPart);
+
+        // crudControllerFqcn=App%5CController%5CAdmin%5CCrud%5CEventParticipantCrudController
+        $crudControllerPart = 'crudControllerFqcn=';
+        $crudControllerPartClass = match ($entityCrud) {
+            'Events' => EventCrudController::class,
+            'Event Participants' => EventParticipantCrudController::class,
+            'Leaders' => LeaderCrudController::class,
+            'Launch Points' => LaunchPointCrudController::class,
+            default => $this->fail('Not able to identify the Entity for the CRUD.')
+        };
+
+        $this->seeInCurrentUrl($crudControllerPart.urlencode($crudControllerPartClass));
     }
 }
