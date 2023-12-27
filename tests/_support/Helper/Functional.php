@@ -7,6 +7,7 @@ namespace App\Tests\Helper;
 
 use App\DataFixtures\AppFixtures;
 use Codeception\Configuration;
+use Codeception\Exception\ModuleException;
 use Codeception\Module\Filesystem;
 use Codeception\Module\Symfony;
 use Codeception\TestInterface;
@@ -43,6 +44,9 @@ class Functional extends \Codeception\Module
     protected AdminUrlGeneratorInterface $adminUrlGenerator;
     protected EntityManagerInterface $entityManager;
 
+    /**
+     * @throws ModuleException
+     */
     public function _beforeSuite(array $settings = [])
     {
         parent::_beforeSuite($settings);
@@ -88,12 +92,12 @@ class Functional extends \Codeception\Module
     }
 
     // New Form Generation
-    public function amOnAdminNewFormPageFor(string $dashboard, string $controller, string $query = null)
+    public function amOnAdminNewFormPageFor(string $dashboard, string $controller)
     {
         /** @var Symfony $symfony */
         $symfony = $this->getModule('Symfony');
         $symfony->amOnPage(
-            $this->generateNewFormUrl($query, $dashboard, $controller)
+            $this->generateNewFormUrl($dashboard, $controller)
         );
         $symfony->seeResponseCodeIsSuccessful();
     }
@@ -188,14 +192,4 @@ class Functional extends \Codeception\Module
         $fullPath = $outputDir.$filename;
         $filesystem->deleteFile($fullPath);
     }
-
-    // Crud Generation
-    //    public function amOnCrudUrl(string $dashboard, string $controller,?string $query = null)
-    //    {
-    //        /** @var Symfony $symfony */
-    //        $symfony = $this->getModule('Symfony');
-    //        $symfony->amOnPage(
-    //            $this->getCrudUrl($query,$dashboard,$controller)
-    //        );
-    //    }
 }

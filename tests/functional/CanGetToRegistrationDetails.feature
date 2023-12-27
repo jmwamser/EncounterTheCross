@@ -8,19 +8,9 @@ Feature: CanGetToRegistrationDetails
 
   Scenario: Get to Event Registration Details from Events List page
     Given I am on the "Events" "List" Page
-    When I click on the action menu for an "Events"
+    When I click on the action row menu
     And I should see a "Show Registrations" action
     And I click the "Show Registrations" action
     Then I should be on "Event Participants" "List" Page
-#    Then
-#    Then I should see Form Field label of "Name"
-#    And I should see Form Field label of "Start"
-#    And I should see Form Field label of "Registration Dead Line Servers"
-#    And I should see Form Field label of "Location"
-#    And I should see Form Field label of "Launch Points"
-#    And I should see Form Field label of "Price"
-#    And I should see Form Field label of "Total Servers"
-#    And I should see Form Field label of "Total Attendees"
-#    And I should see Form Rows of "Registrations"
 
 #  Scenario: Get to Event Registration Details from Dashboard

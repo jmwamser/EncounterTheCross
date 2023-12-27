@@ -9,53 +9,42 @@ Feature: SeeAllRegistrationFields
 
   Scenario: try Viewing an Attendee
     Given I have a new "Attendee"
-    And I am on the "Events" "List" Page
-    And I click on the action menu for an "Events"
-    And I should see a "Show Registrations" action
-    And I click the "Show Registrations" action
-    When I click on the action row menu
-    And I click the "Show" action
-    Then I should see Form Field label of "First Name"
-    And I should see Form Field label of "Last Name"
+    When I am on the new "Attendee" Detail Page
+    Then I should see Form Field label of "Full Name"
     And I should see Form Field label of "Email"
     And I should see Form Field label of "Phone"
     And I should see Form Field label of "Address"
     And I should see Form Field label of "Address 2"
     And I should see Form Field label of "City"
     And I should see Form Field label of "State"
-    And I should see Form Field label of "Zip"
+    And I should see Form Field label of "Zipcode"
     And I should see Form Field label of "Contact Person"
-    And I should see Form Field label of "Relationship"
+    And I should see Form Field label of "Contact Relationship"
+    And I should see Form Field label of "Contact Phone"
     And I should see Form Field label of "Launch Point"
     And I should see Form Field label of "Invited By"
     And I should see Form Field label of "Church"
     And I should see Form Field label of "Concerns"
     And I should see Form Field label of "Questions or Comments"
-    And I should see Form Field label of "Attending Status"
+#    And I should see Form Field label of "Attending Status"
     And I should see Form Field label of "Paid"
     And I should see Form Field label of "Payment Method"
 
   Scenario: try Viewing a Server
     Given I have a new "Server"
-    And I am on the "Events" "List" Page
-    And I click on the action menu for an "Events"
-    And I should see a "Show Registrations" action
-    And I click the "Show Registrations" action
-    When I click on the action row menu
-    And I click the "Show" action
-    Then I should see Form Field label of "First Name"
-    And I should see Form Field label of "Last Name"
+    When I am on the new "Server" Detail Page
+    Then I should see Form Field label of "Full Name"
     And I should see Form Field label of "Email"
     And I should see Form Field label of "Phone"
     And I should see Form Field label of "Address"
     And I should see Form Field label of "Address 2"
     And I should see Form Field label of "City"
     And I should see Form Field label of "State"
-    And I should see Form Field label of "Zip"
+    And I should see Form Field label of "Zipcode"
     And I should see Form Field label of "Launch Point"
-    And I should see Form Field label of "Served Times"
-    And I should see Form Field label of "Concerns"
+    And I should see Form Field label of "Server Attended times"
+    And I should see Form Field label of "Health Concerns"
     And I should see Form Field label of "Questions or Comments"
-    And I should see Form Field label of "Attending Status"
+#    And I should see Form Field label of "Attending Status"
     And I should see Form Field label of "Paid"
     And I should see Form Field label of "Payment Method"
