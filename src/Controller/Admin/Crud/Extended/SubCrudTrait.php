@@ -26,8 +26,8 @@ trait SubCrudTrait
             throw new CrudLogicException('SubCrud does not have a createIndexQueryBuilder Method.');
         }
         // Call the parent's createIndexQueryBuilder
-        /** @var QueryBuilder $qb */
-        $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        /** @var QueryBuilder $queryBuilder */
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $repository = self::getEntityRepositoryFqcn();
 
         if (!is_callable([$repository, 'queryBuilderFilterToParentId'])) {
@@ -42,7 +42,7 @@ trait SubCrudTrait
             throw new RuntimeException('Unable to display Sub CRUD page, we do not know what the parent is.');
         }
 
-        return $repository::queryBuilderFilterToParentId($parentId, $qb);
+        return $repository::queryBuilderFilterToParentId($parentId, $queryBuilder);
     }
 
     abstract public function getAdminUrlGenerator(): AdminUrlGenerator;
