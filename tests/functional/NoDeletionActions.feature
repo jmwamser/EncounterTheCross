@@ -8,7 +8,7 @@ Feature: NoDeletionActions
 
   Scenario Outline: Restrict Deletion Actions On List Page
     Given I am on the "<object_type>" "List" Page
-    When I click on the action menu for an "<object_type>"
+    When I click on the action row menu
     Then I should not see a "<action>" action
 
     Examples:

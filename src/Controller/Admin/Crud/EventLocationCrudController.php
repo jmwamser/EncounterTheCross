@@ -49,8 +49,6 @@ class EventLocationCrudController extends LocationCrudController
     {
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_EVENT, $qb);
-
-        return $qb;
+        return LocationRepository::queryBuilderFilterByLocationType(Location::TYPE_EVENT, $qb);
     }
 }

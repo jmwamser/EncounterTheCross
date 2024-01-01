@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CoreEntityTrait;
 use App\Entity\Traits\QuestionsAndConcernsTrait;
+use App\Enum\EventParticipantStatusEnum;
 use App\Repository\EventParticipantRepository;
 use App\Service\Exporter\EntityExportableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -74,6 +75,9 @@ class EventParticipant implements EntityExportableInterface
         message: 'Please select how you will pay.',
     )]
     private ?string $paymentMethod = null;
+
+    #[ORM\Column(type: 'string', enumType: EventParticipantStatusEnum::class)]
+    private EventParticipantStatusEnum $status = EventParticipantStatusEnum::ATTENDING;
 
     public static function TYPES(): array
     {
@@ -263,6 +267,19 @@ class EventParticipant implements EntityExportableInterface
     public function setPaymentMethod(?string $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status->value;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $statusEnum = EventParticipantStatusEnum::tryFrom($status);
+        $this->status = $statusEnum;
 
         return $this;
     }
