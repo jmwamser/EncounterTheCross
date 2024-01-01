@@ -15,6 +15,7 @@ use App\Exception\CrudLogicException;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 trait ParentCrudTrait
@@ -29,7 +30,7 @@ trait ParentCrudTrait
         $entity = $adminContext->getEntity()->getInstance();
 
         // Validate Entity Type
-        $reflector = new \ReflectionClass(get_class($this));
+        $reflector = new ReflectionClass(get_class($this));
 
         if (!in_array(ParentCrudControllerInterface::class, $reflector->getInterfaceNames())) {
             throw new CrudLogicException('Entity of Crud not using '.ParentCrudControllerInterface::class.'.');
