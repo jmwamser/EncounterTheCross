@@ -26,7 +26,7 @@ Feature: SeeAllRegistrationFields
     And I should see Form Field label of "Church"
     And I should see Form Field label of "Concerns"
     And I should see Form Field label of "Questions or Comments"
-#    And I should see Form Field label of "Attending Status"
+    And I should see Form Field label of "Attending Status"
     And I should see Form Field label of "Paid"
     And I should see Form Field label of "Payment Method"
 
@@ -45,6 +45,6 @@ Feature: SeeAllRegistrationFields
     And I should see Form Field label of "Server Attended times"
     And I should see Form Field label of "Health Concerns"
     And I should see Form Field label of "Questions or Comments"
-#    And I should see Form Field label of "Attending Status"
+    And I should see Form Field label of "Attending Status"
     And I should see Form Field label of "Paid"
     And I should see Form Field label of "Payment Method"

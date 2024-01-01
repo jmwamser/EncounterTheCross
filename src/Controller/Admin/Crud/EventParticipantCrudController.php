@@ -107,6 +107,10 @@ class EventParticipantCrudController extends AbstractCrudController implements S
 
         yield FormField::addColumn('col-lg-4');
         yield FormField::addFieldset('Additionals');
+        yield TextField::new('status')
+            ->hideOnForm()
+            ->setLabel('Attending Status')
+        ;
         yield TextField::new('type')
             ->hideOnForm()
         ;
