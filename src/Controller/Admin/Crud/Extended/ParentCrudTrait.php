@@ -43,11 +43,13 @@ trait ParentCrudTrait
         }
 
         $subCrudUrl = $this->getAdminUrlGenerator()
-            ->includeReferrer()
             ->set(ParentCrudControllerInterface::PARENT_ID, $entityId)
             ->setController($this->getSubCrudControllerClass())
             ->setAction(Crud::PAGE_INDEX)
         ;
+        if ($subCrudUrl->get('entityId')) {
+            $subCrudUrl->unset('entityId');
+        }
 
         // Redirect to the Crud Controller
         return $this->redirect($subCrudUrl);
