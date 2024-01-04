@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -89,7 +90,7 @@ class LaunchPointCrudController extends LocationCrudController
                     $data = $response->toArray();
 
                     if (0 === count($data)) {
-                        throw new \Exception('Address did not return a Lat/Long to use');
+                        throw new Exception('Address did not return a Lat/Long to use');
                     }
 
                     $entityInstance->setGeolocation([
@@ -98,7 +99,7 @@ class LaunchPointCrudController extends LocationCrudController
                         'color' => '',
                         'status' => 'SUCCESS',
                     ]);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $entityInstance->setGeolocation([
                         'latitude' => null,
                         'longitude' => null,

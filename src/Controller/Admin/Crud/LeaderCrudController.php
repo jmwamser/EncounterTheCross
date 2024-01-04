@@ -6,6 +6,7 @@ use App\Entity\Leader;
 use App\Service\RoleManager\Role;
 use App\Service\RoleManager\RoleFormatter;
 use App\Service\RoleManager\RoleListFinder;
+use Closure;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -123,7 +124,7 @@ class LeaderCrudController extends AbstractCrudController
         return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
     }
 
-    private function hashPassword(): \Closure
+    private function hashPassword(): Closure
     {
         return function ($event) {
             $form = $event->getForm();

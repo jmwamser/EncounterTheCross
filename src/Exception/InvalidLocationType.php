@@ -9,9 +9,10 @@
 
 namespace App\Exception;
 
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 
-class InvalidLocationType extends \InvalidArgumentException
+class InvalidLocationType extends InvalidArgumentException
 {
     #[Pure]
     public function __construct(string $fieldName, string $locationType)

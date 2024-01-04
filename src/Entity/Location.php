@@ -8,7 +8,9 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
+use ReflectionClass;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
@@ -92,7 +94,7 @@ class Location
 
     public static function TYPES(): array
     {
-        $oClass = new \ReflectionClass(static::class);
+        $oClass = new ReflectionClass(static::class);
 
         return $oClass->getConstants();
     }
@@ -135,7 +137,7 @@ class Location
     public function setType(string $type): self
     {
         if (!in_array($type, self::TYPES())) {
-            throw new \InvalidArgumentException('Invalid Type provided for Location');
+            throw new InvalidArgumentException('Invalid Type provided for Location');
         }
 
         $this->type = $type;

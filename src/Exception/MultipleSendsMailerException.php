@@ -4,11 +4,12 @@ namespace App\Exception;
 
 use App\Exception\Core\RuntimeException;
 use JetBrains\PhpStorm\Pure;
+use Throwable;
 
 class MultipleSendsMailerException extends RuntimeException
 {
     #[Pure]
-    public function __construct(string $class, \Throwable $previous = null)
+    public function __construct(string $class, Throwable $previous = null)
     {
         parent::__construct(
             sprintf(

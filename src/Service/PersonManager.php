@@ -13,21 +13,35 @@ class PersonManager
     }
 
     /**
+     * 1. look up by email
+     * 2. see if first name and last name are the same, if so return 1st found
+     *      else return initial person submitted.
+     *
      * Will return the Submitted person if none found matching in database.
      */
     public function exists(Person $person): Person
     {
-        $found = $this->personRepository->findOneBy([
+        $found = $this->personRepository->findBy([
             'email' => $person->getEmail(),
         ]);
 
-        if (null === $found) {
-            // TODO: issue here could be duplicates of a contact person place holder.
-            $found = $this->personRepository->findOneBy([
-                'phone' => $person->getPhone(),
-            ]);
+        if (empty($found)) {
+            // No one found
+            return $person;
+
+            //            // TODO: issue here could be duplicates of a contact person place holder.
+            //            $found = $this->personRepository->findBy([
+            //                'phone' => $person->getPhone(),
+            //            ]);
         }
 
-        return $found ?? $person;
+        // Found someone
+        // ALWAYS use first found person
+        $foundPerson = $found[0];
+        if ($foundPerson->getFullName() !== $person->getFullName()) {
+            return $person;
+        }
+
+        return $foundPerson;
     }
 }
