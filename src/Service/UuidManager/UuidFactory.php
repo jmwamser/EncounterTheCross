@@ -4,6 +4,7 @@ namespace App\Service\UuidManager;
 
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
+use Throwable;
 
 /**
  * @Author: jwamser
@@ -32,7 +33,7 @@ class UuidFactory
     {
         try {
             return Uuid::fromBase32($base);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return null;
         }
     }

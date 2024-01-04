@@ -5,6 +5,7 @@ namespace App\Settings;
 use App\Enum\SystemModeEnum;
 use Symfony\Component\PropertyInfo\Type;
 use Tzunghaor\SettingsBundle\Service\SettingConverterInterface;
+use UnitEnum;
 
 class SettingsEnumConverter implements SettingConverterInterface
 {
@@ -17,7 +18,7 @@ class SettingsEnumConverter implements SettingConverterInterface
     }
 
     /**
-     * @param \UnitEnum $value
+     * @param UnitEnum $value
      */
     public function convertToString(Type $type, $value): string
     {

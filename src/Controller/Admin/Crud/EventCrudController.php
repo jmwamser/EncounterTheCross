@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use LogicException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -129,7 +130,7 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
     {
         $event = $adminContext->getEntity()->getInstance();
         if (!$event instanceof Event) {
-            throw new \LogicException('Entity is missing or not an Event');
+            throw new LogicException('Entity is missing or not an Event');
         }
 
         $spreadsheet = $exporter->createEventReport($event->getEventParticipants()->toArray());
@@ -141,7 +142,7 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
     {
         $event = $adminContext->getEntity()->getInstance();
         if (!$event instanceof Event) {
-            throw new \LogicException('Entity is missing or not an Event');
+            throw new LogicException('Entity is missing or not an Event');
         }
 
         $spreadsheet = $exporter->createEventReportByLaunchPoint($event->getEventParticipants()->toArray());

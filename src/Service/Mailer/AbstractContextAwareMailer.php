@@ -5,6 +5,7 @@ namespace App\Service\Mailer;
 use App\Exception\Core\LogicException;
 use App\Exception\MissingMailerContextRequiredValuesException;
 use App\Exception\MultipleSendsMailerException;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface as Mailer;
@@ -141,7 +142,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
         // Make sure emails are in correct format
         try {
             $toEmails = array_merge($this->getEmail()->getTo(), $this->createToAddresses($toEmails ?? []));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new LogicException(message: 'While converting all to emails to an Address, one was missing a value.', previous: $exception);
         }
 

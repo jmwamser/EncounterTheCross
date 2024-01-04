@@ -18,6 +18,7 @@ use App\Repository\EventRepository;
 use App\Service\Mailer\RegistrationLeaderNotificationContextAwareMailer;
 use App\Service\Mailer\RegistrationThankYouContextAwareMailer;
 use App\Service\PersonManager;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -84,7 +85,7 @@ class RegistrationController extends AbstractController
     #[Route('/register/{event}/server', name: 'app_registration_server_formentry')]
     public function serverRegistration(Event $event, Request $request)
     {
-        if (new \DateTime() > $event->getRegistrationDeadLineServers() && $this->getGlobalSettings()->isRegistrationDeadlineInforced()) {
+        if (new DateTime() > $event->getRegistrationDeadLineServers() && $this->getGlobalSettings()->isRegistrationDeadlineInforced()) {
             $this->addFlash('error', 'The deadline for server registration has passed.');
 
             return $this->redirectToRoute('app_registration_list');

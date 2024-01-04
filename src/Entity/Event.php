@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\CoreEntityTrait;
 use App\Exception\InvalidLocationType;
 use App\Repository\EventRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -16,13 +17,13 @@ class Event
     use CoreEntityTrait;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $start = null;
+    private ?DateTimeInterface $start = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $end = null;
+    private ?DateTimeInterface $end = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $registrationDeadLineServers = null;
+    private ?DateTimeInterface $registrationDeadLineServers = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -47,36 +48,36 @@ class Event
         $this->eventParticipants = new ArrayCollection();
     }
 
-    public function getStart(): ?\DateTimeInterface
+    public function getStart(): ?DateTimeInterface
     {
         return $this->start;
     }
 
-    public function setStart(\DateTimeInterface $start): self
+    public function setStart(DateTimeInterface $start): self
     {
         $this->start = $start;
 
         return $this;
     }
 
-    public function getEnd(): ?\DateTimeInterface
+    public function getEnd(): ?DateTimeInterface
     {
         return $this->end;
     }
 
-    public function setEnd(\DateTimeInterface $end): self
+    public function setEnd(DateTimeInterface $end): self
     {
         $this->end = $end;
 
         return $this;
     }
 
-    public function getRegistrationDeadLineServers(): ?\DateTimeInterface
+    public function getRegistrationDeadLineServers(): ?DateTimeInterface
     {
         return $this->registrationDeadLineServers;
     }
 
-    public function setRegistrationDeadLineServers(\DateTimeInterface $registrationDeadLineServers): self
+    public function setRegistrationDeadLineServers(DateTimeInterface $registrationDeadLineServers): self
     {
         $this->registrationDeadLineServers = $registrationDeadLineServers;
 

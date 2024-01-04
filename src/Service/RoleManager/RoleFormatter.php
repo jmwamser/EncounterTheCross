@@ -10,6 +10,8 @@
 
 namespace App\Service\RoleManager;
 
+use Exception;
+
 class RoleFormatter
 {
     public static function formatRolesForForm(array $roles): array
@@ -49,7 +51,7 @@ class RoleFormatter
                 [' '],
                 $value
             );
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // TODO Log Formatter issue
             // TODO Make RoleFormatterException::class
             throw $exception;

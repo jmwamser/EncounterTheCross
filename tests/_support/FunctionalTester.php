@@ -13,6 +13,8 @@ use App\Entity\ContactPerson;
 use App\Entity\Event;
 use App\Entity\EventParticipant;
 use App\Entity\Leader;
+use App\Entity\Person;
+use App\Exception\FunctionalTestLogicException;
 use Codeception\Attribute\Given;
 use Codeception\Attribute\Then;
 use Codeception\Attribute\When;
@@ -22,6 +24,7 @@ use Codeception\Util\Locator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestIndexAsserts;
 use EasyCorp\Bundle\EasyAdminBundle\Test\Trait\CrudTestSelectors;
+use Zenstruck\Foundry\Factory;
 use Zenstruck\Foundry\Test\Factories;
 
 /**
@@ -346,8 +349,9 @@ class FunctionalTester extends \Codeception\Actor
 
     /**
      * @Given /^I have a new "([^"]*)"$/
+     * @Given /^I have a new "([^"]*)" with email "([^"]*)"$/
      */
-    public function iHaveInDatabase($entity)
+    public function iHaveInDatabase($entity, $email = null)
     {
         $subEntity = [
             'Attendee' => EventParticipant::class,
@@ -376,6 +380,14 @@ class FunctionalTester extends \Codeception\Actor
                 $baseEntityPath.$entity
             ));
         }
+
+        if (null !== $email) {
+            $attributes = array_merge(
+                $attributes,
+                ['person.email' => $email]
+            );
+        }
+
         $entityObject = $this->have($baseEntityPath.$entity, $attributes);
 
         $this->entities[$baseEntityPath.$entity.$subEntityPath][] = $entityObject;
@@ -399,5 +411,153 @@ class FunctionalTester extends \Codeception\Actor
             'attendeeContactPerson' => null,
             'event' => $this->entities[Event::class][0],
         ];
+    }
+
+    /**
+     * @Given /^I am on an Event "([^"]*)" registration$/
+     */
+    public function iAmOnRegistration($attendeeType)
+    {
+        if (
+            !array_key_exists(Event::class, $this->entities)
+            || !array_key_exists(0, $this->entities[Event::class])
+        ) {
+            throw new FunctionalTestLogicException(sprintf('Expected Entity not configured for the test. Expected a new `%s` to be created before running.', Event::class));
+        }
+        /** @var Event $event */
+        $event = $this->entities[Event::class][0];
+
+        if (!in_array(strtolower($attendeeType), ['attendee', 'server'])) {
+            throw new FunctionalTestLogicException(sprintf('Expected "attendee" or "server" as the event type, recieved %s', $attendeeType));
+        }
+
+        $this->amOnRoute(sprintf(
+            'app_registration_%s_formentry',
+            strtolower($attendeeType)
+        ), [
+            'event' => $event->getId(),
+        ]);
+    }
+
+    /**
+     * @Given /^I fill out registration with "([^"]*)" info$/
+     */
+    public function iFillOutRegistrationWithInfo($attendeeType)
+    {
+        if (!in_array(strtolower($attendeeType), ['attendee', 'server'])) {
+            throw new FunctionalTestLogicException(sprintf('Expected "attendee" or "server" as the event type, recieved %s', $attendeeType));
+        }
+        $faker = Factory::faker();
+
+        // ** Attendee Information
+        // firstname
+        $this->fillField(['name' => 'attendee_event_participant[person][firstName]'], $faker->firstName());
+        // lastname
+        $this->fillField(['name' => 'attendee_event_participant[person][lastName]'], $faker->lastName());
+        // email
+        $this->fillField(['name' => 'attendee_event_participant[person][email]'], $faker->email());
+        // phone
+        $this->fillField(['name' => 'attendee_event_participant[person][phone]'], $faker->phoneNumber());
+        // address
+        $this->fillField(['name' => 'attendee_event_participant[line1]'], $faker->streetAddress());
+        // city
+        $this->fillField(['name' => 'attendee_event_participant[city]'], $faker->city());
+        // state
+        $this->selectOption('form[name=attendee_event_participant] select[name="attendee_event_participant[state]"]', ['value' => 'KS']);
+        // zipcode
+        $this->fillField(['name' => 'attendee_event_participant[zipcode]'], $faker->postcode());
+
+        // ** Contact Person Information
+        // firstname
+        $this->fillField(['name' => 'attendee_event_participant[attendeeContactPerson][details][firstName]'], $faker->firstName());
+        // lastname
+        $this->fillField(['name' => 'attendee_event_participant[attendeeContactPerson][details][lastName]'], $faker->lastName());
+        // phone
+        $this->fillField(['name' => 'attendee_event_participant[attendeeContactPerson][details][phone]'], $faker->phoneNumber());
+        // relation
+        $this->selectOption('form[name=attendee_event_participant] input[name="attendee_event_participant[attendeeContactPerson][relationship]"]', ['value' => 'Mother']);
+
+        // ** Questions
+        // launchpoint
+        if (
+            !array_key_exists(Event::class, $this->entities)
+            || !array_key_exists(0, $this->entities[Event::class])
+        ) {
+            throw new FunctionalTestLogicException(sprintf('Expected Entity not configured for the test. Expected a new `%s` to be created before running.', Event::class));
+        }
+        /** @var Event $event */
+        $event = $this->entities[Event::class][0];
+
+        $launchpoints = $event->getLaunchPoints()->getIterator();
+        $launchpoint = $faker->randomElement($launchpoints);
+        $this->selectOption('form[name=attendee_event_participant] select[name="attendee_event_participant[launchPoint]"]', ['value' => (string) $launchpoint->getId()]);
+
+        // invitedby
+        $this->fillField(['name' => 'attendee_event_participant[invitedBy]'], $faker->name());
+        // church
+        $this->fillField(['name' => 'attendee_event_participant[church]'], $faker->company());
+        // concerns
+        $this->fillField(['name' => 'attendee_event_participant[healthConcerns]'], $faker->paragraph());
+        // questions
+        $this->fillField(['name' => 'attendee_event_participant[questionsOrComments]'], $faker->paragraph());
+        // payment
+        $this->selectOption('form[name=attendee_event_participant] select[name="attendee_event_participant[paymentMethod]"]', ['value' => 'SCHOLARSHIP']);
+    }
+
+    /**
+     * @Given /^I fill out registration attendee email with "([^"]*)"$/
+     */
+    public function iFillOutRegistrationAttendeeEmailWith($email)
+    {
+        // email
+        $this->fillField(['name' => 'attendee_event_participant[person][email]'], $email);
+    }
+
+    /**
+     * @When /^I submit registration$/
+     */
+    public function iSubmitRegistration()
+    {
+        $this->click('Register!');
+    }
+
+    /**
+     * @Then /^I should see "([^"]*)" page$/
+     */
+    public function iShouldSeePage($arg1)
+    {
+        $this->see('Thank You! Registration Completed.');
+    }
+
+    /**
+     * @Given /^I should have (\d+) "([^"]*)" in database with different "([^"]*)"$/
+     */
+    public function iShouldHaveInDatabaseWithDifferent($quantity, $entityType, $uniqueField)
+    {
+        if (
+            !array_key_exists(Event::class, $this->entities)
+            || !array_key_exists(0, $this->entities[Event::class])
+        ) {
+            throw new FunctionalTestLogicException(sprintf('Expected Entity not configured for the test. Expected a new `%s` to be created before running.', Event::class));
+        }
+        /** @var Event $event */
+        $event = $this->entities[Event::class][0];
+
+        $repoResponse = match ($entityType) {
+            'persons' => $this->grabEntitiesFromRepository(Person::class, ['email' => 'a@a.com'])
+        };
+
+        $this->assertTrue((int) $quantity === count($repoResponse), sprintf(
+            'Expected %d, got %d responses.',
+            $quantity,
+            count($repoResponse)
+        ));
+        $field = 'get'.$uniqueField;
+        $uniqueFields = [];
+        foreach ($repoResponse as $item) {
+            $uniqueFields[] = $item->$field();
+        }
+
+        $this->assertTrue(count($uniqueFields) === count(array_unique($uniqueFields)));
     }
 }

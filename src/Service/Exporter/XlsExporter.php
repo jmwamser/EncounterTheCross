@@ -3,6 +3,8 @@
 namespace App\Service\Exporter;
 
 use App\Entity\EventParticipant;
+use DateTime;
+use DateTimeZone;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -30,7 +32,7 @@ class XlsExporter
         // List of launch points as we will have each one have its own sheet
         $launchPoints = [];
         $worksheets = [];
-        $exportTime = new \DateTime('now', new \DateTimeZone('America/Chicago'));
+        $exportTime = new DateTime('now', new DateTimeZone('America/Chicago'));
 
         /** @var EventParticipant $participent */
         foreach ($objectToExport as $participent) {
@@ -43,7 +45,7 @@ class XlsExporter
                 $launchPoints[$worksheetName][] = []; // blank row
 
                 $launchPoints[$worksheetName][] = array_keys($participent->getBasicSerialization());
-                $worksheets[$worksheetName] = new Worksheet($spreadsheet, $worksheetName);
+                $worksheets[$worksheetName] = new Worksheet($spreadsheet, strlen($worksheetName) > 27 ? substr($worksheetName, 0, 27) : $worksheetName);
             }
 
             $launchPoints[$worksheetName][] = $participent->getBasicSerialization();
