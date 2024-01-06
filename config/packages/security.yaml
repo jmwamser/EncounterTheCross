@@ -11,7 +11,6 @@ security:
                 property: email
     role_hierarchy:
         ROLE_SUPER_ADMIN:
-            - ROLE_ADMIN
             - ROLE_LEADER
             - ROLE_ALLOWED_TO_SWITCH
             - ROLE_NGLAYOUTS_ADMIN
@@ -41,7 +40,7 @@ security:
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

@@ -6,11 +6,6 @@ parameters:
 			path: src/Controller/Admin/Crud/Field/Field.php
 
 		-
-			message: "#^Property App\\\\Controller\\\\Admin\\\\Crud\\\\LeaderCrudController\\:\\:\\$roleHierarchy is never read, only written\\.$#"
-			count: 1
-			path: src/Controller/Admin/Crud/LeaderCrudController.php
-
-		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: src/Controller/DevelopmentController.php
