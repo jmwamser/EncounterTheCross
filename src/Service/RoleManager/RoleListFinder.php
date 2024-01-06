@@ -25,12 +25,12 @@ class RoleListFinder
         $this->roleHierarchy = $roleHierarchy;
     }
 
-    public function getRolesAccessableToUserOrFullList(UserInterface $user)
+    public function getRolesAccessableToUserOrFullList(UserInterface $user): array
     {
         return $this->getRoles($user->getRoles());
     }
 
-    private function getRoles($originalRoles)
+    private function getRoles($originalRoles): array
     {
         return $this->roleHierarchy->getReachableRoleNames($originalRoles);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Controller\Admin\MainDashboardController;
 use App\Entity\Leader;
 use App\Service\RoleManager\Role;
 use App\Service\RoleManager\RoleFormatter;
@@ -13,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -21,14 +23,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class LeaderCrudController extends AbstractCrudController
 {
     public function __construct(
-        private RoleHierarchyInterface $roleHierarchy,
-        private RoleListFinder $roleFinder,
-        private UserPasswordHasherInterface $passwordHasher
+        private readonly RoleListFinder $roleFinder,
+        private readonly UserPasswordHasherInterface $passwordHasher
     ) {
     }
 
@@ -75,9 +75,24 @@ class LeaderCrudController extends AbstractCrudController
                 ->setChoices(
                     RoleFormatter::formatRolesForForm($roles)
                 )
+                ->hideOnDetail()
+                ->hideOnIndex()
                 ->allowMultipleChoices()
                 ->renderExpanded()
                 ->renderAsBadges()
+            ;
+            yield ChoiceField::new('roles', 'Permission Groups')
+                ->hideOnForm()
+                ->renderAsBadges()
+                ->setChoices(
+                    function (?Leader $leader, FieldDto $fieldDto): array {
+                        $options = $this->roleFinder->getRolesAccessableToUserOrFullList(
+                            $leader
+                        );
+
+                        return array_combine($options, $options);
+                    }
+                )
             ;
         }
     }
@@ -86,6 +101,25 @@ class LeaderCrudController extends AbstractCrudController
     {
         return parent::configureActions($actions)
             ->disable(Action::DELETE, Action::BATCH_DELETE)
+            ->add(Crud::PAGE_INDEX, Action::new('impersonate', 'Impersonate')
+                ->linkToUrl(function (Leader $entity = null): string {
+                    return $this->getAdminUrlGenerator()
+                        ->unsetAll()
+                        ->set('_switch_user', $entity->getEmail())
+                        ->setDashboard(MainDashboardController::class)
+//                        ->
+                        ->generateUrl()
+                    ;
+                })
+                ->displayIf(function (?Leader $entity): bool {
+                    $loggedInLeader = $this->getUser();
+                    assert($loggedInLeader instanceof Leader);
+
+                    return $entity->getEmail() && $entity->getEmail() !== $loggedInLeader->getEmail() && $this->isGranted(Role::FULL);
+                })
+            )
+//            ->setPermission(Action::NEW,Role::FULL)
+//            ->setPermission(Action::EDIT,Role::FULL)
         ;
         // TODO: Add invitation Action for new Leaders
         //            ->remove(Crud::PAGE_INDEX,Crud::PAGE_NEW);
