@@ -28,6 +28,8 @@ class EventParticipant implements EntityExportableInterface
         self::PAYMENT_METHOD_SCHOLARSHIP,
     ];
 
+    private bool $forceNewPerson = false;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $church = null;
 
@@ -282,5 +284,15 @@ class EventParticipant implements EntityExportableInterface
         $this->status = $statusEnum;
 
         return $this;
+    }
+
+    public function isForceNewPerson(): bool
+    {
+        return $this->forceNewPerson;
+    }
+
+    public function setForceNewPerson(bool $forceNewPerson): void
+    {
+        $this->forceNewPerson = $forceNewPerson;
     }
 }

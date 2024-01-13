@@ -24,7 +24,7 @@ class PersonManager
         $found = $this->personRepository->findBy([
             'email' => $person->getEmail(),
         ]);
-
+        dump($found);
         if (empty($found)) {
             // No one found
             return $person;
@@ -38,10 +38,38 @@ class PersonManager
         // Found someone
         // ALWAYS use first found person
         $foundPerson = $found[0];
+
         if ($foundPerson->getFullName() !== $person->getFullName()) {
             return $person;
         }
 
         return $foundPerson;
+    }
+
+    public function update(Person $person, bool $forced): Person
+    {
+        if (!$forced) {
+            // will still get Database person if PHONE changes
+            $existingPerson = $this->exists($person);
+            // Make sure we have the most up-to-date phone, the other field were just checked
+            if (null !== $person->getPhone() && $existingPerson->getPhone() !== $person->getPhone()) {
+                // This is a person from the database
+                $existingPerson->setPhone($person->getPhone());
+            }
+
+            // if we didn't change phone number we still have the Initial Person submitted
+            return $existingPerson;
+        }
+        // Leader has determined this 100% is a different person
+        $newPerson = new Person();
+
+        $newPerson
+            ->setFirstName($person->getFirstName())
+            ->setLastName($person->getLastName())
+            ->setEmail($person->getEmail())
+            ->setPhone($person->getPhone())
+        ;
+
+        return $newPerson;
     }
 }
