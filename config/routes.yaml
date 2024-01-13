@@ -7,3 +7,7 @@ controllers:
 tzunghaor_settings_editor:
     resource: '@TzunghaorSettingsBundle/config/routes.xml'
     prefix: '/admin/settings'
+
+_monitor:
+    resource: "@LiipMonitorBundle/Resources/config/routing.xml"
+    prefix: /monitor/health
