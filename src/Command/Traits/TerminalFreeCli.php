@@ -34,7 +34,8 @@ trait TerminalFreeCli
         $process->run();
 
         // Check the output
-        if ($output = $process->getOutput()) {
+        $output = $process->getOutput();
+        if ($output) {
             return $output;
         }
 

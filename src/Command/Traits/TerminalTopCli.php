@@ -22,7 +22,8 @@ trait TerminalTopCli
 
     private function hasTopTerminalCommand(): bool
     {
-        if ($operatingSystem = $this->getUnameTerminalCommand()) {
+        $operatingSystem = $this->getUnameTerminalCommand();
+        if ($operatingSystem) {
             $this->operatingSystemEnum = $operatingSystem;
 
             return true;
