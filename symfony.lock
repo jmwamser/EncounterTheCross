@@ -104,6 +104,18 @@
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },
+    "liip/monitor-bundle": {
+        "version": "2.22",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.6",
+            "ref": "02c7cd93304dead890f9042fc2670dd9b0e0c091"
+        },
+        "files": [
+            "config/packages/monitor.yaml"
+        ]
+    },
     "netgen/content-browser": {
         "version": "1.4",
         "recipe": {

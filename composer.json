@@ -18,6 +18,7 @@
         "guzzlehttp/psr7": "^2.6",
         "knplabs/knp-menu-bundle": "^3.2",
         "league/html-to-markdown": "^5.1",
+        "liip/monitor-bundle": "^2.22",
         "netgen/layouts-standard": "^1.4",
         "pagerfanta/doctrine-orm-adapter": "^3.8.0",
         "phpdocumentor/reflection-docblock": "^5.3",
