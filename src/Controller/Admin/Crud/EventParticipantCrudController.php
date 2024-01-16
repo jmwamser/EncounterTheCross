@@ -55,7 +55,8 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         $entityInstance = $context->getEntity()->getInstance();
         assert($entityInstance instanceof EventParticipant);
         if ($entityInstance->getStatus() !== EventParticipantStatusEnum::DUPLICATE->value) {
-            if ($response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::DUPLICATE)) {
+            $response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::DUPLICATE);
+            if ($response) {
                 return $response;
             }
         }
@@ -75,7 +76,8 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         $entityInstance = $context->getEntity()->getInstance();
         assert($entityInstance instanceof EventParticipant);
         if ($entityInstance->getStatus() !== EventParticipantStatusEnum::DROPPED->value) {
-            if ($response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::DROPPED)) {
+            $response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::DROPPED);
+            if ($response) {
                 return $response;
             }
         }
@@ -95,7 +97,8 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         $entityInstance = $context->getEntity()->getInstance();
         assert($entityInstance instanceof EventParticipant);
         if ($entityInstance->getStatus() !== EventParticipantStatusEnum::ATTENDING->value) {
-            if ($response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::ATTENDING)) {
+            $response = $this->updateParticipantStatus($context, EventParticipantStatusEnum::ATTENDING);
+            if ($response) {
                 return $response;
             }
         }
