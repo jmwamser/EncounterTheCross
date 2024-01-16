@@ -98,6 +98,8 @@ class FunctionalTester extends \Codeception\Actor
 
     /**
      * @Given /^I am on the new "([^"]*)" Detail Page$/
+     *
+     * Use this method to navigate to new data generated in the test
      */
     public function iAmOnTheNewAdminDetailPage($objectType)
     {
@@ -118,6 +120,7 @@ class FunctionalTester extends \Codeception\Actor
                 $objectType
             ));
         }
+
         $this->iAmOnTheDetailPage(
             $objectType,
             $this->entities[$baseEntityPath.$objectType.$subEntityPath][0]->getId()
@@ -126,6 +129,8 @@ class FunctionalTester extends \Codeception\Actor
 
     /**
      * @Given /^I am on the "([^"]*)" "([^"]*)" Page$/
+     *
+     * Use this method for data that was generated in DoctrineFixtures
      */
     public function iAmOnTheAdminPage($objectType, $page)
     {

@@ -24,7 +24,7 @@ class PersonManager
         $found = $this->personRepository->findBy([
             'email' => $person->getEmail(),
         ]);
-        dump($found);
+
         if (empty($found)) {
             // No one found
             return $person;
