@@ -230,6 +230,8 @@ class EventParticipant implements EntityExportableInterface
             'launchPoint' => $this->getLaunchPoint()?->getName(),
             'paid' => $this->paid ? 'X' : '',
             'paymentMethod' => $this->paymentMethod ?? '',
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt(),
         ];
     }
 
@@ -246,6 +248,8 @@ class EventParticipant implements EntityExportableInterface
             'invitedBy' => $this->getInvitedBy(),
             'paid' => $this->paid ? 'X' : '',
             'paymentMethod' => $this->paymentMethod ?? '',
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt(),
         ];
     }
 

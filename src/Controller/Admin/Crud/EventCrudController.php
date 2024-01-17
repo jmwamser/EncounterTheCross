@@ -115,8 +115,6 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
             ->linkToCrudAction('redirectToShowSubCrud')
         ;
 
-        //        Action::new('view_registrations')->linkToRoute();
-
         return parent::configureActions($actions)
             ->add(Crud::PAGE_INDEX, $exportByLaunchAction)
             ->add(Crud::PAGE_INDEX, $exportAllAction)
