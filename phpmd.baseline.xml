@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <phpmd-baseline>
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Command/CreateAdminCommand.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/AbstractController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/AbstractCrudController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/EventCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/EventCrudController.php"/>
@@ -9,13 +8,14 @@
   <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/Admin/Crud/EventCrudController.php"/>
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Controller/Admin/Crud/EventLocationCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/EventLocationCrudController.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Controller/Admin/Crud/EventParticipantCrudController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/EventParticipantCrudController.php"/>
-  <violation rule="PHPMD\Rule\Design\LongMethod" file="src/Controller/Admin/Crud/EventParticipantCrudController.php" method="configureFields"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="src/Controller/Admin/Crud/EventParticipantCrudController.php" method="configureActions"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/EventParticipantCrudController.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="src/Controller/Admin/Crud/EventParticipantCrudController.php" method="configureFields"/>
   <violation rule="PHPMD\Rule\UnusedPrivateField" file="src/Controller/Admin/Crud/Field/Field.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/Admin/Crud/LaunchPointCrudController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/Admin/Crud/LeaderCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LeaderCrudController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Controller/Admin/Crud/LocationCrudController.php"/>
@@ -25,10 +25,8 @@
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Controller/MainController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/RegistrationController.php"/>
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Controller/RegistrationController.php"/>
-  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/RegistrationController.php"/>
   <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="src/Controller/ResetPasswordController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\IfStatementAssignment" file="src/Controller/ResetPasswordController.php" method="checkEmail"/>
-  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Controller/SecurityLeaderController.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/DataFixtures/AppFixtures.php"/>
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Entity/Event.php"/>
   <violation rule="PHPMD\Rule\Naming\LongVariable" file="src/Entity/EventParticipant.php"/>
@@ -39,7 +37,6 @@
   <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="src/Entity/Location.php"/>
   <violation rule="PHPMD\Rule\CleanCode\BooleanArgumentFlag" file="src/Entity/Location.php"/>
   <violation rule="PHPMD\Rule\Controversial\CamelCaseMethodName" file="src/Entity/Location.php" method="TYPES"/>
-  <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/Entity/Location.php"/>
   <violation rule="PHPMD\Rule\Naming\ShortVariable" file="src/Entity/Traits/EntityIdTrait.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/Entity/Traits/EntityIdTrait.php"/>
   <violation rule="PHPMD\Rule\CleanCode\StaticAccess" file="src/EventSubscriber/DoctrineSubscriber.php"/>

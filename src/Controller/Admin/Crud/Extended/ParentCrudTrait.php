@@ -9,6 +9,7 @@
 
 namespace App\Controller\Admin\Crud\Extended;
 
+use App\Enum\EventParticipantStatusEnum;
 use App\Exception\Core\LogicException;
 use App\Exception\Core\RuntimeException;
 use App\Exception\CrudLogicException;
@@ -44,6 +45,9 @@ trait ParentCrudTrait
 
         $subCrudUrl = $this->getAdminUrlGenerator()
             ->set(ParentCrudControllerInterface::PARENT_ID, $entityId)
+            // &filters[status][comparison]==&filters[status][value]=attending
+            ->set('filters[status][comparison]', '=')
+            ->set('filters[status][value]', EventParticipantStatusEnum::ATTENDING->value)
             ->setController($this->getSubCrudControllerClass())
             ->setAction(Crud::PAGE_INDEX)
         ;

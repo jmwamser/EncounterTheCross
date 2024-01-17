@@ -21,6 +21,8 @@ class XlsExporter
     }
 
     /**
+     * @param array|EventParticipant[] $objectToExport
+     *
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @throws \Exception
@@ -66,6 +68,11 @@ class XlsExporter
         return $spreadsheet;
     }
 
+    /**
+     * @param array|EventParticipant[] $participants
+     *
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
     public function createEventReport(array $participants): Spreadsheet
     {
         $spreadsheet = $this->spreadsheetFactory->createSpreadsheet();
