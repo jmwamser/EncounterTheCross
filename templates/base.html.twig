@@ -21,7 +21,7 @@
             id="toast-container"
             class="toast-container position-fixed top-0 end-0 p-3"
         >
-            {% for flash in app.flashes('toast') %}
+            {% for flash in app.flashes('error') %}
                 {{ include('frontend/compnents/_toast.html.twig', {
                     title: 'Alert!',
                     body: flash
