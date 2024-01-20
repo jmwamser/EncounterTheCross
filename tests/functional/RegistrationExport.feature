@@ -9,15 +9,15 @@ Feature: RegistrationExport
   Scenario: Export Registration List Sorted by Launch Point From Events Page
     Given I am on the "Events" "List" Page
     And I click on the action row menu
-    And I see "Export by Launch" action
-    When I click and download the "Export by Launch" action
+    And I see "Export by Launch (Attending)" action
+    When I click and download the "Export by Launch (Attending)" action
     Then I receive the xlsx file
     And I verify there are tabs
 
   Scenario: Export Registration List From Events Page
     Given I am on the "Events" "List" Page
     And I click on the action row menu
-    And I see "Export All" action
-    When I click and download the "Export All" action
+    And I see "Export All (Attending)" action
+    When I click and download the "Export All (Attending)" action
     Then I receive the xlsx file
     And I verify there are not tabs
