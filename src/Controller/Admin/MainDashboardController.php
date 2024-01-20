@@ -52,6 +52,9 @@ class MainDashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::linkToUrl('Site Settings', null, '/admin/settings/edit')
+            ->setPermission('ROLE_SUPER_ADMIN')
+        ;
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
         yield MenuItem::section('Encounter Events');
