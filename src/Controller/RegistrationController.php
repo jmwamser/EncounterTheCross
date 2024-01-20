@@ -40,10 +40,15 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_registration_list')]
     public function encounterList(EventRepository $eventRepository)
     {
-        $events = $eventRepository->findAll();
+        $event = $eventRepository->findUpcomingEvent();
+        //        $events = $eventRepository->findAll();
+
+        $strictRegistration = $this->getGlobalSettings()->isRegistrationDeadlineInforced();
 
         return $this->render('frontend/events/list.html.twig', [
-            'events' => $events,
+            'events' => [$event],
+//            'events' => $events,
+            'strict_registration' => $strictRegistration,
         ]);
     }
 

@@ -45,7 +45,15 @@
                                 <div class="col">
                                     <div class="d-grid gap-2">
                                         <a href="{{ path('app_registration_attendee_formentry',{'event': event.id}) }}" class="btn btn-primary btn-sm btn-block">Attendee Registration</a>
-                                        <a href="{{ path('app_registration_server_formentry',{'event': event.id}) }}" class="btn btn-outline-secondary btn-sm btn-block">Server Registration</a>
+                                        <a href="{{ path('app_registration_server_formentry',{'event': event.id}) }}"
+                                            {% if strict_registration
+                                                and event.RegistrationDeadLineServers <= date('now') %}
+                                                class="btn btn-light btn-sm btn-block disabled d-none"
+                                                title="Server Registrasion is CLOSED"
+                                            {% else %}
+                                                class="btn btn-outline-secondary btn-sm btn-block"
+                                            {% endif %}
+                                        >Server Registration</a>
                                     </div>
                                 </div>
                             </div>
