@@ -141,7 +141,10 @@ class Event
     {
         $total = 0;
         foreach ($this->getEventParticipants()->getIterator() as $server) {
-            if (EventParticipant::TYPE_SERVER === $server->getType()) {
+            if (
+                EventParticipant::TYPE_SERVER === $server->getType()
+                && EventParticipantStatusEnum::ATTENDING->value === $server->getStatus()
+            ) {
                 ++$total;
             }
         }
@@ -155,7 +158,10 @@ class Event
 
         /** @var EventParticipant $attendee */
         foreach ($this->getEventParticipants()->getIterator() as $attendee) {
-            if (EventParticipant::TYPE_ATTENDEE === $attendee->getType()) {
+            if (
+                EventParticipant::TYPE_ATTENDEE === $attendee->getType()
+                && EventParticipantStatusEnum::ATTENDING->value === $attendee->getStatus()
+            ) {
                 ++$total;
             }
         }
