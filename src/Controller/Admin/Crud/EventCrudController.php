@@ -7,6 +7,7 @@ use App\Controller\Admin\Crud\Extended\ParentCrudTrait;
 use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
+use App\Enum\EventParticipantStatusEnum;
 use App\Repository\LocationRepository;
 use App\Service\Exporter\XlsExporter;
 use Doctrine\ORM\QueryBuilder;
@@ -100,14 +101,14 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
 
     public function configureActions(Actions $actions): Actions
     {
-        $exportByLaunchAction = Action::new('export_by_launch')
+        $exportByLaunchAction = Action::new('export_attending_by_launch')
 //            ->addCssClass('btn btn-success')
 //            ->setIcon('fa fa-check-circle')
 //            ->displayAsButton()
             ->linkToCrudAction('export')
         ;
 
-        $exportAllAction = Action::new('export_all')
+        $exportAllAction = Action::new('export_all_attending')
             ->linkToCrudAction('exportAll')
         ;
 
@@ -131,9 +132,13 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
             throw new LogicException('Entity is missing or not an Event');
         }
 
-        $spreadsheet = $exporter->createEventReport($event->getEventParticipants()->toArray());
+        $spreadsheet = $exporter->createEventReport(
+            array_values($event->getEventParticipants(
+                EventParticipantStatusEnum::ATTENDING
+            )->toArray())
+        );
 
-        return $exporter->streamSpreadSheetResponse($spreadsheet);
+        return $exporter->streamResponse($spreadsheet);
     }
 
     public function export(AdminContext $adminContext, XlsExporter $exporter): StreamedResponse
@@ -143,9 +148,13 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
             throw new LogicException('Entity is missing or not an Event');
         }
 
-        $spreadsheet = $exporter->createEventReportByLaunchPoint($event->getEventParticipants()->toArray());
+        $spreadsheet = $exporter->createEventReportByLaunchPoint(
+            $event->getEventParticipants(
+                EventParticipantStatusEnum::ATTENDING
+            )->toArray()
+        );
 
-        return $exporter->streamSpreadSheetResponse($spreadsheet);
+        return $exporter->streamResponse($spreadsheet);
     }
 
     protected function getSubCrudControllerClass(): string

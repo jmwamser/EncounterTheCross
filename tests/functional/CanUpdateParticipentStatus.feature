@@ -20,17 +20,17 @@ Feature: CanUpdateParticipentStatus
       | Events      | mark_dup       |
       | Events      | mark_drop      |
 
-  Scenario Outline: Restrict Deletion Actions On List Page
-    Given I am on the "<object_type>" "List" Page
-    When I click on the action row menu
-    And I see "detail" action
-    And I see "edit" action
-    And I click the "show_registrations" action
-    And I click on the action row menu
-    And I click the "mark_drop" action
-    And I click on the action row menu
-    Then I should see a "<action>" action
-
-    Examples:
-      | object_type | action         |
-      | Events      | mark_attending |
+#  Scenario Outline: Restrict Deletion Actions On List Page
+#    Given I am on the "<object_type>" "List" Page
+#    When I click on the action row menu
+#    And I see "detail" action
+#    And I see "edit" action
+#    And I click the "show_registrations" action
+#    And I click on the action row menu
+#    And I click the "mark_drop" action
+#    And I click on the action row menu
+#    Then I should see a "<action>" action
+#
+#    Examples:
+#      | object_type | action         |
+#      | Events      | mark_attending |

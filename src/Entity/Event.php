@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\CoreEntityTrait;
+use App\Enum\EventParticipantStatusEnum;
 use App\Exception\InvalidLocationType;
 use App\Repository\EventRepository;
 use DateTimeInterface;
@@ -170,9 +171,20 @@ class Event
     /**
      * @return Collection<int, EventParticipant>
      */
-    public function getEventParticipants(): Collection
+    public function getEventParticipants(EventParticipantStatusEnum $status = null): Collection
     {
-        return $this->eventParticipants;
+        $participants = $this->eventParticipants;
+
+        if ($status) {
+            return $participants->filter(function (EventParticipant $participant) use ($status) {
+                //                if ($participant->getStatus() !== $status->value) {
+                //                    dump($participant->getStatus(), $status->value);
+                //                }
+                return $participant->getStatus() === $status->value;
+            });
+        }
+
+        return $participants;
     }
 
     public function addEventParticipant(EventParticipant $eventParticipant): self

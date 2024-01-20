@@ -214,6 +214,7 @@ class EventParticipant implements EntityExportableInterface
         $contactPerson = $this->getAttendeeContactPerson();
 
         return [
+            'status' => $this->getStatus(),
             'type' => $this->getType(),
             'name' => $this->getFullName(),
             'email' => $this->getPerson()->getEmail(),
@@ -238,6 +239,7 @@ class EventParticipant implements EntityExportableInterface
     public function getBasicSerialization(): array
     {
         return [
+            'status' => $this->getStatus(),
             'type' => $this->getType(),
             'name' => $this->getFullName(),
             'email' => $this->getPerson()->getEmail(),

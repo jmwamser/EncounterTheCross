@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Controller\Admin\Crud\Extended\HasXlsxExporter;
 use App\Controller\Admin\Crud\Extended\ParentCrudControllerInterface;
 use App\Controller\Admin\Crud\Extended\SubCrudControllerInterface;
 use App\Controller\Admin\Crud\Extended\SubCrudTrait;
@@ -12,7 +13,6 @@ use App\Repository\EventParticipantRepository;
 use App\Service\Exporter\XlsExporter;
 use App\Service\PersonManager;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -23,7 +23,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Exception\ForbiddenActionException;
 use EasyCorp\Bundle\EasyAdminBundle\Exception\InsufficientEntityPermissionException;
-use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -39,11 +38,13 @@ use Symfony\Component\HttpFoundation\Response;
 class EventParticipantCrudController extends AbstractCrudController implements SubCrudControllerInterface
 {
     use SubCrudTrait;
+    use HasXlsxExporter;
 
     public function __construct(
         private readonly PersonManager $personManager,
-        private readonly XlsExporter $exporter,
+        XlsExporter $exporter,
     ) {
+        $this->exporter = $exporter;
     }
 
     public static function getEntityFqcn(): string
@@ -249,7 +250,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
 
                 return $this->getAdminUrlGenerator()
                     ->setAll($request->query->all())
-                    ->setAction('exportAll')
+                    ->setAction('exportByLaunch')
                     ->generateUrl()
                 ;
             })
@@ -273,32 +274,6 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         ;
 
         return $configuredActions;
-    }
-
-    public function exportAll(AdminContext $context)
-    {
-        $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
-        $context->getCrud()->setFieldAssets($this->getFieldAssets($fields));
-        $filters = $this->container->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
-        $queryBuilder = $this->createIndexQueryBuilder($context->getSearch(), $context->getEntity(), $fields, $filters);
-
-        $participents = $queryBuilder->getQuery()->getResult();
-        $xls = $this->exporter->createEventReport($participents);
-
-        return $this->exporter->streamSpreadSheetResponse($xls);
-    }
-
-    public function exportByLaunch(AdminContext $context)
-    {
-        $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
-        $context->getCrud()->setFieldAssets($this->getFieldAssets($fields));
-        $filters = $this->container->get(FilterFactory::class)->create($context->getCrud()->getFiltersConfig(), $fields, $context->getEntity());
-        $queryBuilder = $this->createIndexQueryBuilder($context->getSearch(), $context->getEntity(), $fields, $filters);
-
-        $participents = $queryBuilder->getQuery()->getResult();
-        $xls = $this->exporter->createEventReportByLaunchPoint($participents);
-
-        return $this->exporter->streamSpreadSheetResponse($xls);
     }
 
     public function configureFilters(Filters $filters): Filters
