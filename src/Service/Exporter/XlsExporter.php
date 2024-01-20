@@ -2,9 +2,13 @@
 
 namespace App\Service\Exporter;
 
+use App\Contracts\ExporterContract;
 use App\Entity\EventParticipant;
 use DateTime;
 use DateTimeZone;
+use Doctrine\ORM\QueryBuilder;
+use GuzzleHttp\Psr7\MimeType;
+use LogicException;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -13,21 +17,26 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yectep\PhpSpreadsheetBundle\Factory;
 
-class XlsExporter
+class XlsExporter implements ExporterContract
 {
+    public const EXPORT_ALL = 'EventReport';
+    public const EXPORT_ALL_SORTED = 'EventReportByLaunchPoint';
+
     public function __construct(
         private readonly Factory $spreadsheetFactory
     ) {
     }
 
+    protected ?QueryBuilder $queryBuilder = null;
+
     /**
-     * @param array|EventParticipant[] $objectToExport
+     * @param array|EventParticipant[] $participants
      *
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @throws \Exception
      */
-    public function createEventReportByLaunchPoint(array $objectToExport): Spreadsheet
+    public function createEventReportByLaunchPoint(array $participants): Spreadsheet
     {
         $spreadsheet = $this->spreadsheetFactory->createSpreadsheet();
 
@@ -36,9 +45,9 @@ class XlsExporter
         $worksheets = [];
         $exportTime = new DateTime('now', new DateTimeZone('America/Chicago'));
 
-        /** @var EventParticipant $participent */
-        foreach ($objectToExport as $participent) {
-            $worksheetName = $participent->getLaunchPoint()->getName();
+        /** @var EventParticipant $participant */
+        foreach ($participants as $participant) {
+            $worksheetName = $participant->getLaunchPoint()->getName();
 
             // Create all Worksheets we need, will add to these later
             if (!in_array($worksheetName, array_keys($launchPoints))) {
@@ -46,11 +55,11 @@ class XlsExporter
                 $launchPoints[$worksheetName][] = ['Launch Point:', $worksheetName, 'Exported At:', $exportTime->format('d/m/y H:i')];
                 $launchPoints[$worksheetName][] = []; // blank row
 
-                $launchPoints[$worksheetName][] = array_keys($participent->getBasicSerialization());
+                $launchPoints[$worksheetName][] = array_keys($participant->getBasicSerialization());
                 $worksheets[$worksheetName] = new Worksheet($spreadsheet, strlen($worksheetName) > 27 ? substr($worksheetName, 0, 27) : $worksheetName);
             }
 
-            $launchPoints[$worksheetName][] = $participent->getBasicSerialization();
+            $launchPoints[$worksheetName][] = $participant->getBasicSerialization();
         }
 
         foreach ($worksheets as $launchPointName => $worksheet) {
@@ -85,22 +94,47 @@ class XlsExporter
         return $spreadsheet;
     }
 
+    public function streamResponse(string|Spreadsheet $xlsxFileMethod = null): StreamedResponse
+    {
+        if (is_string($xlsxFileMethod) && !$this->queryBuilder) {
+            throw new LogicException('You need to provide a file to stream or set the QueryBuilder.');
+        }
+
+        if (is_string($xlsxFileMethod)) {
+            // build $xlsx
+            $objects = $this->queryBuilder->getQuery()->getResult();
+            $method = 'create'.$xlsxFileMethod;
+            $xlsxFileMethod = $this->$method($objects);
+        }
+
+        return $this->streamSpreadSheetResponse(
+            $xlsxFileMethod
+        );
+    }
+
     /**
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function streamSpreadSheetResponse(
-        Spreadsheet $spreadsheet, $type = IOFactory::WRITER_XLSX, $status = 200, $headers = [], $writerOptions = []
+    private function streamSpreadSheetResponse(
+        Spreadsheet $spreadsheet,
+        $type = IOFactory::WRITER_XLSX,
+        $status = 200,
+        $headers = [],
+        $writerOptions = []
     ): StreamedResponse {
         $dispositionHeader = HeaderUtils::makeDisposition(
             HeaderUtils::DISPOSITION_ATTACHMENT,
             'Export.xlsx'
         );
 
+        // TODO: should we use Symfony Mime Component to determine the Content-Type?
+        // Currently we have the MimeType.php from Guzzle, we will use this for now.
         $headers = array_merge(
             $headers,
             [
                 'Content-Disposition' => $dispositionHeader,
-                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => MimeType::fromExtension('xlsx'),
+//                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             ]
         );
 
@@ -111,5 +145,12 @@ class XlsExporter
             $headers,
             $writerOptions
         );
+    }
+
+    public function setQueryBuilder(QueryBuilder $queryBuilder): self
+    {
+        $this->queryBuilder = $queryBuilder;
+
+        return $this;
     }
 }
