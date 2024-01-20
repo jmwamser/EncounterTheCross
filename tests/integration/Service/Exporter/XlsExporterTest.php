@@ -40,8 +40,8 @@ class XlsExporterTest extends \Codeception\Test\Unit
         $events = $doctrine->grabEntitiesFromRepository(Event::class);
         $participants = $doctrine->grabEntitiesFromRepository(EventParticipant::class, ['event' => $events[0]]);
 
-        foreach (array_keys($participants[0]->getExtendedSerialization()) as $header) {
-            $this->assertArrayHasKey($header, array_combine($requiredHeaders, $requiredHeaders));
+        foreach (array_keys(array_combine($requiredHeaders, $requiredHeaders)) as $header) {
+            $this->assertArrayHasKey($header, $participants[0]->getExtendedSerialization());
         }
     }
 
@@ -64,8 +64,8 @@ class XlsExporterTest extends \Codeception\Test\Unit
         $events = $doctrine->grabEntitiesFromRepository(Event::class);
         $participants = $doctrine->grabEntitiesFromRepository(EventParticipant::class, ['event' => $events[0]]);
 
-        foreach (array_keys($participants[0]->getBasicSerialization()) as $header) {
-            $this->assertArrayHasKey($header, array_combine($requiredHeaders, $requiredHeaders));
+        foreach (array_keys(array_combine($requiredHeaders, $requiredHeaders)) as $header) {
+            $this->assertArrayHasKey($header, $participants[0]->getBasicSerialization());
         }
     }
 
