@@ -18,7 +18,7 @@ final class Field implements FieldInterface
     use FieldTrait;
     private FieldDto $dto;
 
-    public static function new(string $propertyName, string $label = null)
+    public static function new(string $propertyName, ?string $label = null)
     {
         return (new self())
             ->setProperty($propertyName)

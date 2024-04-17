@@ -124,7 +124,7 @@ class ServerEventParticipantType extends AbstractType
             'help' => 'The Launch Point is the area location we will meet up before attending Encounter.',
             'class' => Location::class,
             'label' => 'Launch Point',
-                'required' => true,
+            'required' => true,
             'attr' => [
                 'placeholder' => 'Launch Point',
             ],

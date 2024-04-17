@@ -54,7 +54,7 @@ final class LeaderFactory extends ModelFactory
             'person' => PersonFactory::new(),
             'createdAt' => self::faker()->dateTime(),
             'email' => self::faker()->email(),
-//            'password' => self::faker()->text(),
+            //            'password' => self::faker()->text(),
             'plainPassword' => 'tada',
             'roles' => [Role::LIMITED_FULL],
             'rowPointer' => new Uuid(self::faker()->uuid()),

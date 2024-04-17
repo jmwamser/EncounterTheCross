@@ -24,5 +24,5 @@ interface ExporterContract
 
     public function setQueryBuilder(QueryBuilder $queryBuilder): self;
 
-    public function streamResponse(string|Spreadsheet $xlsxFileMethod = null): StreamedResponse;
+    public function streamResponse(string|Spreadsheet|null $xlsxFileMethod = null): StreamedResponse;
 }

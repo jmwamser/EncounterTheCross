@@ -11,9 +11,9 @@ use Symfony\Component\Mime\Email;
 class SetFromListener implements EventSubscriberInterface
 {
     public function __construct(
+        private LoggerInterface $logger,
         private ?string $fromEmail = null,
         private ?string $fromName = null,
-        private LoggerInterface $logger,
     ) {
     }
 

@@ -90,7 +90,7 @@ class MainController extends AbstractController
         //        );
 
         return $this->render('frontend/testimonies.html.twig', [
-//            'pager' => $pagerfanta,
+            //            'pager' => $pagerfanta,
         ]);
     }
 }

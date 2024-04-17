@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('frontend/events/list.html.twig', [
             'events' => [$event],
-//            'events' => $events,
+            //            'events' => $events,
             'strict_registration' => $strictRegistration,
         ]);
     }

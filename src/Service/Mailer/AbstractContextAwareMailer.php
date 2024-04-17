@@ -33,7 +33,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
     /**
      * @internal
      */
-    final public function send(string|array $toEmails = null, array $context = []): void
+    final public function send(string|array|null $toEmails = null, array $context = []): void
     {
         $email = $this->getEmail();
         $this->email = $email->context(
@@ -72,7 +72,7 @@ abstract class AbstractContextAwareMailer implements MailerInterface
         return $this->mailer;
     }
 
-    private function handlePreventEmailSend(string $message = null, ?array $context = [])
+    private function handlePreventEmailSend(?string $message = null, ?array $context = [])
     {
         $exceptionMessage = $message ?? 'Had an issue generating the email, was unable to send.';
 
