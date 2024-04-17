@@ -94,7 +94,7 @@ class XlsExporter implements ExporterContract
         return $spreadsheet;
     }
 
-    public function streamResponse(string|Spreadsheet $xlsxFileMethod = null): StreamedResponse
+    public function streamResponse(string|Spreadsheet|null $xlsxFileMethod = null): StreamedResponse
     {
         if (is_string($xlsxFileMethod) && !$this->queryBuilder) {
             throw new LogicException('You need to provide a file to stream or set the QueryBuilder.');
@@ -134,7 +134,7 @@ class XlsExporter implements ExporterContract
             [
                 'Content-Disposition' => $dispositionHeader,
                 'Content-Type' => MimeType::fromExtension('xlsx'),
-//                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                //                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             ]
         );
 

@@ -177,7 +177,7 @@ class Event
     /**
      * @return Collection<int, EventParticipant>
      */
-    public function getEventParticipants(EventParticipantStatusEnum $status = null): Collection
+    public function getEventParticipants(?EventParticipantStatusEnum $status = null): Collection
     {
         $participants = $this->eventParticipants;
 

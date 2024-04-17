@@ -24,7 +24,7 @@ class ContactPersonType extends AbstractType
         $builder
             ->add('relationship', ChoiceType::class, [
                 'choices' => array_combine($this->relationType, $this->relationType),
-//                "choices_as_values" => true,
+                //                "choices_as_values" => true,
                 'choice_value' => function ($choice) {
                     return $choice;
                 },
@@ -32,9 +32,9 @@ class ContactPersonType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Relationship to Contact Person',
                 ],
-//                'row_attr' => [
-//                    'class' => 'form-floating',
-//                ],
+                //                'row_attr' => [
+                //                    'class' => 'form-floating',
+                //                ],
                 'label_attr' => [
                     'class' => 'radio-inline',
                 ],

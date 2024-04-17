@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Contracts\ExporterContract;
 use App\Controller\Admin\Crud\Extended\HasXlsxExporter;
 use App\Controller\Admin\Crud\Extended\ParentCrudControllerInterface;
 use App\Controller\Admin\Crud\Extended\SubCrudControllerInterface;
@@ -10,6 +11,7 @@ use App\Entity\EventParticipant;
 use App\Entity\Person;
 use App\Enum\EventParticipantStatusEnum;
 use App\Repository\EventParticipantRepository;
+use App\Repository\PersonRepository;
 use App\Service\Exporter\XlsExporter;
 use App\Service\PersonManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +41,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
 {
     use SubCrudTrait;
     use HasXlsxExporter;
+    protected ?ExporterContract $exporter;
 
     public function __construct(
         private readonly PersonManager $personManager,
@@ -227,7 +230,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
 
         $exportAllAction = Action::new('exportAll')
             ->setLabel('Export All')
-            ->linkToUrl(function (EventParticipant $eventParticipant = null) {
+            ->linkToUrl(function (?EventParticipant $eventParticipant = null) {
                 $request = $this->getContext()->getRequest();
 
                 return $this->getAdminUrlGenerator()
@@ -236,7 +239,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
                     ->generateUrl()
                 ;
             })
-            ->displayIf(function (EventParticipant $participant = null) {
+            ->displayIf(function (?EventParticipant $participant = null) {
                 return null !== $this->getAdminUrlGenerator()->get(ParentCrudControllerInterface::PARENT_ID);
             })
             ->addCssClass('btn btn-success')
@@ -245,7 +248,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         ;
         $exportLaunchAction = Action::new('exportLaunch')
             ->setLabel('Export (By Launch)')
-            ->linkToUrl(function (EventParticipant $eventParticipant = null) {
+            ->linkToUrl(function (?EventParticipant $eventParticipant = null) {
                 $request = $this->getContext()->getRequest();
 
                 return $this->getAdminUrlGenerator()
@@ -254,7 +257,7 @@ class EventParticipantCrudController extends AbstractCrudController implements S
                     ->generateUrl()
                 ;
             })
-            ->displayIf(function (EventParticipant $participant = null) {
+            ->displayIf(function (?EventParticipant $participant = null) {
                 return null !== $this->getAdminUrlGenerator()->get(ParentCrudControllerInterface::PARENT_ID);
             })
             ->addCssClass('btn btn-success')
@@ -313,6 +316,12 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         yield TextField::new('person.lastName', 'Last Name')
             ->hideOnIndex()
             ->hideOnDetail()
+            ->setFormTypeOptions([
+                'query_builder' => function (PersonRepository $personRepository) {
+                    return $personRepository->createQueryBuilder('p')
+                        ->orderBy('p.lastName', 'ASC');
+                },
+            ])
         ;
         yield EmailField::new('person.email', 'Email')
             ->hideOnIndex()

@@ -28,8 +28,8 @@ final class MenuBuilderFactory
         // Testimony Pages
         $mainMenu->addChild(
             'Testimonials', [
-            'uri' => '/men/#testimonials',
-        ])
+                'uri' => '/men/#testimonials',
+            ])
         ;
 
         // Register Pages

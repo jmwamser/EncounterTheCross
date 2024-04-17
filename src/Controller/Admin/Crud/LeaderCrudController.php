@@ -102,7 +102,7 @@ class LeaderCrudController extends AbstractCrudController
         return parent::configureActions($actions)
             ->disable(Action::DELETE, Action::BATCH_DELETE)
             ->add(Crud::PAGE_INDEX, Action::new('impersonate', 'Impersonate')
-                ->linkToUrl(function (Leader $entity = null): string {
+                ->linkToUrl(function (?Leader $entity = null): string {
                     return $this->getAdminUrlGenerator()
                         ->unsetAll()
                         ->set('_switch_user', $entity->getEmail())

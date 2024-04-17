@@ -65,9 +65,9 @@ class FunctionalTester extends \Codeception\Actor
         $this->amOnPage('/login');
         $this->seeElement('form');
         $this->submitForm('form', [
-                'email' => 'dev@dev.com',
-                'password' => 'tada',
-            ],
+            'email' => 'dev@dev.com',
+            'password' => 'tada',
+        ],
             'button[type="submit"]'
         );
 
@@ -270,6 +270,26 @@ class FunctionalTester extends \Codeception\Actor
     }
 
     /**
+     * @When /^I click and download the global "([^"]*)" action$/
+     */
+    public function iClickAndDownloadTheGlobalAction($action)
+    {
+        $this->receiveFileResponse($this->getGlobalActionSelector(
+            self::createCamelCaseActionClass($action)
+        ));
+    }
+
+    /**
+     * @When /^I click the global "([^"]*)" action$/
+     */
+    public function iClickTheGlobalAction($action): void
+    {
+        $this->click($this->getGlobalActionSelector(
+            self::createCamelCaseActionClass($action)
+        ));
+    }
+
+    /**
      * @When /^I click the "([^"]*)" action$/
      */
     public function iClickTheAction($action)
@@ -312,6 +332,17 @@ class FunctionalTester extends \Codeception\Actor
     private static function createActionClass($action)
     {
         return strtolower(str_replace(' ', '_', $action));
+    }
+
+    private static function createCamelCaseActionClass(string $action): string
+    {
+        return lcfirst(str_replace(
+            '_',
+            '',
+            ucwords(
+                str_replace(' ', '_', $action)
+            )
+        ));
     }
 
     /**

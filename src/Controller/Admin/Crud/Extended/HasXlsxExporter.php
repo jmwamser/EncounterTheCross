@@ -23,6 +23,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 trait HasXlsxExporter
 {
@@ -34,7 +35,6 @@ trait HasXlsxExporter
      * @var ContainerInterface
      */
     protected $container;
-    protected ExporterContract $exporter;
 
     abstract public function configureFields(string $pageName): iterable;
 
@@ -46,14 +46,14 @@ trait HasXlsxExporter
 
     protected function getExporter(): ExporterContract
     {
-        if ($this->exporter ?? null) {
+        if (null === ($this->exporter ?? null)) {
             throw new RuntimeException(sprintf('You never setup an Exporter for this CRUD. Please include an Exporter implementing %s, on the exporter property.', ExporterContract::class));
         }
 
         return $this->exporter;
     }
 
-    public function exportAll(AdminContext $context)
+    public function exportAll(AdminContext $context): StreamedResponse
     {
         $filteredQueryBuilder = $this->getFilteredQueryBuilder($context);
         $this->exporter->setQueryBuilder($filteredQueryBuilder);

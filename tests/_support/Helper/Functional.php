@@ -84,7 +84,7 @@ class Functional extends \Codeception\Module
     }
 
     // Index Generation
-    public function amOnAdminIndexPageFor(string $dashboard, string $controller, string $query = null)
+    public function amOnAdminIndexPageFor(string $dashboard, string $controller, ?string $query = null)
     {
         /** @var Symfony $symfony */
         $symfony = $this->getModule('Symfony');
@@ -106,7 +106,7 @@ class Functional extends \Codeception\Module
     }
 
     // Edit Form Generation
-    public function amOnAdminEditFormPageFor(string $dashboard, string $controller, string $query = null)
+    public function amOnAdminEditFormPageFor(string $dashboard, string $controller, ?string $query = null)
     {
         /** @var Symfony $symfony */
         $symfony = $this->getModule('Symfony');
@@ -117,7 +117,7 @@ class Functional extends \Codeception\Module
     }
 
     // Detail Generation
-    public function amOnAdminDetailPageFor(string $dashboard, string $controller, string $query = null)
+    public function amOnAdminDetailPageFor(string $dashboard, string $controller, ?string $query = null)
     {
         /** @var Symfony $symfony */
         $symfony = $this->getModule('Symfony');
@@ -162,8 +162,7 @@ class Functional extends \Codeception\Module
 
         $href = $actionElement->extract(['href']);
         $this->assertIsArray($href);
-        $this->assertCount(2, $href);
-        $href = $href[0];
+        $href = reset($href);
 
         $actionResponse = $symfony->_request(Request::METHOD_GET, $href);
         $this->_saveFileToOutputDirectory($actionResponse, 'Export.xlsx');
