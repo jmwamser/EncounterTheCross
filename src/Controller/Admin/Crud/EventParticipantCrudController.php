@@ -316,12 +316,12 @@ class EventParticipantCrudController extends AbstractCrudController implements S
         yield TextField::new('person.lastName', 'Last Name')
             ->hideOnIndex()
             ->hideOnDetail()
-            ->setFormTypeOptions([
-                'query_builder' => function (PersonRepository $personRepository) {
-                    return $personRepository->createQueryBuilder('p')
-                        ->orderBy('p.lastName', 'ASC');
-                },
-            ])
+//            ->setFormTypeOptions([
+//                'query_builder' => function (PersonRepository $personRepository) {
+//                    return $personRepository->createQueryBuilder('p')
+//                        ->orderBy('p.lastName', 'ASC');
+//                },
+//            ])
         ;
         yield EmailField::new('person.email', 'Email')
             ->hideOnIndex()
