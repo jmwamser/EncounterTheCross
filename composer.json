@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-zip": "*",
@@ -20,8 +20,8 @@
         "knplabs/knp-menu-bundle": "^3.2",
         "league/html-to-markdown": "^5.1",
         "liip/monitor-bundle": "^2.22",
-        "netgen/layouts-standard": "^1.4",
         "pagerfanta/doctrine-orm-adapter": "^3.8.0",
+        "pagerfanta/twig": "^4.5",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.15",
         "scienta/doctrine-json-functions": "~4.3",
@@ -68,6 +68,9 @@
         "yectep/phpspreadsheet-bundle": "^1.0"
     },
     "config": {
+        "platform": {
+            "php": "8.3"
+        },
         "allow-plugins": {
             "symfony/flex": true,
             "symfony/runtime": true,
@@ -122,7 +125,7 @@
         "codeception/codeception": "^5.0",
         "codeception/module-asserts": "^3.0",
         "codeception/module-db": "^3.1",
-        "codeception/module-doctrine2": "^3.0",
+        "codeception/module-doctrine": "^3.1",
         "codeception/module-filesystem": "^3.0",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-symfony": "^3.1",
