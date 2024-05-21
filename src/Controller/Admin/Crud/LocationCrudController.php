@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Crud;
 use App\Controller\Admin\Crud\Field\Field;
 use App\Entity\Event;
 use App\Entity\Location;
+use App\Form\GeoAddressType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -52,6 +53,9 @@ class LocationCrudController extends AbstractCrudController
         // Where is the Event Location
         yield Field::new('shortAddress', 'Where is it?')
             ->onlyOnIndex();
+        yield Field::new('address', 'Address')
+            ->setFormType(GeoAddressType::class)
+        ;
 
         if ($this->isLaunchPoint()) {
             yield AssociationField::new('eventAttendees', 'LifeTime Attendees')

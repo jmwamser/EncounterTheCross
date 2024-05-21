@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CoreEntityTrait;
+use App\Entity\Traits\GeoAddressTrait;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,6 +18,7 @@ class Location
 {
     use CoreEntityTrait;
     use AddressTrait;
+    use GeoAddressTrait;
 
     public const TYPE_LAUNCH_POINT = 'launch';
     public const TYPE_EVENT = 'event';

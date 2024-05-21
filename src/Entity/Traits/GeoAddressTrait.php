@@ -6,7 +6,7 @@ use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Daften\Bundle\AddressingBundle\Validator\Constraints as AddressingBundleAssert;
 use Doctrine\ORM\Mapping as ORM;
 
-trait GeoAddressTrail
+trait GeoAddressTrait
 {
     #[ORM\Embedded(class: AddressEmbeddable::class)]
     #[AddressingBundleAssert\EmbeddedAddressFormatConstraint(fieldOverrides: [
