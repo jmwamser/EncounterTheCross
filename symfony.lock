@@ -27,6 +27,9 @@
             "tests/_output/.gitignore"
         ]
     },
+    "daften/addressing-bundle": {
+        "version": "2.0.1"
+    },
     "doctrine/annotations": {
         "version": "1.14",
         "recipe": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96b83aee4efde158a97ae6c1115bea3c",
+    "content-hash": "c386e423e411c1cf8b065c8108db3a5b",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -141,6 +141,126 @@
                 "source": "https://github.com/Behat/Transliterator/tree/v1.5.0"
             },
             "time": "2022-03-30T09:27:43+00:00"
+        },
+        {
+            "name": "commerceguys/addressing",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/commerceguys/addressing.git",
+                "reference": "a5af40bd4b6edee5101e182085e67b7ff5d4a89b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/commerceguys/addressing/zipball/a5af40bd4b6edee5101e182085e67b7ff5d4a89b",
+                "reference": "a5af40bd4b6edee5101e182085e67b7ff5d4a89b",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "^1.6 || ^2.0",
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "mikey179/vfsstream": "^1.6.11",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "^3.7",
+                "symfony/validator": "^5.4 || ^6.3 || ^7.0"
+            },
+            "suggest": {
+                "symfony/validator": "to validate addresses"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CommerceGuys\\Addressing\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bojan Zivanovic"
+                },
+                {
+                    "name": "Damien Tournoud"
+                }
+            ],
+            "description": "Addressing library powered by CLDR and Google's address data.",
+            "keywords": [
+                "address",
+                "internationalization",
+                "localization",
+                "postal"
+            ],
+            "support": {
+                "issues": "https://github.com/commerceguys/addressing/issues",
+                "source": "https://github.com/commerceguys/addressing/tree/v2.2.0"
+            },
+            "time": "2024-02-25T11:22:16+00:00"
+        },
+        {
+            "name": "daften/addressing-bundle",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daften/addressing-bundle.git",
+                "reference": "61789a234de8fc59b86c024922f6ff906c0c56cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daften/addressing-bundle/zipball/61789a234de8fc59b86c024922f6ff906c0c56cf",
+                "reference": "61789a234de8fc59b86c024922f6ff906c0c56cf",
+                "shasum": ""
+            },
+            "require": {
+                "commerceguys/addressing": "^2",
+                "doctrine/orm": "^2.6",
+                "php": "^7.4 | ^8.0",
+                "symfony/form": "^4.4 | ^5.3 | ^6.0",
+                "symfony/framework-bundle": "^4.4 | ^5.3 | ^6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "symfony/phpunit-bridge": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Daften\\Bundle\\AddressingBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "daften",
+                    "email": "dieterblomme@gmail.com"
+                }
+            ],
+            "description": "Provides an integration between commerceguys addressing package and Symfony.",
+            "keywords": [
+                "address",
+                "addressing",
+                "commerceguys",
+                "internationalization",
+                "localization",
+                "postal"
+            ],
+            "support": {
+                "issues": "https://github.com/daften/addressing-bundle/issues",
+                "source": "https://github.com/daften/addressing-bundle/tree/2.0.1"
+            },
+            "time": "2024-01-15T23:34:52+00:00"
         },
         {
             "name": "doctrine/annotations",

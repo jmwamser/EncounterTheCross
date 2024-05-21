@@ -6,6 +6,34 @@
     {% include('email/registration/header.thankyou.html.twig') %}
     {% if registration.isServer %}
         {% include('email/registration/types/server.information.html.twig') %}
+        <callout class="secondary">
+            <row>
+                <columns large="6">
+                    <p>
+                        <strong>Payment Method</strong><br/>
+                        Dubloons
+                    </p>
+                    <p>
+                        <strong>Email Address</strong><br/>
+                        thecapn@pirates.org
+                    </p>
+                    <p>
+                        <strong>Order ID</strong><br/>
+                        239235983749636
+                    </p>
+                </columns>
+                <columns large="6">
+                    <p>
+                        <strong>Shipping Method</strong><br/>
+                        Boat (1&ndash;2 weeks)<br/>
+                        <strong>Shipping Address</strong><br/>
+                        Captain Price<br/>
+                        123 Maple Rd<br/>
+                        Campbell, CA 95112
+                    </p>
+                </columns>
+            </row>
+        </callout>
     {% else %}
         {% include('email/registration/types/attendee.information.html.twig') %}
         <row>
