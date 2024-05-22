@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Crud;
 use App\Controller\Admin\Crud\Extended\ParentCrudControllerInterface;
 use App\Controller\Admin\Crud\Extended\ParentCrudTrait;
 use App\Controller\Admin\Crud\Field\Field;
+use App\Entity\Embeddable\TrainingModal;
 use App\Entity\Event;
 use App\Entity\Location;
 use App\Enum\EventParticipantStatusEnum;
@@ -17,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use LogicException;
@@ -87,6 +89,36 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
         yield DateField::new('end')
             ->onlyOnForms();
         yield DateField::new('registrationDeadLineServers');
+        yield FormField::addFieldset('Server Training Information')->collapsible()->renderCollapsed();
+        yield Field::new('training.locationName')
+            ->setLabel('Place')
+            ->setHelp('Required value before added to Server Thank You Email.')
+            ->hideOnIndex()
+        ;
+        yield Field::new('training.locationAddress')
+            ->setLabel('Address')
+            ->hideOnIndex()
+        ;
+        yield Field::new('training.locationCity')
+            ->setLabel('City')
+            ->hideOnIndex()
+        ;
+        yield Field::new('training.locationState')
+            ->setLabel('State')
+            ->hideOnIndex()
+        ;
+        yield Field::new('training.locationZip')
+            ->setLabel('Postal Code')
+            ->hideOnIndex()
+        ;
+        yield DateField::new('training.startTime')
+            ->setTimezone(TrainingModal::DEFAULT_VIEW_TIMEZONE)
+            ->setLabel('Date')
+            ->setHelp('Required value before added to Server Thank You Email.')
+            ->hideOnIndex()
+        ;
+
+        yield FormField::addFieldset('Launches & Costs')->collapsible();
         yield $location;
 
         yield $launchPoints;

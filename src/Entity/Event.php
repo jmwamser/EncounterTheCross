@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Embeddable\TrainingModal;
 use App\Entity\Traits\CoreEntityTrait;
 use App\Enum\EventParticipantStatusEnum;
 use App\Exception\InvalidLocationType;
@@ -43,10 +44,24 @@ class Event
     #[ORM\Column(type: 'decimal', precision: 20, scale: 8)]
     private ?string $price = null;
 
+    #[ORM\Embedded(TrainingModal::class, 'server_')]
+    private TrainingModal $training;
+
     public function __construct()
     {
+        $this->training = new TrainingModal();
         $this->launchPoints = new ArrayCollection();
         $this->eventParticipants = new ArrayCollection();
+    }
+
+    public function getTraining(): TrainingModal
+    {
+        return $this->training ?? new TrainingModal();
+    }
+
+    public function setTraining(TrainingModal $training): void
+    {
+        $this->training = $training;
     }
 
     public function getStart(): ?DateTimeInterface
