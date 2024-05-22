@@ -237,6 +237,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/pagerfanta/core" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pagerfanta/doctrine-orm-adapter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pagerfanta/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/commerceguys/addressing" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/daften/addressing-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

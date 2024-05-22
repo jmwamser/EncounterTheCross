@@ -8,15 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait GeoAddressTrait
 {
-    #[ORM\Embedded(class: AddressEmbeddable::class)]
+    //    #[ORM\Embedded(class: AddressEmbeddable::class)]
     #[AddressingBundleAssert\EmbeddedAddressFormatConstraint(fieldOverrides: [
-        'addressLine1' => 'required',
+        'addressLine1' => 'hidden',
         'postalCode' => 'required',
         'locality' => 'required',
         'organization' => 'required',
-        'givenName' => 'required',
-        'familyName' => 'required',
-        'addressLine2' => 'optional',
+        'givenName' => 'hidden',
+        'familyName' => 'hidden',
+        'addressLine2' => 'hidden',
         'additionalName' => 'hidden',
         'administrativeArea' => 'hidden',
         'dependentLocality' => 'hidden',

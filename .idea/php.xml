@@ -251,6 +251,37 @@
       <path value="$PROJECT_DIR$/vendor/pagerfanta/doctrine-orm-adapter" />
       <path value="$PROJECT_DIR$/vendor/pagerfanta/twig" />
       <path value="$PROJECT_DIR$/vendor/codeception/module-doctrine" />
+      <path value="$PROJECT_DIR$/vendor/pagerfanta/pagerfanta" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/http-cache-bundle" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/http-cache" />
+      <path value="$PROJECT_DIR$/vendor/netgen/content-browser" />
+      <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
+      <path value="$PROJECT_DIR$/vendor/emodric/twig-package-versions" />
+      <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/vendor/netgen/content-browser-ui" />
+      <path value="$PROJECT_DIR$/vendor/clue/stream-filter" />
+      <path value="$PROJECT_DIR$/vendor/phplang/scope-exit" />
+      <path value="$PROJECT_DIR$/vendor/xemlock/htmlpurifier-html5" />
+      <path value="$PROJECT_DIR$/vendor/swaggest/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/swaggest/json-diff" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/vendor/php-http/client-common" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message" />
+      <path value="$PROJECT_DIR$/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/vendor/nikolaposa/version" />
+      <path value="$PROJECT_DIR$/vendor/netgen/layouts-standard" />
+      <path value="$PROJECT_DIR$/vendor/netgen/layouts-core" />
+      <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/vendor/beberlei/assert" />
+      <path value="$PROJECT_DIR$/vendor/netgen/layouts-ui" />
+      <path value="$PROJECT_DIR$/vendor/codeception/module-doctrine2" />
+      <path value="$PROJECT_DIR$/vendor/commerceguys/addressing" />
+      <path value="$PROJECT_DIR$/vendor/daften/addressing-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
