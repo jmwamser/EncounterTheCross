@@ -84,12 +84,26 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
         ;
 
         // return fields
+        yield FormField::addFieldset('Encounter Details')->collapsible();
         yield TextField::new('name');
         yield DateField::new('start');
         yield DateField::new('end')
             ->onlyOnForms();
         yield DateField::new('registrationDeadLineServers');
-        yield FormField::addFieldset('Server Training Information')->collapsible()->renderCollapsed();
+
+        yield FormField::addFieldset('Launches & Costs')->collapsible();
+        yield $location;
+
+        yield $launchPoints;
+        yield MoneyField::new('price')
+            ->setStoredAsCents(false)
+            ->setCurrency('USD');
+        yield Field::new('TotalServers')
+            ->hideOnForm();
+        yield Field::new('TotalAttendees')
+            ->hideOnForm();
+
+        yield FormField::addFieldset('Server Training Information')->collapsible();
         yield Field::new('training.locationName')
             ->setLabel('Place')
             ->setHelp('Required value before added to Server Thank You Email.')
@@ -117,18 +131,6 @@ class EventCrudController extends AbstractCrudController implements ParentCrudCo
             ->setHelp('Required value before added to Server Thank You Email.')
             ->hideOnIndex()
         ;
-
-        yield FormField::addFieldset('Launches & Costs')->collapsible();
-        yield $location;
-
-        yield $launchPoints;
-        yield MoneyField::new('price')
-            ->setStoredAsCents(false)
-            ->setCurrency('USD');
-        yield Field::new('TotalServers')
-            ->hideOnForm();
-        yield Field::new('TotalAttendees')
-            ->hideOnForm();
     }
 
     public function configureActions(Actions $actions): Actions
