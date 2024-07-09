@@ -45,9 +45,6 @@ services:
             $fromEmail: '%env(MAILER_SENDER_EMAIL)%'
             $fromName: '%env(MAILER_SENDER_NAME)%'
 
-    App\EventSubscriber\MaintenanceModeSubscriber:
-        arguments:
-            $environment: '%kernel.environment%'
 
 #    App\Settings\SettingsEnumConverter:
 #        tags:
