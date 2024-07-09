@@ -27,20 +27,16 @@ magephp:
       on-deploy:
       on-release:
         - fs/copy: { from: '/home3/avbapt/releases/production/.env.local.php', to: '/home3/avbapt/releases/production/current/.env.local.php' }
-        - fs/copy:
+        - fs/symlink:
             from: '/home3/avbapt/releases/production/current/public/build/*'
             to: '/home3/avbapt/public_html/build'
-            flags: '-prf'
-        - fs/copy:
+            flags: '-snf'
+        - fs/symlink:
             from: '/home3/avbapt/releases/production/current/public/bundles'
             to: '/home3/avbapt/public_html/bundles'
-            flags: '-prf'
+            flags: '-snf'
         - exec: { cmd: '/home3/avbapt/releases/production/current/bin/console doctrine:migrations:migrate --env=prod --no-interaction', desc: 'Run Doctrine Migrations if needed.'}
       post-deploy:
-#        - composer/install: { flags: '--no-scripts' }
-#        - yarn/install
-#        - yarn/build
-#        - symfony/assets-install: { env: 'dev', target: 'public' }
     production:
 #      user: app
       branch: main
@@ -52,13 +48,7 @@ magephp:
         - ./horizon-ui-chakra/*
         - ./tools/*
         - '*.local*'
-#        - ./var/cache/*
-#        - ./var/log/*
-#        - ./web/app_dev.php
 #      hosts:
-#        - webserver1
-#        - webserver2
-#        - webserver3
       # Runs on Local
       pre-deploy:
         - fs/remove: {file: './public/bundles', flags: '-Rf'}
